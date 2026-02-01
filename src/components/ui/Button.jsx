@@ -14,7 +14,7 @@ const buttonVariants = cva(
         variants: {
             variant: {
                 default: "bg-deglya-teal text-white hover:bg-deglya-teal/90 shadow-md",
-                action: "bg-deglya-mustard text-white hover:bg-[#D4A034] shadow-md uppercase tracking-wide font-bold",
+                action: "bg-deglya-mustard text-deglya-wood hover:bg-[#D4A034] shadow-md uppercase tracking-wide font-bold",
                 outline: "border-2 border-deglya-teal text-deglya-teal hover:bg-deglya-teal/10",
                 ghost: "hover:bg-deglya-terracota/20 text-deglya-wood",
                 link: "text-deglya-teal underline-offset-4 hover:underline",

@@ -27,7 +27,7 @@ const Header = () => (
                     <a className="text-sm font-medium hover:text-deglya-teal dark:hover:text-deglya-terracota" href="/#portal">Portal</a>
                 </nav>
                 <div className="hidden items-center gap-4 lg:flex">
-                    <button className="flex cursor-pointer items-center justify-center rounded-full bg-deglya-mustard px-6 py-2 text-sm font-bold text-white shadow-lg shadow-deglya-mustard/30 transition-shadow duration-300 hover:shadow-xl hover:shadow-deglya-mustard/50">
+                    <button className="flex cursor-pointer items-center justify-center rounded-full bg-deglya-mustard px-6 py-2 text-sm font-bold text-deglya-wood shadow-lg shadow-deglya-mustard/30 transition-shadow duration-300 hover:shadow-xl hover:shadow-deglya-mustard/50">
                         <span>Agendar Cita</span>
                     </button>
                 </div>
@@ -178,7 +178,7 @@ export default function Services() {
                             className={cn(
                                 "px-8 py-3 rounded-full text-base font-bold transition-all duration-300 tracking-wide",
                                 activeTab === 'empresas'
-                                    ? "bg-deglya-mustard text-white shadow-md transform scale-105"
+                                    ? "bg-deglya-mustard text-deglya-wood shadow-md transform scale-105"
                                     : "text-deglya-wood hover:text-deglya-mustard hover:bg-white/50"
                             )}
                         >

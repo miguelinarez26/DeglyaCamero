@@ -1,30 +1,32 @@
 @import "tailwindcss";
 
 @theme {
+  /* Brand Colors */
   --color-deglya-teal: #1B6CA8;
   --color-deglya-mustard: #E3B346;
   --color-deglya-wood: #8B5A2B;
   --color-deglya-cream: #FDF6E9;
   --color-deglya-terracota: #D1BFA7;
 
-  /* Aliases for Reference Code Compatibility */
-  --color-primary: #1B6CA8;
-  /* Map primary to Teal */
-  --color-sand: #D1BFA7;
-  /* Map sand to Terracota */
-  --color-background-light: #FDF6E9;
-  --color-background-dark: #131d1f;
-  --color-text-light: #3a3a3a;
-  --color-text-dark: #e0e0e0;
+  /* Booking System Colors */
+  --color-booking-primary: #3730A3;
+  --color-booking-secondary: #0D9488;
 
-  --font-display: "Outfit", sans-serif;
-  --font-body: "Roboto", sans-serif;
-  --font-sans: "Inter", sans-serif;
+  /* Legacy/Semantic Aliases */
+  --color-primary: var(--color-deglya-teal);
+  --color-secondary: var(--color-deglya-mustard);
+  --color-background-light: var(--color-deglya-cream);
+  --color-text-light: var(--color-deglya-wood);
+
+  /* Fonts */
+  --font-sans: "Nunito", sans-serif;
+  --font-display: "Playfair Display", serif;
+  --font-body: "Nunito", sans-serif;
 }
 
 @layer base {
   body {
-    @apply overflow-x-hidden bg-deglya-cream text-deglya-wood;
+    @apply overflow-x-hidden bg-deglya-cream text-deglya-wood font-sans;
   }
 }
 

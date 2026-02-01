@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { User, CreditCard, CheckCircle2 } from 'lucide-react';
+import { supabase } from '../../lib/backend';
 
 export const RegistrationForm = ({ formData, onChange }) => {
     // Mock User Data (Simulating a logged-in user via Magic Link)
@@ -9,6 +10,35 @@ export const RegistrationForm = ({ formData, onChange }) => {
 
     const handleChange = (field, value) => {
         onChange({ ...formData, [field]: value });
+    };
+
+    const handleFileChange = async (e) => {
+        // Defensive check as requested by user to prevent "Cannot read properties of undefined"
+        const fileList = e.target.files;
+        const file = (fileList && fileList.length > 0) ? fileList[0] : null;
+
+        if (!file) return;
+
+        try {
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
+            const filePath = `payment-proofs/${fileName}`;
+
+            const { error: uploadError } = await supabase.storage
+                .from('clinic-docs')
+                .upload(filePath, file);
+
+            if (uploadError) throw uploadError;
+
+            const { data: { publicUrl } } = supabase.storage
+                .from('clinic-docs')
+                .getPublicUrl(filePath);
+
+            handleChange('paymentProof', publicUrl);
+        } catch (error) {
+            console.error('Error uploading file:', error);
+            alert('Error subiendo el archivo. Intente nuevamente.');
+        }
     };
 
     const countries = [
@@ -131,7 +161,7 @@ export const RegistrationForm = ({ formData, onChange }) => {
                 <div className="space-y-2">
                     <label className="text-sm font-bold text-deglya-wood ml-1">Comprobante de Pago <span className="text-red-500">*</span></label>
                     <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:bg-gray-50 transition-colors cursor-pointer group">
-                        <input type="file" className="hidden" id="payment-proof" accept=".pdf,.jpg,.jpeg,.png" />
+                        <input type="file" className="hidden" id="payment-proof" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileChange} />
                         <label htmlFor="payment-proof" className="cursor-pointer flex flex-col items-center">
                             <div className="w-12 h-12 bg-deglya-cream rounded-full flex items-center justify-center text-deglya-teal mb-3 group-hover:scale-110 transition-transform">
                                 <CreditCard size={24} />
