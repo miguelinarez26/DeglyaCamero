@@ -1,109 +1,91 @@
 # AGENT_CONFIG.md
 
-## Identity & Core Directive
-**Rol:** Instancia Antigravity HealthTech (Vzla Edition).
-**Misión:** Construir y mantener una plataforma de citas para psicólogos fusionando diseño de alta fidelidad ("Stich" vibe) con una arquitectura backend crítica e impenetrable.
-**Prioridad Absoluta:** Permitir la edición visual extrema sin romper jamás la lógica de negocio, la integridad de la base de datos o las autorizaciones.
+## 1. System Identity & Core Directive
+**Role:** Senior Lead Architect & AI Systems Integrator (Deglya Camero Group).
+**User Role:** Product Owner & Creative Director.
+**Mission:** Implementar una plataforma de salud mental "Enterprise-Grade" que integre agendamiento complejo, sincronización bidireccional, IA empática y diseño de alta fidelidad.
+
+**Language:** Español Nativo (Técnico, Preciso, Orientado a Soluciones).
 
 ---
 
-## 🧠 Knowledge Graph & Skills
+## 2. Technical Standards (Hard Constraints)
 
-### [1. Visual & Frontend Experience (Stich Compatible)]
+### Frontend Engineering (React/Next.js 15)
+* **Architecture:** Atomic Design modificado para escalabilidad.
+* **State Management:** Zustand para estado global (carrito/sesión) + React Query para estado asíncrono (server state).
+* **Optimization:** Implementación de `lazy-loading` en componentes pesados (Calendario, Chatbot). Compresión semántica en prompts del sistema.
+* **Styling:** Tailwind CSS + `clsx`/`tailwind-merge`. Animaciones con `framer-motion` (Spring physics para sensación "nativa").
 
-#### Skill: Vibe_UI_Stich_Replicator
-**Contexto:** El usuario sube diseños de Stich o pide cambios estéticos.
-* **Token Mapping:** Extrae paletas, tipografías y espaciados del diseño visual y los convierte a variables de `tailwind.config.ts`.
-* **Componentización Atómica:** Divide el diseño en componentes "Dumb" (Presentational) y "Smart" (Containers).
-    * *Regla de Oro:* Los componentes visuales NUNCA hacen llamadas a la BD. Solo reciben `props`.
-* **Animación:** Implementa `framer-motion` (AnimatePresence) para transiciones suaves ("calma clínica").
-* **Mobile-First:** Optimización obligatoria para redes móviles de Venezuela.
-
-#### Skill: Hydration_Harmony_Expert
-**Objetivo:** Arreglar errores de hidratación en Next.js 15.
-* **Lógica:** Envuelve fechas y datos dinámicos en componentes `ClientOnly` para evitar conflictos Servidor (UTC) vs Cliente (VET).
+### Backend Integrity (Supabase & Edge Functions)
+* **Security:** RLS (Row Level Security) mandatorio en TODAS las tablas.
+* **Identity:** Protocolo OBO (On-Behalf-Of) para manejar tokens de Google de los especialistas sin exponer credenciales maestras.
+* **Resilience:** Implementación de Circuit Breakers en llamadas a APIs externas (Google, Stripe, OpenAI).
 
 ---
 
-### [2. Core Architecture & Resilience (Saga/Circuit Breaker)]
+## 3. The Absolute Visual Truth (Design System)
+**Concept:** "Vitalidad Sofisticada" (Confianza Clínica + Calidez Humana).
 
-#### Skill: Resilient_Booking_Saga
-**Contexto:** Orquestación del flujo de "Reservar Cita" (Web y WhatsApp) para evitar inconsistencias.
-* **Patrón Saga (Lógica de Reversión):**
-    1.  **Lock:** Reserva slot en DB (`status: PENDING`).
-    2.  **Process:** Intento de cobro (Pasarela).
-    3.  **Commit:** Si éxito -> `CONFIRMED` + Sync Google Calendar.
-    4.  **Compensate:** Si falla pago o API externa -> Ejecuta `release_slot()` (Rollback).
-* **Circuit Breaker:** Envuelve llamadas externas (Stripe, Calendar). Si detecta latencia >8s, corta la conexión y devuelve error amigable sin colgar el servidor.
-
-#### Skill: Safe_Guard_Refactor (Backend Protection)
-**Contexto:** Edición de código existente.
-* **Invariant Check:** Antes de aplicar cualquier cambio visual:
-    * Verifica que `@login_required`, `auth.getUser()` o RLS policies no sean eliminados.
-    * Asegura que los `useEffect` de carga de datos no se rompan al cambiar el HTML.
-* **Mocking Capability:** Provee estructuras JSON simuladas ("Mocks") para probar componentes visuales sin necesitar conexión a la base de datos real.
+**Color Palette (Immutable & Explicit):**
+* 🔵 **Primary Structure (Fondos oscuros/Headers):** `bg-teal-700` / `text-white` (Para navegación y encabezados).
+* 🟡 **Conversion (Botones/Links):** `bg-yellow-500` / `text-stone-900` (EXCLUSIVO: Botones "Agendar", "Pagar").
+* 🟤 **Typography (Texto Principal):** `text-stone-700` (Para párrafos, títulos y lectura general).
+* ⚪ **Surface (Fondo General):** `bg-stone-50` (Color de fondo de la página y tarjetas).
 
 ---
 
-### [3. Security & Data Vault (Zero-Trust)]
+## 4. Specialized Procedural Skills
 
-#### Skill: Secure_Vault_Architecture
-**Contexto:** Datos médicos (HIPAA/GDPR) y Roles.
-* **OBO (On-Behalf-Of):** El Agente actúa "en nombre del" usuario solo tras validar token temporal.
-* **Sanitización:** Limpia JSON y Strings de inyecciones XSS o SQL antes de procesar.
-* **Sanitización MCP:** Todo input (texto de notas, transcripciones) pasa por un filtro de sanitización (eliminación de scripts/tags maliciosos) antes de tocar la DB.
-* **Encriptación:** Datos sensibles (`diagnosis`) usan columnas encriptadas (`pgsodium`).
+### [Skill: High_Fidelity_UI_Impl]
+**Objective:** Construir interfaces que generen confianza clínica.
+**Procedure:**
+1.  **Skeleton Loading:** Nunca mostrar espacios en blanco. Usar skeletons pulsantes `bg-stone-200` durante la carga de datos.
+2.  **Responsive Layout:** Grilla fluida (Mobile 1 col -> Tablet 2 col -> Desktop 12 col).
+3.  **Micro-Interacciones:** Feedback táctil visual en botones (scale 0.98 al click).
 
-#### Skill: RLS_Security_Auditor
-**Objetivo:** Gestión de permisos Supabase.
-* **Mandatory:** NUNCA crear tablas sin RLS habilitado.
-* **Policy Pattern:** Políticas separadas para `SELECT`, `INSERT`, `UPDATE` basándose en roles (Paciente vs Especialista).
+### [Skill: Scheduler_Saga_Orchestrator]
+**Objective:** Gestión de citas con integridad transaccional (ACID).
+**Procedure (Saga Pattern):**
+1.  **Slot Validation:** Verificar disponibilidad en DB local Y Google Calendar (doble verificación).
+2.  **Soft Lock:** Reservar slot temporalmente (5 min) en Redis/DB (`status: locked`) para evitar colisiones durante el pago.
+3.  **Payment Gateway:** Procesar Stripe/Pago Móvil.
+4.  **Commit:** `INSERT` cita confirmada + `POST` Google Calendar Event.
+5.  **Circuit Breaker:** Si Google Calendar falla, guardar en cola de reintentos (Dead Letter Queue) y confirmar al usuario (Degradación elegante).
 
----
+### [Skill: Google_Sync_Adapter]
+**Objective:** Sincronización bidireccional robusta.
+**Procedure:**
+1.  **Auth Flow:** Gestionar Refresh Tokens de forma segura en `encrypted_columns`.
+2.  **Webhook Listener:** Escuchar cambios en el calendario del doctor para bloquear slots en la app en tiempo real.
+3.  **Sanitization:** Limpiar descripciones de eventos de datos PII (Información Personal Identificable) antes de enviar a Google.
 
-### [4. Business Logic & AI (Venezuelan Context)]
-
-#### Skill: WhatsApp_Sentinel (Triage AI)
-**Contexto:** Asistente de ventas y citas.
-* **Audio Pipeline:** Audio -> Whisper -> **Sanitización** -> LLM -> Respuesta.
-* **Flow:** Utiliza la *Resilient_Booking_Saga* para agendar desde el chat.
-
-#### Skill: Venezuelan_Commerce (Pagos)
-**Contexto:** Economía multi-moneda.
-* **Dualidad:** Manejo de Tshop/Pago Móvil (VES) y Stripe (USD).
-* **Validación:** Verificación de recibos de pago antes de confirmar la Saga.
-
-#### Skill: Supabase_Edge_Commander
-**Objetivo:** Lógica Backend en Deno.
-* **Environment:** Uso estricto de `Deno.env.get()` para API Keys.
-* **Async Processing:** Para tareas largas (transcripciones), usa arquitectura de colas (Job Queue) para no exceder los timeouts de las Edge Functions.
-
----
-
-### [5. Maintenance & Data Integrity]
-
-#### Skill: Supabase_Schema_Guardian
-* **Tipos:** Uso de `timestamptz` para fechas.
-* **Índices:** Creación automática de índices en `patient_id` y `status`.
-
-#### Skill: Supabase_Type_Sync
-* **Sync:** Generación automática de tipos TypeScript (`database.types.ts`) tras cambios en SQL para evitar errores de tipado en el Frontend.
-
-#### Skill: FullStack_Trace_Hunter
-* **Diagnóstico:** Rastreo de `x-request-id` para correlacionar errores de Frontend con logs de Backend.
-
-#### Skill: Transaction_Rescue_Squad
-* **Recuperación:** Detecta pagos huérfanos (dinero recibido sin cita agendada) y fuerza la conciliación.
+### [Skill: AI_Triagist_Core]
+**Objective:** Agente de IA para orientación, triaje básico y soporte.
+**Procedure:**
+1.  **Context Injection:** Cargar contexto dinámico (Servicios disponibles, disponibilidad horaria) en el System Prompt.
+2.  **Guardrails:** Detectar palabras clave de crisis (suicidio, autolesión) y activar "Protocolo de Emergencia" (mostrar números de ayuda estáticos, bloquear respuestas generativas).
+3.  **Tone Calibration:** Empatía profesional. Nunca diagnosticar, solo orientar y facilitar agendamiento.
+4.  **RAG (Retrieval):** Consultar base de conocimiento (FAQ, Biografías) antes de responder dudas sobre tratamientos.
 
 ---
 
-## 🛠️ Operational Tools Configuration
+## 5. Testing & Mocking Protocols (Development Mode)
 
-### Tool: `ui_mutator_safe`
-```typescript
-interface UIMutatorRequest {
-  target_file: string;
-  design_tokens: { colors: string[], spacing: string };
-  // Si true, el agente rechaza el cambio si detecta que borra lógica de backend
-  preserve_backend_logic: true; 
-}
+**Propósito:** Permitir desarrollo rápido sin gastar créditos de LLM ni ensuciar calendarios reales.
+
+### [Mocking_Strategy]
+Si la variable de entorno `NEXT_PUBLIC_MOCK_MODE=true`:
+1.  **AI Agent:** Responderá con "Lorem ipsum dolor [MOCK RESPONSE]" instantáneamente sin llamar a OpenAI.
+2.  **Calendar:** Simulará éxito (`200 OK`) en agendamiento devolviendo un `event_id` falso ("mock_evt_123").
+3.  **Payments:** Aceptará cualquier tarjeta terminada en `4242` sin procesar cargo real.
+
+---
+
+## 6. Project Roadmap
+
+1.  **Core Foundation:** Setup Supabase + Auth + RLS.
+2.  **The Face:** Landing Page & Servicios (High Fidelity UI).
+3.  **The Brain:** AI Agent (Triaje y FAQs) con RAG simple.
+4.  **The Engine:** Sistema de Citas + Sincronización Google Calendar (Saga Pattern).
+5.  **Delivery:** Testing E2E y Despliegue.

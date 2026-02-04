@@ -1,22 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand Colors */
-  --color-deglya-teal: #1B6CA8;
-  --color-deglya-mustard: #E3B346;
-  --color-deglya-wood: #8B5A2B;
-  --color-deglya-cream: #FDF6E9;
-  --color-deglya-terracota: #D1BFA7;
+  /* Vitalidad Sofisticada Palette */
+  --color-structure: #1B6CA8; /* Teal 700 */
+  --color-conversion: #E3B346; /* Yellow 500 */
+  --color-canvas: #F9F9F7; /* Stone 50 */
+  --color-accent: #44403C; /* Stone 700 */
 
-  /* Booking System Colors */
-  --color-booking-primary: #3730A3;
-  --color-booking-secondary: #0D9488;
+  /* Legacy Mappings (Redirecting to new system) */
+  --color-deglya-teal: var(--color-structure);
+  --color-deglya-mustard: var(--color-conversion);
+  --color-deglya-wood: var(--color-accent); /* Remapped from Wood to Stone 700 */
+  --color-deglya-cream: var(--color-canvas); /* Remapped from Cream to Stone 50 */
+  --color-deglya-terracota: #E7E5E4; /* Deprecated: Mapping to Stone 200 */
 
-  /* Legacy/Semantic Aliases */
-  --color-primary: var(--color-deglya-teal);
-  --color-secondary: var(--color-deglya-mustard);
-  --color-background-light: var(--color-deglya-cream);
-  --color-text-light: var(--color-deglya-wood);
+  /* Semantic Aliases */
+  --color-primary: var(--color-structure);
+  --color-secondary: var(--color-conversion);
+  --color-background-light: var(--color-canvas);
+  --color-text-light: var(--color-accent);
 
   /* Fonts */
   --font-sans: "Nunito", sans-serif;
@@ -26,37 +28,41 @@
 
 @layer base {
   body {
-    @apply overflow-x-hidden bg-deglya-cream text-deglya-wood font-sans;
+    /* Updated to strictly follow AGENT_CONFIG.md: Canvas & Accent */
+    @apply overflow-x-hidden bg-stone-50 text-stone-700 font-sans;
   }
 }
 
 @layer utilities {
   .ai-insights-gradient {
-    background: linear-gradient(-45deg, #1B6CA8, #437d8a, #FDF6E9, #D1BFA7);
+    /* Updated gradient using new palette */
+    background: linear-gradient(-45deg, #1B6CA8, #F9F9F7);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
   }
 
   .hero-gradient {
-    background: linear-gradient(to right, rgba(253, 246, 233, 0.9) 0%, rgba(253, 246, 233, 0.7) 40%, rgba(253, 246, 233, 0.3) 70%, transparent 100%);
+    /* Adjusted for Stone-50 base */
+    background: linear-gradient(to right, rgba(249, 249, 247, 0.9) 0%, rgba(249, 249, 247, 0.7) 40%, rgba(249, 249, 247, 0.3) 70%, transparent 100%);
     backdrop-filter: blur(4px);
   }
 
   .dark .hero-gradient {
-    background: linear-gradient(to right, rgba(19, 29, 31, 0.95) 0%, rgba(19, 29, 31, 0.7) 50%, rgba(19, 29, 31, 0.3) 80%, transparent 100%);
+     /* Kept dark mode but might need adjustment later */
+    background: linear-gradient(to right, rgba(28, 25, 23, 0.95) 0%, rgba(28, 25, 23, 0.7) 50%, rgba(28, 25, 23, 0.3) 80%, transparent 100%);
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar matching canvas */
   ::-webkit-scrollbar {
     width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #FDF6E9;
+    background: #F9F9F7;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #D1BFA7;
+    background: #1B6CA8; /* Structure color */
     border-radius: 4px;
   }
 }

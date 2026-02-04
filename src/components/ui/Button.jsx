@@ -13,11 +13,11 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: "bg-deglya-teal text-white hover:bg-deglya-teal/90 shadow-md",
-                action: "bg-deglya-mustard text-deglya-wood hover:bg-[#D4A034] shadow-md uppercase tracking-wide font-bold",
-                outline: "border-2 border-deglya-teal text-deglya-teal hover:bg-deglya-teal/10",
-                ghost: "hover:bg-deglya-terracota/20 text-deglya-wood",
-                link: "text-deglya-teal underline-offset-4 hover:underline",
+                default: "bg-structure text-white hover:bg-structure/90 shadow-md", // Structure (Teal)
+                action: "bg-conversion text-stone-900 hover:bg-conversion/90 shadow-md uppercase tracking-wide font-bold", // Conversion (Yellow + Dark Text)
+                outline: "border-2 border-structure text-structure hover:bg-structure/10",
+                ghost: "hover:bg-accent/10 text-accent",
+                link: "text-structure underline-offset-4 hover:underline",
             },
             size: {
                 default: "h-10 py-2 px-4",
