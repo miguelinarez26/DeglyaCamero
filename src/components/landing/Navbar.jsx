@@ -1,84 +1,165 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { cn } from "../../lib/utils";
+import { Menu, MenuItem, ProductItem } from "../ui/NavbarMenu";
+import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { SERVICES_DATA } from "../../data/services";
 
-const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export default function Navbar({ className }) {
+    const [active, setActive] = useState(null);
+    const location = useLocation();
+    const [activeTab, setActiveTab] = useState("/");
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 50) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
-        };
+        // Map paths to tab names/keys
+        const path = location.pathname;
+        if (path === '/') setActiveTab('Inicio');
+        else if (path === '/about') setActiveTab('Quiénes Somos');
+        else if (path.includes('/servicios')) setActiveTab('Servicios');
+        else if (path === '/reino') setActiveTab('El Reino');
+        else setActiveTab('');
+    }, [location]);
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    // Filter showcased services
+    const personaServices = SERVICES_DATA.filter(s => s.category === 'personas').slice(0, 2);
+    const companyServices = SERVICES_DATA.filter(s => s.category === 'empresas').slice(0, 2);
 
-    const navClasses = `fixed top-6 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-300`;
-    // Updated to Structure (Teal) as per "Fondos oscuros/Headers" rule
-    const containerClasses = `flex items-center justify-between gap-8 max-w-4xl w-full rounded-full px-6 py-3 transition-all duration-500 ${isScrolled
-        ? 'bg-structure/95 backdrop-blur-md shadow-md border border-structure/50'
-        : 'bg-structure/85 backdrop-blur-sm shadow-sm border border-transparent'
-        }`;
+    // Lamp Component
+    const Lamp = () => (
+        <motion.div
+            layoutId="lamp"
+            className="absolute inset-0 w-full bg-yellow-400/5 rounded-full -z-10"
+            initial={false}
+            transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+            }}
+        >
+            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-yellow-400 rounded-t-full">
+                <div className="absolute w-12 h-6 bg-yellow-400/20 rounded-full blur-md -top-2 -left-2" />
+                <div className="absolute w-8 h-6 bg-yellow-400/20 rounded-full blur-md -top-1" />
+                <div className="absolute w-4 h-4 bg-yellow-400/20 rounded-full blur-sm top-0 left-2" />
+            </div>
+        </motion.div>
+    );
 
     return (
-        <nav className={navClasses}>
-            <div className={containerClasses}>
-                <Link to="/" className="font-display font-bold text-xl text-white tracking-wide">
-                    Deglya Camero
+        <div
+            className={cn(
+                "fixed bottom-6 sm:top-6 sm:bottom-auto left-1/2 -translate-x-1/2 z-50",
+                className
+            )}
+        >
+            <Menu setActive={setActive}>
+
+                {/* 1. Inicio */}
+                <Link
+                    to="/"
+                    onMouseEnter={() => setActive(null)}
+                    className="relative px-4 py-2"
+                >
+                    <span className={cn(
+                        "text-sm font-medium transition-colors relative z-10",
+                        activeTab === 'Inicio' ? "text-stone-900 font-bold" : "text-stone-600 hover:text-stone-900"
+                    )}>
+                        Inicio
+                    </span>
+                    {activeTab === 'Inicio' && <Lamp />}
                 </Link>
 
-                {/* Desktop Menu */}
-                <div className="hidden md:flex items-center gap-6 text-sm font-bold text-white/90">
-                    <Link to="/" className="hover:text-white transition-colors">Inicio</Link>
-                    <Link to="/about" className="hover:text-white transition-colors">Sobre Mí</Link>
-                    <Link to="/servicios" className="hover:text-white transition-colors">Servicios</Link>
-                    <Link to="/reino" className="hover:text-white transition-colors">El Reino</Link>
-                </div>
-
-                <div className="hidden md:block">
-                    <Link
-                        to="/booking"
-                        // Conversion Button: Yellow background + Stone-900 text
-                        className="bg-conversion hover:bg-conversion/90 text-stone-900 px-5 py-2 rounded-full text-sm font-bold transition-transform transform hover:scale-105 shadow-md block"
-                    >
-                        Agendar Cita
-                    </Link>
-                </div>
-
-                {/* Mobile Menu Toggle */}
-                <button
-                    className="md:hidden text-white"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                {/* 2. Quiénes Somos */}
+                <Link
+                    to="/about"
+                    onMouseEnter={() => setActive(null)}
+                    className="relative px-4 py-2"
                 >
-                    {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-            </div>
+                    <span className={cn(
+                        "text-sm font-medium transition-colors relative z-10",
+                        activeTab === 'Quiénes Somos' ? "text-stone-900 font-bold" : "text-stone-600 hover:text-stone-900"
+                    )}>
+                        Quiénes Somos
+                    </span>
+                    {activeTab === 'Quiénes Somos' && <Lamp />}
+                </Link>
 
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <div className="absolute top-20 w-[90%] max-w-md bg-white shadow-xl rounded-2xl p-6 flex flex-col gap-4 md:hidden border border-stone-100 animate-in fade-in slide-in-from-top-5">
-                    <Link to="/" className="text-lg font-bold text-accent hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>Inicio</Link>
-                    <Link to="/about" className="text-lg font-medium text-accent hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>Sobre Mí</Link>
-                    <Link to="/servicios" className="text-lg font-medium text-accent hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>Servicios</Link>
-                    <Link to="/reino" className="text-lg font-medium text-accent hover:text-primary" onClick={() => setIsMobileMenuOpen(false)}>El Reino</Link>
-                    <Link
-                        to="/booking"
-                        className="bg-conversion text-stone-900 px-5 py-3 rounded-xl text-center font-bold"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                        Agendar Cita
-                    </Link>
+                {/* 3. Servicios (Dropdown) */}
+                <div className="relative">
+                    <MenuItem setActive={setActive} active={active} item="Servicios">
+                        <div className="flex flex-col gap-6 p-2 w-[650px]">
+                            <div className="grid grid-cols-2 gap-8">
+                                {/* Column 1: Personas */}
+                                <div className="space-y-3">
+                                    <h5 className="text-sm font-bold text-stone-900 uppercase tracking-widest pl-2 border-l-2 border-conversion">Personas</h5>
+                                    <div className="space-y-4">
+                                        {personaServices.map(service => (
+                                            <ProductItem
+                                                key={service.id}
+                                                title={service.title}
+                                                href="/servicios"
+                                                src={service.image}
+                                                description={service.shortDescription}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Column 2: Empresas */}
+                                <div className="space-y-3">
+                                    <h5 className="text-sm font-bold text-stone-900 uppercase tracking-widest pl-2 border-l-2 border-structure">Empresas</h5>
+                                    <div className="space-y-4">
+                                        {companyServices.map(service => (
+                                            <ProductItem
+                                                key={service.id}
+                                                title={service.title}
+                                                href="/servicios"
+                                                src={service.image}
+                                                description={service.shortDescription}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end border-t border-stone-100 pt-3">
+                                <Link to="/servicios" className="text-xs font-bold text-conversion hover:text-stone-900 transition-colors uppercase tracking-wider">
+                                    Ver todo el catálogo &rarr;
+                                </Link>
+                            </div>
+                        </div>
+                    </MenuItem>
+                    {/* Explicit Lamp for the MenuItem Container if active */}
+                    {activeTab === 'Servicios' && (
+                        <div className="absolute inset-0 -z-10 pointer-events-none">
+                            <Lamp />
+                        </div>
+                    )}
                 </div>
-            )}
-        </nav>
-    );
-};
 
-export default Navbar;
+                {/* 4. El Reino */}
+                <Link
+                    to="/reino"
+                    onMouseEnter={() => setActive(null)}
+                    className="relative px-4 py-2"
+                >
+                    <span className={cn(
+                        "text-sm font-medium transition-colors relative z-10",
+                        activeTab === 'El Reino' ? "text-stone-900 font-bold" : "text-stone-600 hover:text-stone-900"
+                    )}>
+                        El Reino
+                    </span>
+                    {activeTab === 'El Reino' && <Lamp />}
+                </Link>
+
+                {/* CTA Button */}
+                <Link
+                    to="/booking"
+                    onMouseEnter={() => setActive(null)}
+                    className="bg-yellow-400 hover:bg-yellow-500 text-stone-900 text-sm font-bold px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all transform hover:scale-105"
+                >
+                    Agendar
+                </Link>
+            </Menu>
+        </div>
+    );
+}

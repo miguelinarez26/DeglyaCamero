@@ -1,35 +1,39 @@
 export const BOOK_RESOURCES = [
     {
-        id: 'meditation-1',
-        title: 'Calma Profunda',
-        type: 'audio',
-        description: 'Meditación guiada de 10 minutos para reducir la ansiedad.',
-        downloadUrl: '#',
-        size: '12 MB'
+        id: 'meditations-bundle',
+        title: 'Santuario Interior',
+        type: 'meditation',
+        iconName: 'Flower2', // Mental peace / Meditation
+        description: 'Colección de meditaciones guiadas para el equilibrio diario.',
+        count: '5 Audios',
+        size: '120 MB'
     },
     {
-        id: 'workbook-1',
-        title: 'Cuaderno de Trabajo',
+        id: 'exercises-pdf',
+        title: 'Arquitectura del Ser',
         type: 'pdf',
-        description: 'Ejercicios de escritura reflexiva complementarios al Capítulo 3.',
-        downloadUrl: '#',
+        iconName: 'FileText',
+        description: 'Cuaderno de trabajo digital con ejercicios de escritura reflexiva.',
+        count: '1 Guía PDF',
         size: '2.5 MB'
     },
     {
-        id: 'wallpaper-set',
-        title: 'Mantra Visual',
+        id: 'mantras-visuals',
+        title: 'Visiones de Poder',
         type: 'wallpaper',
-        description: 'Pack de fondos de pantalla con afirmaciones del libro.',
-        downloadUrl: '#',
-        size: '15 MB'
+        iconName: 'Video',
+        description: 'Galería de mantras visuales y fondos para tus dispositivos.',
+        count: '12 Imágenes',
+        size: '45 MB'
     },
     {
-        id: 'audio-chapter',
-        title: 'Capítulo 1: El Despertar',
+        id: 'masterclass-audio',
+        title: 'La Voz Guía',
         type: 'audio',
-        description: 'Narrado por la autora. Escucha el inicio del viaje.',
-        downloadUrl: '#',
-        size: '25 MB'
+        iconName: 'Headphones',
+        description: 'Capítulos narrados y masterclasses exclusivas en audio.',
+        count: '3 Pistas',
+        size: '85 MB'
     }
 ];
 
@@ -72,5 +76,29 @@ export const REVIEWS = [
         author: 'Elena R.',
         role: 'Psicóloga',
         text: 'Deglya tiene el don de explicar lo complejo con una simplicidad que toca el alma. Lectura obligatoria.'
+    },
+    {
+        id: 'review-4',
+        author: 'Javier M.',
+        role: 'Arquitecto',
+        text: 'La estructura mental que plantea El Reino de lo Posible me ayudó a rediseñar no solo mis proyectos, sino mi vida.'
+    },
+    {
+        id: 'review-5',
+        author: 'Sofía L.',
+        role: 'Gerente de Marketing',
+        text: 'Una lectura refrescante y necesaria. Me hizo cuestionar mis límites y encontrar nuevas formas de liderazgo.'
+    },
+    {
+        id: 'review-6',
+        author: 'Andrés P.',
+        role: 'Músico',
+        text: 'Inspiración pura. Cada capítulo resuena como una nota perfecta en el caos del día a día.'
+    },
+    {
+        id: 'review-7',
+        author: 'Valentina S.',
+        role: 'Coach de Vida',
+        text: 'Herramientas tangibles para cambios reales. La sección de la Bóveda es un tesoro invaluable.'
     }
 ];

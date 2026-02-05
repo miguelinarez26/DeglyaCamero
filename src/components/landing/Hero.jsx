@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { PlayCircle, Leaf } from 'lucide-react';
 import heroGradient from '../../assets/hero-gradient.png';
+import deglyaHeroNew from '../../assets/brand/deglya-hero-new.jpg';
 
 const Hero = () => {
     return (
@@ -52,29 +53,13 @@ const Hero = () => {
                     <div className="absolute inset-0 bg-primary/5 rounded-t-[10rem] rounded-b-[2rem] rotate-3 transform scale-95 origin-bottom-right dark:bg-primary/10" />
 
                     {/* Main Image */}
-                    <div className="relative w-full h-full max-h-[550px] rounded-t-[10rem] rounded-b-[2rem] overflow-hidden shadow-2xl group">
+                    <div className="relative w-full h-full max-h-[550px] rounded-t-[10rem] rounded-b-[2rem] overflow-hidden shadow-2xl group flex items-end justify-center bg-stone-100">
                         <img
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwLfj0su2jucTxeaOjwcqM_LNPGzvE-nnaDGAkKSFxlmlUiEsqC4QxUbo109C-_xqztJ4tE3kHBXeVA6TAPpopifGv5__CLJnBag-K9ddVamVRiNvvZw5ncZjDw_43XUtFaQFg2OpEnne44fjFbuntK6MgkY1SUZZGNzlBa_mxBoZcWoulUDK1xi2D-kcjqkbn0THDUy67irEjm2908_G2dZ4MO-20dTCPDDAq_EsPVAPvstKr5jJj4UMq1RVmwCXKgkLczci7SrY"
+                            src={deglyaHeroNew}
                             alt="Deglya Camero Portrait"
-                            className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                            className="w-full h-full object-cover object-[50%_15%] hover:scale-105 transition-transform duration-700"
                         />
                     </div>
-
-                    {/* Floating Card */}
-                    <motion.div
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.6, duration: 0.5 }}
-                        className="absolute bottom-10 -left-6 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-xl flex items-center gap-4 max-w-xs border border-gray-100 dark:border-gray-700"
-                    >
-                        <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded-full text-green-600 dark:text-green-400">
-                            <Leaf size={24} />
-                        </div>
-                        <div>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold">Enfoque</p>
-                            <p className="font-display font-semibold text-gray-900 dark:text-white">Bienestar Integral</p>
-                        </div>
-                    </motion.div>
                 </motion.div>
             </div>
         </header>

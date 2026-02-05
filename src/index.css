@@ -2,17 +2,24 @@
 
 @theme {
   /* Vitalidad Sofisticada Palette */
-  --color-structure: #1B6CA8; /* Teal 700 */
-  --color-conversion: #E3B346; /* Yellow 500 */
-  --color-canvas: #F9F9F7; /* Stone 50 */
-  --color-accent: #44403C; /* Stone 700 */
+  --color-structure: #1B6CA8;
+  /* Teal 700 */
+  --color-conversion: #E3B346;
+  /* Yellow 500 */
+  --color-canvas: #F9F9F7;
+  /* Stone 50 */
+  --color-accent: #44403C;
+  /* Stone 700 */
 
   /* Legacy Mappings (Redirecting to new system) */
   --color-deglya-teal: var(--color-structure);
   --color-deglya-mustard: var(--color-conversion);
-  --color-deglya-wood: var(--color-accent); /* Remapped from Wood to Stone 700 */
-  --color-deglya-cream: var(--color-canvas); /* Remapped from Cream to Stone 50 */
-  --color-deglya-terracota: #E7E5E4; /* Deprecated: Mapping to Stone 200 */
+  --color-deglya-wood: var(--color-accent);
+  /* Remapped from Wood to Stone 700 */
+  --color-deglya-cream: var(--color-canvas);
+  /* Remapped from Cream to Stone 50 */
+  --color-deglya-terracota: #E7E5E4;
+  /* Deprecated: Mapping to Stone 200 */
 
   /* Semantic Aliases */
   --color-primary: var(--color-structure);
@@ -31,6 +38,8 @@
     /* Updated to strictly follow AGENT_CONFIG.md: Canvas & Accent */
     @apply overflow-x-hidden bg-stone-50 text-stone-700 font-sans;
   }
+
+
 }
 
 @layer utilities {
@@ -48,7 +57,7 @@
   }
 
   .dark .hero-gradient {
-     /* Kept dark mode but might need adjustment later */
+    /* Kept dark mode but might need adjustment later */
     background: linear-gradient(to right, rgba(28, 25, 23, 0.95) 0%, rgba(28, 25, 23, 0.7) 50%, rgba(28, 25, 23, 0.3) 80%, transparent 100%);
   }
 
@@ -62,7 +71,8 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #1B6CA8; /* Structure color */
+    background: #1B6CA8;
+    /* Structure color */
     border-radius: 4px;
   }
 }
@@ -79,4 +89,18 @@
   100% {
     background-position: 0% 50%;
   }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@utility animate-marquee {
+  animation: marquee var(--duration) linear infinite;
 }
