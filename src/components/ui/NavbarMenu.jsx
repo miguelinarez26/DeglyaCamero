@@ -68,6 +68,7 @@ export const ProductItem = ({
     description,
     href,
     src,
+    imageClassName,
 }) => {
     return (
         <Link to={href} className="flex space-x-4 group min-w-[300px] p-2 rounded-xl hover:bg-stone-50 transition-colors">
@@ -75,7 +76,7 @@ export const ProductItem = ({
                 <img
                     src={src}
                     alt={title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ${imageClassName}`}
                 />
             </div>
             <div>

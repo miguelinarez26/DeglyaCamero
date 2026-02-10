@@ -66,34 +66,49 @@ const ServicesPage = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
                                 onClick={() => setSelectedService(service)}
-                                className="group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl border border-stone-100 hover:border-conversion/30 transition-all duration-300 transform hover:-translate-y-1 flex flex-col h-full"
+                                className={`group cursor-pointer relative bg-white rounded-3xl overflow-hidden transition-all duration-500 transform hover:-translate-y-1 h-[450px]
+                                    ${service.category === 'personas'
+                                        ? 'border-2 border-transparent hover:border-yellow-400/50 hover:shadow-[0_0_20px_rgba(250,204,21,0.3)]'
+                                        : 'border-2 border-transparent hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]'}
+                                    shadow-sm`}
                             >
-                                <div className={`h-48 overflow-hidden relative ${service.category === 'empresas' ? 'bg-structure' : 'bg-conversion'}`}>
+                                {/* Background Image */}
+                                <div className="absolute inset-0">
                                     <img
                                         src={service.image}
                                         alt={service.title}
-                                        className="w-full h-full object-cover opacity-80 mix-blend-overlay group-hover:scale-105 transition-transform duration-700"
+                                        className="w-full h-full object-contain object-center px-6 pt-6 pb-32 transition-transform duration-700 group-hover:scale-105"
                                     />
-                                    <div className={`absolute inset-0 bg-gradient-to-t ${service.category === 'empresas' ? 'from-structure/90' : 'from-conversion/90'} to-transparent opacity-90`}></div>
-                                    <div className="absolute bottom-4 left-6 text-white">
-                                        <Icon size={32} />
-                                    </div>
-                                    {/* Category pill */}
-                                    <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider border border-white/30">
-                                        {service.category}
-                                    </div>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
                                 </div>
-                                <div className="p-8 flex flex-col flex-grow">
-                                    <h3 className="font-display font-bold text-xl text-structure mb-3 group-hover:text-conversion transition-colors">
-                                        {service.title}
-                                    </h3>
-                                    <p className="text-sm text-stone-600 leading-relaxed mb-6 flex-grow">
-                                        {service.shortDescription}
-                                    </p>
-                                    <div className="mt-auto flex items-center justify-between border-t border-stone-100 pt-4">
-                                        <span className="text-conversion font-bold text-xs uppercase tracking-wider flex items-center gap-1 group-hover:gap-2 transition-all">
-                                            Ver detalles <ArrowRight size={14} />
-                                        </span>
+
+                                {/* Content Overlay */}
+                                <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                                    {/* Top Metadata */}
+                                    <div className="absolute top-6 left-6 right-6 flex justify-between items-start opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <div className="bg-structure/5 backdrop-blur-sm p-3 rounded-full text-structure border border-structure/10 shadow-sm">
+                                            <Icon size={20} />
+                                        </div>
+                                        <div className="bg-structure backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-md">
+                                            {service.category}
+                                        </div>
+                                    </div>
+
+                                    {/* Bottom Text */}
+                                    <div className="transform transition-all duration-500 translate-y-2 group-hover:translate-y-0 relative z-10">
+                                        <h3 className="font-display font-bold text-2xl text-structure mb-2 drop-shadow-sm">
+                                            {service.title}
+                                        </h3>
+                                        <p className="text-stone-600 text-sm leading-relaxed mb-4 line-clamp-3 font-medium">
+                                            {service.shortDescription}
+                                        </p>
+
+                                        <div className="border-t border-stone-200 pt-4 flex items-center justify-between">
+                                            <span className="text-conversion font-bold text-xs uppercase tracking-wider flex items-center gap-2 group-hover:gap-3 transition-all">
+                                                Ver detalles
+                                                <ArrowRight size={14} className="text-conversion" />
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </motion.div>

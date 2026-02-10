@@ -101,6 +101,7 @@ export default function Navbar({ className }) {
                                                 href="/servicios"
                                                 src={service.image}
                                                 description={service.shortDescription}
+                                                imageClassName={service.imagePosition}
                                             />
                                         ))}
                                     </div>
