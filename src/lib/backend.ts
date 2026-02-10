@@ -230,26 +230,6 @@ export async function createAppointment(appointmentData: any) {
         });
 
         if (rpcError) throw rpcError;
-        booking = { id: newAptId };
-
-        // 5. INVISIBLE REGISTRATION (The Magic)
-        // Auto-invite user to create account via Magic Link
-        if (!user && guestEmail) {
-            console.log(`✨ Initiating Invisible Registration for ${guestEmail}`);
-            const { error: otpError } = await supabase.auth.signInWithOtp({
-                email: guestEmail,
-                options: {
-                    // Redirect to Activate Account page where they set password
-                    emailRedirectTo: `${window.location.origin}/activar-cuenta/success`
-                }
-            });
-
-            if (otpError) {
-                console.warn("⚠️ Magic Link sending failed:", otpError.message);
-                // Non-blocking: Booking succeeded, just the invite failed.
-            }
-        }
+        booking = { id: newAptId }; // Mock returned object with ID
     }
-
-    return booking;
 }

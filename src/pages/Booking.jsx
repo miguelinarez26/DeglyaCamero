@@ -1,14 +1,15 @@
-
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
+import { useUserRole } from '@/hooks/useUserRole'; // Import User Role Hook
+import { supabase } from '@/lib/backend'; // Import Supabase Client
 
 // --- Components for Wizard Steps ---
 
 import { StepIndicator } from '@/components/booking/StepIndicator';
-import { TriageSection } from '@/components/booking/TriageSection'; // New import
+import { TriageSection } from '@/components/booking/TriageSection';
 import { CalendarView } from '@/components/booking/CalendarView';
 import { RegistrationForm } from '@/components/booking/RegistrationForm';
 import { SuccessView } from '@/components/booking/SuccessView';
@@ -16,28 +17,71 @@ import { getSpecialists, getAvailableSlots, createAppointment } from '@/lib/back
 
 export default function Booking() {
     const [step, setStep] = useState(1);
-    // Updated initial state: triage replaces specialist
     const [data, setData] = useState({ triage: {}, date: null, time: null });
     const [patientDetails, setPatientDetails] = useState({});
     const [specialists, setSpecialists] = useState([]);
     const [availableSlots, setAvailableSlots] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchParams] = useSearchParams(); // Import from react-router-dom
     const navigate = useNavigate();
 
-    // We still fetch specialists for background assignment logic if needed, but UI doesn't show them
-    // In reality, availability might now depend on ANY specialist or load balancing.
-    // For simplicity, let's assume we check availability against the POOL (or just random slots for now as user didn't specify logic).
-    // Actually, backend checkAvailability requires a specialistId.
-    // We should pick one "Default" or "Triage" specialist to check slots against for now.
+    // 1. Auth Detection logic
+    const { user, role } = useUserRole();
+
+    // 2. Pre-fill Data Effect
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            if (user && role === 'patient') {
+                // Fetch full profile data
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+
+                if (profile) {
+                    setPatientDetails({
+                        name: profile.first_name || '', // Assuming standard schema
+                        lastName: profile.last_name || '',
+                        email: user.email,
+                        phone: profile.phone || '',
+                        nationalId: profile.national_id || '' // Assuming this field exists
+                    });
+                } else {
+                    // Fallback to minimal auth data
+                    setPatientDetails({
+                        email: user.email
+                    });
+                }
+            }
+        };
+
+        fetchUserProfile();
+    }, [user, role]);
+
+
+
+    // 1.5 URL Param Handling (Direct Link)
+    useEffect(() => {
+        const serviceParam = searchParams.get('service');
+        if (serviceParam === 'initial-interview' && step === 1) {
+            // Auto-fill triage for this specific service
+            setData(prev => ({
+                ...prev,
+                triage: {
+                    reason: 'Entrevista Inicial',
+                    notes: 'Agendado vía enlace directo'
+                }
+            }));
+            setStep(2); // Skip to Calendar
+        }
+    }, [searchParams, step]);
+
     const defaultSpecialistId = specialists[0]?.id;
 
     useEffect(() => {
         const loadSlots = async () => {
             if (data.date && defaultSpecialistId) {
-                // Assuming CalendarView returns a day number, we need to construct a Date object
-                // But wait, CalendarView returns a number (day). I need the year/month context.
-                // CalendarView mock uses "Julio 2024". I should probably update CalendarView to return full Date or handle it here.
-                // For now, let's construct a date for July 2024.
                 const year = 2024;
                 const month = 6; // July is 6
                 const dateObj = new Date(year, month, data.date);
@@ -51,22 +95,20 @@ export default function Booking() {
         if (specialists.length > 0) {
             loadSlots();
         }
-    }, [data.date, specialists, defaultSpecialistId]); // Removed data.specialist dependency, added specialists and defaultSpecialistId
+    }, [data.date, specialists, defaultSpecialistId]);
 
 
     useEffect(() => {
         const loadSpecialists = async () => {
             const fetched = await getSpecialists();
-            // Map to UI format
             const formatted = fetched.map(s => ({
                 id: s.id,
                 name: s.full_name,
-                role: 'Especialista', // Placeholder or add to schema
-                image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop', // Placeholder
+                role: 'Especialista',
+                image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576&auto=format&fit=crop',
                 specialty: s.specialty
             }));
 
-            // If no specialists in DB, use fallback mock for demo
             if (formatted.length === 0) {
                 setSpecialists([
                     {
@@ -94,11 +136,9 @@ export default function Booking() {
 
     const handleNext = async () => {
         if (step === 3) {
-            // Submit Appointment
             try {
-                // setLoading(true); // Should probably add global loading state for UI feedback
                 await createAppointment({
-                    triage: data.triage, // Pass triage data
+                    triage: data.triage,
                     date: data.date,
                     time: data.time,
                     patientDetails
@@ -114,9 +154,16 @@ export default function Booking() {
     };
     const handleBack = () => setStep(prev => prev - 1);
 
+    // Dynamic Validation for Step 3
+    const isStep3Valid = () => {
+        if (user) return true; // If logged in, assume valid (or basic checks pass via pre-fill)
+        // Guest validation
+        return patientDetails.name && patientDetails.lastName && patientDetails.email && patientDetails.phone;
+    };
+
+
     return (
         <div className="min-h-screen bg-deglya-cream font-sans selection:bg-deglya-mustard selection:text-white">
-            {/* Navbar Minimalist */}
             <nav className="border-b border-white/20 bg-white/50 backdrop-blur-md sticky top-0 z-50">
                 <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
                     <div onClick={() => navigate('/')} className="flex items-center gap-2 cursor-pointer">
@@ -132,7 +179,6 @@ export default function Booking() {
                 {step < 4 && <StepIndicator currentStep={step} steps={['Motivo', 'Agenda', 'Tus Datos']} />}
 
                 <div className="min-h-[500px]">
-                    {/* Step 1: Triage (Replaces Specialist) */}
                     {step === 1 && (
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <div className="text-center mb-10">
@@ -146,7 +192,6 @@ export default function Booking() {
                         </div>
                     )}
 
-                    {/* Step 2: Calendar */}
                     {step === 2 && (
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <div className="text-center mb-10">
@@ -154,7 +199,7 @@ export default function Booking() {
                                 <p className="text-deglya-wood/70">Selecciona el día y horario que mejor te convenga.</p>
                             </div>
                             <CalendarView
-                                onSelectDate={(d) => setData({ ...data, date: d, time: null })} // Reset time on date change
+                                onSelectDate={(d) => setData({ ...data, date: d, time: null })}
                                 selectedDate={data.date}
                                 onSelectTime={(t) => setData({ ...data, time: t })}
                                 selectedTime={data.time}
@@ -163,7 +208,6 @@ export default function Booking() {
                         </div>
                     )}
 
-                    {/* Step 3: Form */}
                     {step === 3 && (
                         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                             <div className="text-center mb-10">
@@ -173,15 +217,14 @@ export default function Booking() {
                             <RegistrationForm
                                 formData={patientDetails}
                                 onChange={setPatientDetails}
+                                currentUser={user} // Pass Auth User
                             />
                         </div>
                     )}
 
-                    {/* Step 4: Success & Confidential */}
                     {step === 4 && <SuccessView />}
                 </div>
 
-                {/* Footer Navigation */}
                 {step < 4 && (
                     <div className="max-w-4xl mx-auto mt-12 flex justify-between items-center border-t border-deglya-wood/10 pt-8">
                         <Button
@@ -195,7 +238,11 @@ export default function Booking() {
 
                         <Button
                             onClick={handleNext}
-                            disabled={(step === 1 && !data.triage?.reason) || (step === 2 && (!data.date || !data.time))}
+                            disabled={
+                                (step === 1 && !data.triage?.reason) ||
+                                (step === 2 && (!data.date || !data.time)) ||
+                                (step === 3 && !isStep3Valid()) // Added validation for Step 3
+                            }
                             className="bg-deglya-teal hover:bg-deglya-teal/90 text-white min-w-[140px] shadow-lg shadow-deglya-teal/30"
                         >
                             {step === 3 ? 'Confirmar Pago' : 'Siguiente'}

@@ -1,182 +1,200 @@
 import { useState } from 'react';
-import { User, CreditCard, CheckCircle2 } from 'lucide-react';
-import { supabase } from '../../lib/backend';
+import { User, Copy, Upload, CheckCircle2, AlertCircle } from 'lucide-react';
+import { supabase } from '@/lib/backend';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/Button';
 
-export const RegistrationForm = ({ formData, onChange }) => {
-    // Mock User Data (Simulating a logged-in user via Magic Link)
-    // In a real scenario, this would come from useAuth() context
-    // Change isUserLoggedIn to false to test the "Guest" view
-    const isUserLoggedIn = false; // Default to false for guest entry for now
+// Mock Binance Data (This should ideally come from config/DB)
+const BINANCE_INFO = {
+    email: "deglya.pay@binance.com",
+    uid: "254897561"
+};
 
-    const handleChange = (field, value) => {
-        onChange({ ...formData, [field]: value });
+export const RegistrationForm = ({ formData, onChange, currentUser }) => {
+    const isUserLoggedIn = !!currentUser;
+    const [uploading, setUploading] = useState(false);
+
+    const handleChange = (field, value) => onChange({ ...formData, [field]: value });
+
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text);
+        // Toast logic would go here
     };
 
     const handleFileChange = async (e) => {
-        // Defensive check as requested by user to prevent "Cannot read properties of undefined"
-        const fileList = e.target.files;
-        const file = (fileList && fileList.length > 0) ? fileList[0] : null;
-
+        const file = e.target.files?.[0];
         if (!file) return;
 
+        setUploading(true);
         try {
             const fileExt = file.name.split('.').pop();
             const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
             const filePath = `payment-proofs/${fileName}`;
 
-            const { error: uploadError } = await supabase.storage
-                .from('clinic-docs')
-                .upload(filePath, file);
-
+            const { error: uploadError } = await supabase.storage.from('clinic-docs').upload(filePath, file);
             if (uploadError) throw uploadError;
 
-            const { data: { publicUrl } } = supabase.storage
-                .from('clinic-docs')
-                .getPublicUrl(filePath);
-
+            const { data: { publicUrl } } = supabase.storage.from('clinic-docs').getPublicUrl(filePath);
             handleChange('paymentProof', publicUrl);
         } catch (error) {
-            console.error('Error uploading file:', error);
-            alert('Error subiendo el archivo. Intente nuevamente.');
+            console.error('Error uploading:', error);
+            alert('Error subiendo el archivo.');
+        } finally {
+            setUploading(false);
         }
     };
 
-    const countries = [
-        { code: '+58', flag: '🇻🇪', name: 'Venezuela' },
-        { code: '+1', flag: '🇺🇸', name: 'USA' },
-        { code: '+34', flag: '🇪🇸', name: 'España' },
-        { code: '+57', flag: '🇨🇴', name: 'Colombia' },
-        { code: '+52', flag: '🇲🇽', name: 'México' },
-        { code: '+54', flag: '🇦🇷', name: 'Argentina' },
-        { code: '+56', flag: '🇨🇱', name: 'Chile' },
-    ];
-
     return (
-        <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 border-t-4 border-deglya-teal">
-            <h3 className="text-2xl font-display font-bold text-deglya-teal mb-6 text-center">Datos del Paciente</h3>
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 items-start">
 
-            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <label className="text-sm font-bold text-deglya-wood ml-1">Nombre <span className="text-red-500">*</span></label>
-                        <div className="relative">
-                            <User className="absolute left-3 top-3 text-deglya-wood/40" size={18} />
-                            <input
-                                type="text"
-                                value={formData.name || ''}
-                                onChange={(e) => handleChange('name', e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-200 focus:border-deglya-teal focus:ring-2 focus:ring-deglya-teal/20 outline-none transition-all"
-                                placeholder="Ej. Ana"
-                                required
-                            />
+            {/* LEFT CARD: PAYMENT & DATA */}
+            <div className="flex-1 bg-white rounded-3xl shadow-xl border border-gray-100 p-8 w-full">
+
+                {/* Binance Pay Header */}
+                <div className="flex items-center gap-3 mb-8 pb-6 border-b border-gray-100">
+                    <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-bold">
+                        ₿
+                    </div>
+                    <div>
+                        <h3 className="font-display font-bold text-stone-900 text-lg">Binance Pay</h3>
+                        <p className="text-stone-500 text-xs">Método de pago preferido</p>
+                    </div>
+                </div>
+
+                {/* Binance Details Fields */}
+                <div className="space-y-4 mb-8">
+                    <div className="relative group">
+                        <label className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1 block">Binance Email</label>
+                        <div className="flex items-center bg-gray-50 rounded-xl border border-gray-200 p-3">
+                            <span className="flex-1 font-mono text-stone-700 font-medium">{BINANCE_INFO.email}</span>
+                            <button onClick={() => handleCopy(BINANCE_INFO.email)} className="p-2 text-stone-400 hover:text-stone-900 hover:bg-white rounded-lg transition-all">
+                                <Copy size={16} />
+                            </button>
                         </div>
                     </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-bold text-deglya-wood ml-1">Segundo Nombre <span className="text-xs font-normal text-gray-400">(Opcional)</span></label>
-                        <div className="relative">
-                            <input
-                                type="text"
-                                value={formData.firstName || ''}
-                                onChange={(e) => handleChange('firstName', e.target.value)}
-                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-deglya-teal focus:ring-2 focus:ring-deglya-teal/20 outline-none transition-all"
-                                placeholder="Ej. María"
-                            />
-                        </div>
-                    </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <label className="text-sm font-bold text-deglya-wood ml-1">Primer Apellido <span className="text-red-500">*</span></label>
-                        <input
-                            type="text"
-                            value={formData.lastName || ''}
-                            onChange={(e) => handleChange('lastName', e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-deglya-teal focus:ring-2 focus:ring-deglya-teal/20 outline-none transition-all"
-                            placeholder="Ej. López"
-                            required
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-bold text-deglya-wood ml-1">Segundo Apellido <span className="text-red-500">*</span></label>
-                        <input
-                            type="text"
-                            value={formData.secondLastName || ''}
-                            onChange={(e) => handleChange('secondLastName', e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-deglya-teal focus:ring-2 focus:ring-deglya-teal/20 outline-none transition-all"
-                            placeholder="Ej. García"
-                            required
-                        />
-                    </div>
-                </div>
-
-                <div className="space-y-2">
-                    <label className="text-sm font-bold text-deglya-wood ml-1">Cédula de Identidad <span className="text-red-500">*</span></label>
-                    <input
-                        type="text"
-                        value={formData.nationalId || ''}
-                        onChange={(e) => handleChange('nationalId', e.target.value)}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-deglya-teal focus:ring-2 focus:ring-deglya-teal/20 outline-none transition-all"
-                        placeholder="Ej. V-12345678"
-                        required
-                    />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                        <label className="text-sm font-bold text-deglya-wood ml-1">Email <span className="text-red-500">*</span></label>
-                        <input
-                            type="email"
-                            value={formData.email || ''}
-                            onChange={(e) => handleChange('email', e.target.value)}
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-deglya-teal focus:ring-2 focus:ring-deglya-teal/20 outline-none transition-all"
-                            placeholder="correo@ejemplo.com"
-                            required
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-sm font-bold text-deglya-wood ml-1">Teléfono (WhatsApp) <span className="text-red-500">*</span></label>
-                        <div className="flex gap-2">
-                            <select
-                                value={formData.countryCode || '+58'}
-                                onChange={(e) => handleChange('countryCode', e.target.value)}
-                                className="w-[110px] px-2 py-3 rounded-lg border border-gray-200 focus:border-deglya-teal focus:ring-2 focus:ring-deglya-teal/20 outline-none transition-all bg-white text-sm"
-                            >
-                                {countries.map(c => (
-                                    <option key={c.code} value={c.code}>{c.flag} {c.code}</option>
-                                ))}
-                            </select>
-                            <input
-                                type="tel"
-                                value={formData.phone || ''}
-                                onChange={(e) => handleChange('phone', e.target.value)}
-                                className="flex-1 px-4 py-3 rounded-lg border border-gray-200 focus:border-deglya-teal focus:ring-2 focus:ring-deglya-teal/20 outline-none transition-all"
-                                placeholder="414 1234567"
-                                required
-                            />
+                    <div className="relative group">
+                        <label className="text-xs font-bold text-stone-400 uppercase tracking-widest mb-1 block">Binance ID (UID)</label>
+                        <div className="flex items-center bg-gray-50 rounded-xl border border-gray-200 p-3">
+                            <span className="flex-1 font-mono text-stone-700 font-medium">{BINANCE_INFO.uid}</span>
+                            <button onClick={() => handleCopy(BINANCE_INFO.uid)} className="p-2 text-stone-400 hover:text-stone-900 hover:bg-white rounded-lg transition-all">
+                                <Copy size={16} />
+                            </button>
                         </div>
                     </div>
                 </div>
 
-                <div className="space-y-2">
-                    <label className="text-sm font-bold text-deglya-wood ml-1">Comprobante de Pago <span className="text-red-500">*</span></label>
-                    <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:bg-gray-50 transition-colors cursor-pointer group">
-                        <input type="file" className="hidden" id="payment-proof" accept=".pdf,.jpg,.jpeg,.png" onChange={handleFileChange} />
-                        <label htmlFor="payment-proof" className="cursor-pointer flex flex-col items-center">
-                            <div className="w-12 h-12 bg-deglya-cream rounded-full flex items-center justify-center text-deglya-teal mb-3 group-hover:scale-110 transition-transform">
-                                <CreditCard size={24} />
-                            </div>
-                            <span className="font-bold text-deglya-wood">Sube tu comprobante aquí</span>
-                            <span className="text-xs text-gray-500 mt-1">Formatos: PDF, JPG, PNG</span>
+                <div className="border-t border-gray-100 pt-8 mb-8">
+                    <h4 className="font-display font-bold text-stone-900 mb-4 flex items-center gap-2">
+                        <span className="bg-red-50 text-red-500 text-xs px-2 py-0.5 rounded font-bold">REQUERIDO</span>
+                        Comprobante de Pago
+                    </h4>
+
+                    <div className="border-2 border-dashed border-gray-200 rounded-2xl p-6 text-center hover:bg-deglya-cream/30 hover:border-deglya-teal/30 transition-all cursor-pointer group relative">
+                        <input type="file" className="hidden" id="proof-upload" accept="image/*,.pdf" onChange={handleFileChange} />
+                        <label htmlFor="proof-upload" className="cursor-pointer w-full h-full flex flex-col items-center justify-center">
+                            {formData.paymentProof ? (
+                                <div className="text-green-600 flex flex-col items-center">
+                                    <CheckCircle2 size={40} className="mb-2" />
+                                    <span className="font-bold">¡Comprobante Subido!</span>
+                                    <span className="text-xs underline mt-2 opacity-80">Cambiar archivo</span>
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 mb-3 group-hover:scale-110 transition-transform">
+                                        <Upload size={20} />
+                                    </div>
+                                    <span className="text-stone-600 font-medium group-hover:text-deglya-teal transition-colors">
+                                        {uploading ? 'Subiendo...' : 'Subir Captura'}
+                                    </span>
+                                </>
+                            )}
                         </label>
                     </div>
                 </div>
 
-                <div className="bg-deglya-cream/50 p-4 rounded-lg flex items-start gap-3 text-sm text-deglya-wood/80">
-                    <CheckCircle2 size={20} className="text-deglya-mustard shrink-0 mt-0.5" />
-                    <p>La cita se confirmará vía Whatsapp una vez verificado el pago adjunto.</p>
+                {/* User Data Form (Simplified) */}
+                <div className="space-y-4">
+                    <h4 className="font-display font-bold text-stone-900">Tus Datos</h4>
+                    <div className="grid grid-cols-2 gap-4">
+                        <input
+                            placeholder="Nombre"
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-deglya-teal transition-colors"
+                            value={formData.name || ''}
+                            onChange={e => handleChange('name', e.target.value)}
+                            disabled={isUserLoggedIn}
+                        />
+                        <input
+                            placeholder="Apellido"
+                            className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-deglya-teal transition-colors"
+                            value={formData.lastName || ''}
+                            onChange={e => handleChange('lastName', e.target.value)}
+                            disabled={isUserLoggedIn}
+                        />
+                    </div>
+                    <input
+                        placeholder="Email"
+                        type="email"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-deglya-teal transition-colors"
+                        value={formData.email || ''}
+                        onChange={e => handleChange('email', e.target.value)}
+                        disabled={isUserLoggedIn}
+                    />
+                    <input
+                        placeholder="Teléfono (WhatsApp)"
+                        className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 outline-none focus:border-deglya-teal transition-colors"
+                        value={formData.phone || ''}
+                        onChange={e => handleChange('phone', e.target.value)}
+                        disabled={isUserLoggedIn}
+                    />
+                    {/* Hidden required fields logic handled by parent validation */}
                 </div>
-            </form>
+
+            </div>
+
+            {/* RIGHT CARD: SUMMARY STICKY */}
+            <div className="md:w-[350px] shrink-0 sticky top-24">
+                <div className="bg-deglya-teal text-white rounded-3xl shadow-xl overflow-hidden relative">
+                    {/* Blue Background Pattern */}
+                    <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(circle at 100% 0%, white 0%, transparent 50%)' }}></div>
+
+                    <div className="p-8 text-center relative z-10">
+                        <div className="w-20 h-20 mx-auto rounded-full border-4 border-white/20 overflow-hidden mb-4 shadow-lg">
+                            <img
+                                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=2576"
+                                className="w-full h-full object-cover"
+                                alt="Specialist"
+                            />
+                        </div>
+                        <h3 className="font-display font-bold text-xl mb-1">Consulta Inicial</h3>
+                        <p className="text-white/70 text-sm">con Deglya Camero</p>
+                    </div>
+
+                    <div className="bg-white/10 p-8">
+                        <div className="flex justify-between items-center mb-4">
+                            <span className="text-white/60 text-sm font-medium">Fecha</span>
+                            <span className="font-bold">24 Feb, 2026</span> {/* Mock, replace with real props */}
+                        </div>
+                        <div className="flex justify-between items-center mb-8">
+                            <span className="text-white/60 text-sm font-medium">Hora</span>
+                            <span className="font-bold">01:00 PM (1h)</span> {/* Mock */}
+                        </div>
+
+                        <div className="flex justify-between items-end border-t border-white/20 pt-6">
+                            <span className="text-white/60 text-xs font-bold uppercase tracking-widest mb-1">Total a Pagar</span>
+                            <span className="font-display font-bold text-3xl">$60.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="mt-6 text-center">
+                    <p className="text-xs text-stone-400 flex items-center justify-center gap-1">
+                        <CheckCircle2 size={12} />
+                        Pagos procesados de forma segura
+                    </p>
+                </div>
+            </div>
+
         </div>
     );
 };

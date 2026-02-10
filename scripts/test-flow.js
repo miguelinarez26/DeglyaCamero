@@ -55,24 +55,7 @@ async function testGuestFlow() {
     }
 
     console.log("   ✅ Appointment Created ID:", aptId);
-
-    // 3. Test Invisible Registration (Magic Link)
-    console.log("   - Testing Magic Link Dispatch...");
-    const { error: otpError } = await supabase.auth.signInWithOtp({
-        email: mockGuest.email,
-        options: {
-            emailRedirectTo: 'http://localhost:5173/activar-cuenta/success'
-        }
-    });
-
-    if (otpError) {
-        console.error("   ❌ Magic Link Failed:", otpError.message);
-    } else {
-        console.log("   ✅ Magic Link Request Sent Successfully!");
-        console.log("      (Check http://localhost:54324/project/default/auth/users or Inbucket)");
-    }
-
-    console.log("🎉 FLOW TEST SUCCESSFUL (RPC + MAGIC LINK verified)");
+    console.log("🎉 FLOW TEST SUCCESSFUL (RPC VERIFIED)");
 }
 
 testGuestFlow();

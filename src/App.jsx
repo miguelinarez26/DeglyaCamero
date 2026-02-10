@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Home from './pages/Home';
 import AboutUs from './components/about/AboutUs';
 import BookingPage from './pages/Booking';
-import CheckoutPage from './components/booking/CheckoutPage';
-import IntakePage from './components/booking/IntakePage';
+// import CheckoutPage from './components/booking/CheckoutPage';
+// import IntakePage from './components/booking/IntakePage';
 import Services from './components/ServicesPage';
 
 import BookPage from './components/BookPage';
@@ -44,8 +44,8 @@ function App() {
 
         {/* === Booking Flow === */}
         <Route path="/booking" element={<BookingPage />} />
-        <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/intake" element={<IntakePage />} />
+        {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
+        {/* <Route path="/intake" element={<IntakePage />} /> */}
         {/* Redirect legacy booking route */}
         <Route path="/agendar" element={<Navigate to="/booking" replace />} />
 
