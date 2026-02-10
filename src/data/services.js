@@ -2,6 +2,18 @@ import { Heart, Compass, Users, Sparkles, Building2, Lightbulb } from 'lucide-re
 
 export const SERVICES_DATA = [
     {
+        id: "initial-interview",
+        title: "Entrevista Inicial",
+        shortDescription: "Valoración diagnóstica para nuevos pacientes.",
+        fullDescription: "Sesión obligatoria para nuevos pacientes. Realizamos una valoración diagnóstica integral para entender tus necesidades y asignarte el plan de tratamiento más adecuado.",
+        features: ["valoración Diagnóstica", "Plan de Tratamiento", "Asignación de Especialista", "Modalidad Online"],
+        icon: Users,
+        image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=2574&auto=format&fit=crop",
+        category: "personas",
+        price: "$50",
+        cta: "Agendar Entrevista"
+    },
+    {
         id: "individual-therapy",
         title: "Terapia Individual",
         shortDescription: "Un espacio seguro para sanar y crecer.",

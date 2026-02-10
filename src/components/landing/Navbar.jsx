@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { cn } from "../../lib/utils";
+import { useUIStore } from "../../lib/uiStore";
 import { Menu, MenuItem, ProductItem } from "../ui/NavbarMenu";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { SERVICES_DATA } from "../../data/services";
 
 export default function Navbar({ className }) {
+    const { openBookingModal } = useUIStore();
     const [active, setActive] = useState(null);
     const location = useLocation();
     const [activeTab, setActiveTab] = useState("/");
@@ -151,14 +153,17 @@ export default function Navbar({ className }) {
                     {activeTab === 'El Reino' && <Lamp />}
                 </Link>
 
-                {/* CTA Button */}
-                <Link
-                    to="/booking"
+                {/* CTA Button - NOW TRIGGERS MODAL */}
+                <button
+                    onClick={() => {
+                        setActive(null);
+                        openBookingModal();
+                    }}
                     onMouseEnter={() => setActive(null)}
-                    className="bg-yellow-400 hover:bg-yellow-500 text-stone-900 text-sm font-bold px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all transform hover:scale-105"
+                    className="bg-yellow-400 hover:bg-yellow-500 text-stone-900 text-sm font-bold px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all transform hover:scale-105 cursor-pointer"
                 >
                     Agendar
-                </Link>
+                </button>
             </Menu>
         </div>
     );

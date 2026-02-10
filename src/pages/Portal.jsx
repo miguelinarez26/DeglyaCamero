@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Calendar, FileText, Video, Settings, LogOut, Download, Clock, Bell, User } from 'lucide-react';
+import { Calendar, FileText, Video, Settings, LogOut, Download, Clock, Bell, User, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { cn } from '@/lib/utils';
@@ -146,7 +146,10 @@ export default function Portal() {
                             </CardContent>
                         </Card>
 
-                        <Card className="border-none shadow-[0_4px_20px_rgba(0,0,0,0.05)] bg-white cursor-pointer hover:shadow-lg transition-shadow">
+                        <Card
+                            onClick={() => navigate('/servicios')}
+                            className="border-none shadow-[0_4px_20px_rgba(0,0,0,0.05)] bg-white cursor-pointer hover:shadow-lg transition-shadow"
+                        >
                             <CardContent className="p-6 flex items-center justify-between">
                                 <div>
                                     <h3 className="font-bold text-deglya-wood">Agendar Nueva</h3>

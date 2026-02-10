@@ -3,11 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 // Pages
 import Home from './pages/Home';
 import AboutUs from './components/about/AboutUs';
-import BookingPage from './components/booking/BookingPage';
+import BookingPage from './pages/Booking';
 import CheckoutPage from './components/booking/CheckoutPage';
 import IntakePage from './components/booking/IntakePage';
 import Services from './components/ServicesPage';
+
 import BookPage from './components/BookPage';
+import BookingModal from './components/ui/BookingModal';
+import WhatsAppFAB from './components/ui/WhatsAppFAB';
 
 // Auth & Dashboard (Keeping existing structure for now)
 import Login from './pages/Login';
@@ -28,6 +31,8 @@ const PatientDashboard = () => <div className="p-12 text-white">Dashboard Pacien
 function App() {
   return (
     <Router>
+      <BookingModal />
+      <WhatsAppFAB />
       <Routes>
         {/* === Public Routes === */}
         <Route path="/" element={<Home />} />

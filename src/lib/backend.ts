@@ -118,9 +118,9 @@ export async function getAvailableSlots(date: Date, specialistId: string): Promi
     endOfDay.setHours(23, 59, 59, 999);
 
     const { data: bookings, error: bookingError } = await supabase
-        .from('bookings')
+        .from('appointments') // Updated to V5 Table
         .select('start_time')
-        .eq('user_id', specialistId) // Filter by specialist
+        // .eq('user_id', specialistId) // Temporarily disabled specialist filter until 'specialist_id' logic is strict
         .gte('start_time', startOfDay.toISOString())
         .lte('start_time', endOfDay.toISOString())
         .neq('status', 'cancelled');
@@ -138,116 +138,116 @@ export async function getAvailableSlots(date: Date, specialistId: string): Promi
     return allSlots.filter(slot => !bookedTimes.includes(slot));
 }
 
+// --- 3. Appointment Logic (Hybrid Flow) ---
 export async function createAppointment(appointmentData: any) {
     const { triage, date, time, patientDetails } = appointmentData;
 
-    if (!date || !time) throw new Error("Date and Time are required");
+    if (!date || !time) throw new Error("Fecha y hora son requeridas.");
 
-    // 1. Auth/Guest Check
+    // 1. Identify Actor (User or Guest)
     const { data: { user } } = await supabase.auth.getUser();
+
+    // Guest Data
     const guestEmail = patientDetails?.email;
-    const guestNationalId = patientDetails?.nationalId;
+    const guestName = patientDetails?.name ? `${patientDetails.name} ${patientDetails.lastName || ''}`.trim() : null;
     const guestPhone = patientDetails?.phone;
 
     if (!user && !guestEmail) {
-        throw new Error("Debes iniciar sesión o proporcionar un email.");
+        throw new Error("Debes proporcionar un email para agendar.");
     }
 
-    // 2. Resolve Patient (Cal.com style: link to 'patients' table)
+    // 2. Resolve Patient Identity (The Hybrid Core)
     let patientId: string | null = null;
+    const targetEmail = user?.email || guestEmail;
 
-    // ... Existing patient resolution logic (kept for robustness) ...
-    // Note: I will reimplement concise version since previous was good but need to ensure it uses the 'patients' table as expected.
+    // A. Check if patient exists by Email
+    const { data: existingPatient } = await supabase
+        .from('patients')
+        .select('id, profile_id')
+        .eq('email', targetEmail)
+        .maybeSingle();
 
-    if (user) {
-        const { data: existing } = await supabase.from('patients').select('id').eq('profile_id', user.id).maybeSingle();
-        if (existing) patientId = existing.id;
-    }
+    if (existingPatient) {
+        // Found existing record!
+        patientId = existingPatient.id;
 
-    if (!patientId && (guestEmail || guestNationalId)) {
-        let query = supabase.from('patients').select('id');
-        const ors = [];
-        if (guestEmail) ors.push(`email.eq.${guestEmail}`);
-        if (guestNationalId) ors.push(`national_id.eq.${guestNationalId}`);
-        // Phone?
-
-        if (ors.length > 0) {
-            const { data: found } = await query.or(ors.join(',')).maybeSingle();
-            if (found) patientId = found.id;
+        // Linkage opportunity: If user is logged in but patient record has no profile link, link it now.
+        if (user && !existingPatient.profile_id) {
+            await supabase.from('patients').update({ profile_id: user.id }).eq('id', patientId);
         }
+    } else {
+        // B. Create New Patient Record via RPC (Secure)
+        const { data: newId, error: rpcError } = await supabase.rpc('create_guest_patient', {
+            p_email: targetEmail,
+            p_full_name: user?.user_metadata?.full_name || guestName,
+            p_phone: guestPhone
+        });
+
+        if (rpcError) throw new Error(`Error registrando ficha de paciente: ${rpcError.message}`);
+        patientId = newId;
     }
 
-    if (!patientId) {
-        const newPatient = {
-            profile_id: user?.id || null,
-            email: guestEmail,
-            first_name: patientDetails?.name,
-            last_name: patientDetails?.lastName,
-            phone: guestPhone,
-            national_id: guestNationalId
-        };
-        const { data: created, error } = await supabase.from('patients').insert(newPatient).select('id').single();
-        if (error) throw new Error(`Error registrando paciente: ${error.message}`);
-        patientId = created.id;
-    }
-
-    // 3. Prepare Booking Data
-    // We need an event_type_id. For now, fetch the first active one or default.
-    const { data: eventTypes } = await supabase.from('event_types').select('id, user_id').limit(1).single();
-    if (!eventTypes) throw new Error("No appointment types available.");
-
-    const eventTypeId = eventTypes.id;
-    const specialistId = eventTypes.user_id; // The specialist
-
+    // 3. Prepare Appointment Data
     const startTime = new Date(date);
     const [h, m] = time.split(':').map(Number);
     startTime.setHours(h, m, 0, 0);
+
     const endTime = new Date(startTime);
-    endTime.setHours(startTime.getHours() + 1); // Default 1 hour
+    endTime.setHours(startTime.getHours() + 1); // Default duration 50-60min
 
-    // 4. Create Booking
-    const bookingPayload = {
-        uid: undefined, // Let DB generate
-        event_type_id: eventTypeId,
-        user_id: specialistId,
-        patient_id: patientId,
-        start_time: startTime.toISOString(),
-        end_time: endTime.toISOString(),
-        title: triage?.reason || 'Consulta General',
-        description: triage?.details || '',
-        status: 'pending',
-        payment_proof_url: patientDetails?.paymentProof
-    };
+    // 4. Create Appointment
+    // 4. Create Appointment
+    let booking;
 
-    const { data: booking, error: bookingError } = await supabase
-        .from('bookings')
-        .insert(bookingPayload)
-        .select()
-        .single();
+    if (user) {
+        // Authenticated User -> Standard Insert (RLS Protected)
+        const appointmentPayload = {
+            patient_id: patientId,
+            service_id: 'initial-interview',
+            start_time: startTime.toISOString(),
+            end_time: endTime.toISOString(),
+            status: 'pending',
+            notes: triage ? JSON.stringify(triage) : null
+        };
 
-    if (bookingError) throw new Error(`Error creating booking: ${bookingError.message}`);
+        const { data, error } = await supabase
+            .from('appointments')
+            .insert(appointmentPayload)
+            .select()
+            .single();
 
-    // 5. Create Booking Note (Encrypted)
-    if (triage?.details || triage?.severity) {
-        const noteContent = JSON.stringify({
-            details: triage.details,
-            severity: triage.severity,
-            duration: triage.duration
+        if (error) throw error;
+        booking = data;
+
+    } else {
+        // Guest -> Secure RPC
+        const { data: newAptId, error: rpcError } = await supabase.rpc('create_guest_appointment', {
+            p_patient_id: patientId,
+            p_service_id: 'initial-interview',
+            p_start_time: startTime.toISOString(),
+            p_end_time: endTime.toISOString(),
+            p_notes: triage ? JSON.stringify(triage) : null
         });
 
-        // Basic Note Insertion (Encryption should be handled by DB Extension or Edge Function in real prod)
-        // Here we insert into 'note' (plain) and potentially 'encrypted_note' if we had the key.
-        // Use the secure RPC function we created
-        const { error: noteError } = await supabase.rpc('create_encrypted_note', {
-            p_booking_id: booking.id,
-            p_note: noteContent,
-            p_created_by: user?.id || null // If guest, null
-        });
+        if (rpcError) throw rpcError;
+        booking = { id: newAptId };
 
-        if (noteError) {
-            console.error("Error creating encrypted note:", noteError);
-        } else {
-            console.log("Secure note created via pgsodium.");
+        // 5. INVISIBLE REGISTRATION (The Magic)
+        // Auto-invite user to create account via Magic Link
+        if (!user && guestEmail) {
+            console.log(`✨ Initiating Invisible Registration for ${guestEmail}`);
+            const { error: otpError } = await supabase.auth.signInWithOtp({
+                email: guestEmail,
+                options: {
+                    // Redirect to Activate Account page where they set password
+                    emailRedirectTo: `${window.location.origin}/activar-cuenta/success`
+                }
+            });
+
+            if (otpError) {
+                console.warn("⚠️ Magic Link sending failed:", otpError.message);
+                // Non-blocking: Booking succeeded, just the invite failed.
+            }
         }
     }
 

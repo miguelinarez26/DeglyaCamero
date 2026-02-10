@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { Button } from '../ui/Button';
+import { useUIStore } from '../../lib/uiStore';
 
 export const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { openBookingModal } = useUIStore();
 
     return (
         <header className="absolute top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8">
@@ -24,7 +26,7 @@ export const Header = () => {
                     </nav>
 
                     <div className="hidden items-center gap-4 lg:flex">
-                        <Button>Agendar Cita</Button>
+                        <Button onClick={openBookingModal}>Agendar Cita</Button>
                     </div>
 
                     {/* Mobile Menu Button */}
@@ -44,7 +46,7 @@ export const Header = () => {
                             <Link className="text-xl font-medium text-text-light dark:text-text-dark" to="/" onClick={() => setIsMenuOpen(false)}>Programas</Link>
                             <Link className="text-xl font-medium text-text-light dark:text-text-dark" to="/" onClick={() => setIsMenuOpen(false)}>Recursos</Link>
                             <Link className="text-xl font-medium text-text-light dark:text-text-dark" to="/" onClick={() => setIsMenuOpen(false)}>Contacto</Link>
-                            <Button className="w-full" onClick={() => setIsMenuOpen(false)}>Agendar Cita</Button>
+                            <Button className="w-full" onClick={() => { setIsMenuOpen(false); openBookingModal(); }}>Agendar Cita</Button>
                         </nav>
                     </div>
                 )}
