@@ -3,6 +3,7 @@ import Navbar from '../components/landing/Navbar';
 import Hero from '../components/landing/Hero';
 import Services from '../components/landing/Services';
 import BookSection from '../components/landing/BookSection';
+import TestimonialsSection from '../components/landing/TestimonialsSection';
 import ContactForm from '../components/landing/ContactForm';
 import Footer from '../components/landing/Footer';
 
@@ -12,12 +13,12 @@ const Home = () => {
     // Scroll Tracking
     const { scrollYProgress } = useScroll();
 
-    // Brand Palette Inverted: #F9F9F7 (Canvas/Cream) -> #1B6CA8 (Structure/Teal)
-    // Starts Cream (Hero) -> Fades into Teal (Footer area)
+    // Brand Palette Inverted: #F9F9F7 (Canvas/Cream) -> #1B6CA8 (Structure/Royal Blue/Book) -> #F9F9F7 (Cream/Testimonials)
+    // Updated per user request (2): Cream (0-10%) -> Solid Blue (35-55%) -> Fade to Cream (80%)
     const backgroundColor = useTransform(
         scrollYProgress,
-        [0, 0.4, 0.9],
-        ['#F9F9F7', '#F9F9F7', '#1B6CA8']
+        [0, 0.10, 0.35, 0.55, 0.8, 1],
+        ['#F9F9F7', '#F9F9F7', '#1B6CA8', '#1B6CA8', '#F9F9F7', '#F9F9F7']
     );
 
     return (
@@ -33,6 +34,7 @@ const Home = () => {
                 <Hero />
                 <Services />
                 <BookSection />
+                <TestimonialsSection />
                 <ContactForm />
                 {/* Footer has its own solid background, so it handles the bottom visually */}
                 <Footer />

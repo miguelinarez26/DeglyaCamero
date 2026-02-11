@@ -1,10 +1,22 @@
 import React, { useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { PlayCircle, Leaf } from 'lucide-react';
 import heroGradient from '../../assets/hero-gradient.png';
 import deglyaHeroNew from '../../assets/brand/deglya-hero-new.jpg';
 
+const words = ["confianza", "esperanza", "espiritualidad", "propósito"];
+
 const Hero = () => {
+
+    const [index, setIndex] = React.useState(0);
+
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            setIndex((prev) => (prev + 1) % words.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <header className="relative w-full min-h-[85vh] flex items-center pt-24 pb-12 px-6 lg:px-12 overflow-hidden">
             {/* Backgrounds */}
@@ -25,8 +37,25 @@ const Hero = () => {
                     <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider uppercase border border-primary/20">
                         Psicóloga y Autora
                     </span>
-                    <h1 className="text-5xl lg:text-7xl font-display font-medium leading-tight text-stone-700">
-                        Transforma el <span className="text-primary italic">caos</span> en propósito.
+                    <h1 className="text-4xl lg:text-6xl font-display font-medium leading-tight text-stone-700">
+                        ¿Quieres potenciar tus <span className="text-secondary italic">habilidades</span>?
+                        <span className="block mt-4 text-3xl lg:text-5xl opacity-90 font-normal">
+                            Rediseñate en{' '}
+                        </span>
+                        <span className="block h-[1.3em] relative overflow-hidden text-primary italic mt-2">
+                            <AnimatePresence mode="wait">
+                                <motion.span
+                                    key={index}
+                                    initial={{ y: 30, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: -30, opacity: 0 }}
+                                    transition={{ duration: 0.5, ease: "backOut" }}
+                                    className="block absolute top-0 left-0"
+                                >
+                                    {words[index]}
+                                </motion.span>
+                            </AnimatePresence>
+                        </span>
                     </h1>
                     <p className="text-lg lg:text-xl text-stone-700 max-w-lg leading-relaxed">
                         Acompaño procesos de transformación con empatía y esperanza. Descubre el maravilloso camino de rediseñarte y potenciar tus capacidades.

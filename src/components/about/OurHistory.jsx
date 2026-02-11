@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const OurHistory = () => {
     return (
@@ -6,8 +7,8 @@ const OurHistory = () => {
             <div className="max-w-4xl mx-auto">
                 <h2 className="font-display text-3xl md:text-4xl text-booking-primary font-bold mb-8 text-center">Nuestra Historia</h2>
                 <div className="relative">
-                    {/* Vignette Circle Float Effect */}
-                    <div className="float-left mr-6 mb-2 w-40 h-40 md:w-56 md:h-56 bg-[#7D8F69]/10 backdrop-blur-sm rounded-full flex items-center justify-center text-center p-4 border-2 border-white/60 shadow-inner relative z-10 shape-circle">
+                    {/* Vignette Circle Effect (Static) */}
+                    <div className="float-right ml-6 mb-2 w-40 h-40 md:w-56 md:h-56 bg-[#7D8F69]/10 backdrop-blur-sm rounded-full flex items-center justify-center text-center p-4 border-2 border-white/60 shadow-inner relative z-10 shape-circle">
                         <div>
                             <span className="font-display text-5xl md:text-6xl font-bold text-booking-primary block leading-none">15+</span>
                             <span className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-booking-primary mt-1 block">Años transformando vidas</span>

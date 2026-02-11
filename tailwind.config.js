@@ -1,3 +1,6 @@
+import colors from 'tailwindcss/colors';
+import tailwindAnimate from 'tailwindcss-animate';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -21,10 +24,9 @@ export default {
         "surface-dark": "#1B6CA8", // Structure (as per 'Fondos oscuros')
         "background-light": "#F9F9F7", // Canvas
         "text-light": "#44403C", // Accent
-      },
-      // Map gray to stone for consistent warm greys
-      colors: {
-        gray: require('tailwindcss/colors').stone,
+
+        // Map gray to stone for consistent warm greys
+        gray: colors.stone,
       },
       fontFamily: {
         "sans": ["Nunito", "sans-serif"],
@@ -32,6 +34,8 @@ export default {
         "body": ["Nunito", "sans-serif"],
       },
     },
-    plugins: [],
+    plugins: [
+      tailwindAnimate,
+    ],
   }
 }

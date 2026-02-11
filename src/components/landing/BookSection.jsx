@@ -30,20 +30,20 @@ const BookSection = () => {
                     {/* Content */}
                     <div className="lg:w-1/2 space-y-8 text-center lg:text-left">
                         <div>
-                            <span className="text-structure font-bold uppercase tracking-widest text-sm">Nuevo Lanzamiento</span>
-                            <h2 className="text-4xl lg:text-6xl font-display font-semibold text-stone-700 mt-2 mb-6">
+                            <span className="text-white/90 font-bold uppercase tracking-widest text-sm">Nuevo Lanzamiento</span>
+                            <h2 className="text-4xl lg:text-6xl font-display font-semibold text-white mt-2 mb-6">
                                 El Reino de lo Posible
                             </h2>
                         </div>
-                        <p className="text-lg text-stone-700/80 leading-relaxed">
+                        <p className="text-lg text-white/80 leading-relaxed">
                             "El Reino de lo posible" es un manual para iniciar procesos de cambio psicoespirituales. La autora nos conduce de una forma creativa por diferentes rutas para la toma de conciencia de nuestras distorsiones en la percepción propia y del mundo.
                         </p>
 
                         <ul className="space-y-3 text-left max-w-md mx-auto lg:mx-0">
                             {["Herramientas prácticas para el día a día.", "Ejercicios de introspección profunda.", "Enfoque psicoespiritual único."].map((item, i) => (
                                 <li key={i} className="flex items-start gap-3">
-                                    <CheckCircle className="text-structure mt-1" size={20} />
-                                    <span className="text-stone-700/80">{item}</span>
+                                    <CheckCircle className="text-white mt-1" size={20} />
+                                    <span className="text-white/80">{item}</span>
                                 </li>
                             ))}
                         </ul>
@@ -53,7 +53,7 @@ const BookSection = () => {
                                 <ShoppingCart size={20} />
                                 Comprar en Amazon
                             </a>
-                            <a href="#" className="px-8 py-3 rounded-md font-semibold text-stone-700 border border-stone-300 hover:border-structure hover:text-structure transition-colors">
+                            <a href="#" className="px-8 py-3 rounded-md font-semibold text-white border border-white/30 hover:bg-white/10 hover:border-white transition-colors">
                                 Leer primer capítulo
                             </a>
                         </div>
