@@ -33,7 +33,7 @@ import ScrollToHashElement from './components/ScrollToHashElement';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/DeglyaCamero/">
       <ScrollToHashElement />
       <BookingModal />
       <WhatsAppFAB />
