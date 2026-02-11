@@ -87,7 +87,7 @@ export default function Navbar({ className }) {
 
                 {/* 3. Servicios (Dropdown) */}
                 <div className="relative">
-                    <MenuItem setActive={setActive} active={active} item="Servicios">
+                    <MenuItem setActive={setActive} active={active} item="Servicios" href="/servicios">
                         <div className="flex flex-col gap-6 p-2 w-[650px]">
                             <div className="grid grid-cols-2 gap-8">
                                 {/* Column 1: Personas */}
@@ -118,6 +118,7 @@ export default function Navbar({ className }) {
                                                 href="/servicios"
                                                 src={service.image}
                                                 description={service.shortDescription}
+                                                imageClassName={service.imagePosition || ""}
                                             />
                                         ))}
                                     </div>

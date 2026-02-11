@@ -316,7 +316,7 @@ const BookPage = () => {
                         className="relative flex w-full flex-col items-center justify-center overflow-hidden"
                         style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
                     >
-                        <div className="group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row [--duration:120s]">
+                        <div className="group flex overflow-hidden p-2 [--gap:1rem] [gap:var(--gap)] flex-row [--duration:50s]">
                             {/* First Marquee Set */}
                             <div className="flex shrink-0 items-center [gap:var(--gap)] animate-marquee flex-row group-hover:[animation-play-state:paused]">
                                 {REVIEWS.map((review, i) => (

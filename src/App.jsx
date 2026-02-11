@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Home from './pages/Home';
 import AboutUs from './components/about/AboutUs';
 import BookingPage from './pages/Booking';
-// import CheckoutPage from './components/booking/CheckoutPage';
+import CheckoutPage from './components/booking/CheckoutPage';
 // import IntakePage from './components/booking/IntakePage';
 import Services from './components/ServicesPage';
 
@@ -12,25 +12,29 @@ import BookPage from './components/BookPage';
 import BookingModal from './components/ui/BookingModal';
 import WhatsAppFAB from './components/ui/WhatsAppFAB';
 
-// Auth & Dashboard (Keeping existing structure for now)
+// Auth & Dashboard
 import Login from './pages/Login';
 import ActivateAccount from './pages/ActivateAccount';
 import StaffLogin from './pages/StaffLogin';
 import Portal from './pages/Portal';
 import Unauthorized from './pages/Unauthorized';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import DashboardLayout from './components/layout/DashboardLayout';
+import PatientDashboard from './pages/dashboard/PatientDashboard';
 import ReceptionDashboard from './pages/dashboard/ReceptionDashboard';
 
 // Placeholders
 const Contact = () => <div className="p-12 text-center text-deglya-teal font-display text-2xl">Contacto (En Construcción)</div>;
 
 // Dashboard Placeholders
-const SpecialistDashboard = () => <div className="p-12 text-white">Dashboard Especialista</div>;
-const PatientDashboard = () => <div className="p-12 text-white">Dashboard Paciente</div>;
+const SpecialistDashboard = () => <div className="p-12 text-white">Dashboard Especialista (En Construcción)</div>;
+
+import ScrollToHashElement from './components/ScrollToHashElement';
 
 function App() {
   return (
     <Router>
+      <ScrollToHashElement />
       <BookingModal />
       <WhatsAppFAB />
       <Routes>
@@ -44,7 +48,7 @@ function App() {
 
         {/* === Booking Flow === */}
         <Route path="/booking" element={<BookingPage />} />
-        {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
+        <Route path="/checkout" element={<CheckoutPage />} />
         {/* <Route path="/intake" element={<IntakePage />} /> */}
         {/* Redirect legacy booking route */}
         <Route path="/agendar" element={<Navigate to="/booking" replace />} />
@@ -60,16 +64,30 @@ function App() {
           <Route path="/portal" element={<Portal />} />
         </Route>
 
-        <Route element={<ProtectedRoute allowedRoles={['specialist']} />}>
-          <Route path="/dashboard/especialista/*" element={<SpecialistDashboard />} />
-        </Route>
+        {/* === Dashboards === */}
 
-        <Route element={<ProtectedRoute allowedRoles={['receptionist', 'admin']} />}>
-          <Route path="/dashboard/recepcion/*" element={<ReceptionDashboard />} />
-        </Route>
-
+        {/* Patient Dashboard */}
         <Route element={<ProtectedRoute allowedRoles={['patient']} />}>
-          <Route path="/dashboard/paciente/*" element={<PatientDashboard />} />
+          <Route path="/dashboard/paciente" element={<DashboardLayout role="patient" />}>
+            <Route index element={<PatientDashboard />} />
+            <Route path="citas" element={<div>Mis Citas (Coming Soon)</div>} />
+            <Route path="pagos" element={<div>Pagos (Coming Soon)</div>} />
+            <Route path="perfil" element={<div>Perfil (Coming Soon)</div>} />
+          </Route>
+        </Route>
+
+        {/* Specialist Dashboard */}
+        <Route element={<ProtectedRoute allowedRoles={['specialist']} />}>
+          <Route path="/dashboard/especialista" element={<DashboardLayout role="specialist" />}>
+            <Route index element={<SpecialistDashboard />} />
+          </Route>
+        </Route>
+
+        {/* Reception/Admin Dashboard */}
+        <Route element={<ProtectedRoute allowedRoles={['receptionist', 'admin']} />}>
+          <Route path="/dashboard/recepcion" element={<DashboardLayout role="receptionist" />}>
+            <Route path="*" element={<ReceptionDashboard />} />
+          </Route>
         </Route>
 
         {/* Fallback */}

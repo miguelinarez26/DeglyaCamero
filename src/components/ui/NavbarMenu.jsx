@@ -16,15 +16,22 @@ export const MenuItem = ({
     active,
     item,
     children,
+    href,
 }) => {
+    const content = (
+        <motion.p
+            transition={{ duration: 0.3 }}
+            className="cursor-pointer text-stone-600 hover:text-stone-900 font-medium text-sm"
+        >
+            {item}
+        </motion.p>
+    );
+
     return (
         <div onMouseEnter={() => setActive(item)} className="relative h-full flex items-center">
-            <motion.p
-                transition={{ duration: 0.3 }}
-                className="cursor-pointer text-stone-600 hover:text-stone-900 font-medium text-sm"
-            >
-                {item}
-            </motion.p>
+            {href ? (
+                <Link to={href}>{content}</Link>
+            ) : content}
             {active !== null && (
                 <motion.div
                     initial={{ opacity: 0, scale: 0.85, y: 10 }}

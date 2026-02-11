@@ -85,11 +85,12 @@ const TestimonialsColumn = ({ className, testimonials, duration = 10 }) => {
                             <motion.li
                                 key={`${index}-${i}`}
                                 whileHover={{
-                                    scale: 1.02,
-                                    y: -5,
-                                    boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+                                    scale: 1.05,
+                                    y: -8,
+                                    rotateX: 2,
+                                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1)",
                                 }}
-                                className="p-8 rounded-3xl bg-white border border-booking-secondary/20 shadow-sm max-w-xs w-full transition-all duration-300 cursor-default"
+                                className="p-8 rounded-3xl bg-white border-b-4 border-stone-100 shadow-xl transition-all duration-300 cursor-default hover:border-b-amber-400/50"
                             >
                                 <blockquote className="m-0 p-0">
                                     <p className="text-deglya-wood/80 leading-relaxed font-body italic m-0">
@@ -147,11 +148,11 @@ const TestimonialsSection = () => {
                 </div>
 
                 <div
-                    className="flex justify-center gap-6 mt-10 [mask-image:linear-gradient(to_bottom,transparent,black_10%,black_90%,transparent)] max-h-[600px] overflow-hidden"
+                    className="flex justify-center gap-6 mt-10 max-h-[600px] overflow-hidden"
                 >
-                    <TestimonialsColumn testimonials={firstColumn} duration={40} />
-                    <TestimonialsColumn testimonials={secondColumn} className="hidden md:block pt-12" duration={50} />
-                    <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={45} />
+                    <TestimonialsColumn testimonials={firstColumn} duration={15} />
+                    <TestimonialsColumn testimonials={secondColumn} className="hidden md:block pt-12" duration={18} />
+                    <TestimonialsColumn testimonials={thirdColumn} className="hidden lg:block" duration={16} />
                 </div>
             </motion.div>
         </section>

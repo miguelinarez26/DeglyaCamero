@@ -30,7 +30,7 @@ const Services = () => {
                 <div className="text-center mb-16 max-w-3xl mx-auto">
                     <span className="text-structure font-bold uppercase tracking-widest text-sm mb-3 block">Sistema Destino</span>
                     <h2 className="text-4xl lg:text-5xl font-display font-semibold mb-6 text-accent">
-                        Lo que ofrecemos para rediseñarte
+                        Nuestros Pilares de Transformación
                     </h2>
                     <p className="text-accent/80">
                         Nuestro enfoque se destaca por estar centrado en el Sistema Destino, integrando diferentes tipos de formación y especialidades.
@@ -56,7 +56,7 @@ const Services = () => {
                             <p className="text-accent/80 mb-6 text-sm leading-relaxed">
                                 {service.description}
                             </p>
-                            <a href={service.link} className="inline-flex items-center text-structure font-semibold text-sm hover:underline">
+                            <a href="/servicios" className="inline-flex items-center text-structure font-semibold text-sm hover:underline">
                                 Saber más <ArrowRight size={16} className="ml-1" />
                             </a>
                         </motion.div>

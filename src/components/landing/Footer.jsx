@@ -20,10 +20,10 @@ const Footer = () => {
                 <div>
                     <h5 className="text-white font-bold uppercase tracking-wider text-xs mb-6">Explorar</h5>
                     <ul className="space-y-3 text-sm">
-                        <li><a href="#about" className="hover:text-white transition-colors">Sobre Mí</a></li>
-                        <li><a href="#services" className="hover:text-white transition-colors">Servicios</a></li>
-                        <li><a href="#book" className="hover:text-white transition-colors">El Libro</a></li>
-                        <li><a href="#resources" className="hover:text-white transition-colors">Recursos Gratuitos</a></li>
+                        <li><a href="/about" className="hover:text-white transition-colors">Sobre Mí</a></li>
+                        <li><a href="/servicios" className="hover:text-white transition-colors">Servicios</a></li>
+                        <li><a href="/#book" className="hover:text-white transition-colors">El Libro</a></li>
+                        <li><a href="/#resources" className="hover:text-white transition-colors">Recursos Gratuitos</a></li>
                     </ul>
                 </div>
 

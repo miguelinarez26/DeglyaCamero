@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/Label";
 import { Separator } from "@/components/ui/Separator";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/lib/supabase";
 
 // --------------------------------
 // Enums
@@ -117,12 +118,20 @@ function AuthError({ message }) {
 }
 
 function AuthSocialButtons({ isLoading }) {
+    const handleGoogleLogin = async () => {
+        // Implement Google Login logic here
+        // For now, it's a placeholder as we focus on Email/Password first
+        console.log("Google Login Clicked");
+    };
+
     return (
         <div className="w-full mt-6">
             <Button
                 variant="outline"
                 className="w-full h-12 bg-white/50 border-stone-200"
                 disabled={isLoading}
+                onClick={handleGoogleLogin}
+                type="button"
             >
                 <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                     <path
@@ -181,15 +190,27 @@ function AuthSignIn({ onForgotPassword, onSignUp, onSuccess, onBack }) {
     const onSubmit = async (data) => {
         setFormState((prev) => ({ ...prev, isLoading: true, error: null }));
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API call
-            // setFormState((prev) => ({ ...prev, error: "Correo o contraseña inválidos" })); // Simulate fail
-            // Simulate Success
+            const { error } = await supabase.auth.signInWithPassword({
+                email: data.email,
+                password: data.password,
+            });
+
+            if (error) {
+                if (error.message === "Invalid login credentials") {
+                    throw new Error("Correo o contraseña incorrectos.");
+                }
+                throw error;
+            }
+
             if (onSuccess) onSuccess();
-        } catch {
-            setFormState((prev) => ({ ...prev, error: "Ocurrió un error inesperado" }));
-        } finally {
-            // Only unset loading if we didn't succeed/redirect
-            setFormState((prev) => ({ ...prev, isLoading: false }));
+            // Don't stop loading here if successful, wait for redirect/unmount
+        } catch (error) {
+            console.error("Login Error:", error);
+            setFormState((prev) => ({
+                ...prev,
+                error: error.message || "Ocurrió un error al iniciar sesión.",
+                isLoading: false // Stop loading on error
+            }));
         }
     };
 
@@ -324,13 +345,30 @@ function AuthSignUp({ onSignIn, onSuccess }) {
     const onSubmit = async (data) => {
         setFormState((prev) => ({ ...prev, isLoading: true, error: null }));
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API call
-            //Simulate Success
+            const { error: signUpError, data: authData } = await supabase.auth.signUp({
+                email: data.email,
+                password: data.password,
+                options: {
+                    data: {
+                        full_name: data.name,
+                        role: 'patient', // Default role
+                    },
+                },
+            });
+
+            if (signUpError) throw signUpError;
+
+            // Optionally create profile manually if trigger doesn't exist
+            // But usually we rely on postgres trigger on auth.users -> public.profiles
+
             if (onSuccess) onSuccess();
-        } catch {
-            setFormState((prev) => ({ ...prev, error: "Ocurrió un error inesperado" }));
-        } finally {
-            setFormState((prev) => ({ ...prev, isLoading: false }));
+        } catch (error) {
+            console.error("Signup Error:", error);
+            setFormState((prev) => ({
+                ...prev,
+                error: error.message || "Ocurrió un error al crear la cuenta.",
+                isLoading: false
+            }));
         }
     };
 
@@ -490,12 +528,18 @@ function AuthForgotPassword({ onSignIn, onSuccess }) {
     const onSubmit = async (data) => {
         setFormState((prev) => ({ ...prev, isLoading: true, error: null }));
         try {
-            await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API call
+            const { error } = await supabase.auth.resetPasswordForEmail(data.email, {
+                redirectTo: window.location.origin + '/reset-password',
+            });
+            if (error) throw error;
             onSuccess();
-        } catch {
-            setFormState((prev) => ({ ...prev, error: "Ocurrió un error inesperado" }));
-        } finally {
-            setFormState((prev) => ({ ...prev, isLoading: false }));
+        } catch (error) {
+            console.error("Forgot Password Error:", error);
+            setFormState((prev) => ({
+                ...prev,
+                error: error.message || "Ocurrió un error al enviar el correo.",
+                isLoading: false
+            }));
         }
     };
 

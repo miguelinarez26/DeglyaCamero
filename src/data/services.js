@@ -33,7 +33,7 @@ export const SERVICES_DATA = [
         fullDescription: "Un proceso dinámico enfocado en el futuro y la acción. Trabajamos juntos para clarificar tu visión, identificar obstáculos y diseñar un plan de acción concreto para alcanzar tus objetivos personales y profesionales, potenciando tus fortalezas naturales.",
         features: ["Clarificación de Metas", "Diseño de Plan de Acción", "Superación de Bloqueos", "Accountability"],
         icon: Compass,
-        image: "https://yqmqzyaqlhgzcbcbintn.supabase.co/storage/v1/object/public/Imagenes%20Deglya%20web/undraw_decide_g91m.svg",
+        image: "https://yqmqzyaqlhgzcbcbintn.supabase.co/storage/v1/object/public/Imagenes%20Deglya%20web/coaching%20de%20vida.svg",
         category: "personas",
         price: "$100 / sesión",
         cta: "Iniciar Proceso"
