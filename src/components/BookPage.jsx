@@ -50,16 +50,16 @@ const VaultCard = ({ resource, onClick }) => {
             <div className="absolute inset-0 bg-stone-300 rounded-3xl transform scale-95 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:-rotate-3 transition-all duration-500 ease-out delay-75" />
 
             {/* Main Card */}
-            <div className="relative h-full w-full bg-[#EAE8E3] rounded-3xl border border-white/50 p-8 flex flex-col justify-between transition-transform duration-500 group-hover:-translate-y-2 shadow-sm hover:shadow-xl overflow-hidden">
+            <div className="relative h-full w-full bg-[#F9F7F2] rounded-3xl border border-white/50 p-8 flex flex-col justify-between transition-transform duration-500 group-hover:-translate-y-2 shadow-sm hover:shadow-xl overflow-hidden">
 
 
                 {/* Decorative BG Icon */}
-                <div className="absolute -bottom-8 -right-8 text-stone-900/10 transform rotate-12 scale-150 transition-transform duration-700 group-hover:scale-175 pointer-events-none group-hover:text-yellow-500/20">
+                <div className="absolute -bottom-8 -right-8 text-structure/5 transform rotate-12 scale-150 transition-transform duration-700 group-hover:scale-175 pointer-events-none group-hover:text-conversion/20">
                     <Icon size={180} strokeWidth={1} />
                 </div>
 
                 <div className="relative z-10">
-                    <div className="w-12 h-12 bg-stone-900/5 rounded-2xl flex items-center justify-center text-stone-700 mb-6 group-hover:bg-yellow-400 group-hover:text-stone-900 transition-colors duration-300">
+                    <div className="w-12 h-12 bg-structure/5 rounded-2xl flex items-center justify-center text-structure mb-6 group-hover:bg-conversion group-hover:text-white transition-colors duration-300">
                         <Icon size={24} />
                     </div>
                     <h3 className="font-display text-2xl font-bold text-stone-900 leading-tight mb-2">
@@ -100,7 +100,7 @@ const VaultModal = ({ category, onClose }) => {
             >
                 <div className="p-8 pb-0">
                     <div className="flex justify-between items-start mb-6">
-                        <div className="w-14 h-14 bg-yellow-400 rounded-2xl flex items-center justify-center text-stone-900 shadow-sm">
+                        <div className="w-14 h-14 bg-conversion rounded-2xl flex items-center justify-center text-white shadow-sm">
                             <Icon size={28} />
                         </div>
                         <button
@@ -133,7 +133,7 @@ const VaultModal = ({ category, onClose }) => {
                     </div>
 
                     <div className="mt-8 pt-6 border-t border-stone-200">
-                        <button className="w-full py-3 bg-stone-900 text-white rounded-xl font-bold text-sm hover:bg-stone-800 transition-colors flex items-center justify-center gap-2">
+                        <button className="w-full py-3 bg-structure text-white rounded-xl font-bold text-sm hover:bg-structure/90 transition-colors flex items-center justify-center gap-2">
                             Adquirir Libro para Desbloquear
                         </button>
                     </div>
@@ -146,9 +146,9 @@ const VaultModal = ({ category, onClose }) => {
 const TestimonialCard = ({ author, text, role }) => {
     return (
         <div className="flex flex-col justify-between rounded-xl border bg-white/90 backdrop-blur-sm p-6 shadow-sm hover:shadow-md transition-all duration-300 w-[350px] md:w-[400px] h-[220px] shrink-0 border-stone-200/50">
-            <div className="flex gap-1 text-yellow-500 mb-4">
+            <div className="flex gap-1 text-conversion mb-4">
                 {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} fill="currentColor" className="text-yellow-400" />
+                    <Star key={i} size={16} fill="currentColor" className="text-conversion" />
                 ))}
             </div>
             <p className="text-stone-700 text-base italic leading-relaxed line-clamp-4 mb-4">
@@ -166,28 +166,30 @@ const BookPage = () => {
     // Scroll Tracking
     const { scrollYProgress } = useScroll();
 
-    // 1. La Verdad Visual (Paleta Estricta Reino)
-    // #009ADE (Top) -> #B7C9CF (Mid) -> #FEF3E1 (Bottom)
+    // Golden Harvest Palette Seamless Flow
+    // #F9F7F2 (Canvas) -> #B06540 (Terracotta) -> #F9F7F2 (Canvas)
     const backgroundColor = useTransform(
         scrollYProgress,
         [0, 0.4, 0.8],
-        ['#009ADE', '#B7C9CF', '#FEF3E1']
+        ['#F9F7F2', '#B06540', '#F9F7F2']
     );
 
     // Typography Correction: White on Blue, Dark on Cream
+    // Typography: Structure (Olive) on Cream -> White on Terracotta -> Structure on Cream
     const textColor = useTransform(
         scrollYProgress,
         [0, 0.3, 0.6],
-        ['#FFFFFF', '#FFFFFF', '#1e293b'] // White -> White -> Slate-800
+        ['#2F3E30', '#FFFFFF', '#2F3E30']
     );
 
     const [selectedCategory, setSelectedCategory] = React.useState(null);
 
     // Specific text colors for lighter sections
+    // Specific text colors for lighter sections
     const muteTextColor = useTransform(
         scrollYProgress,
         [0, 0.5],
-        ['rgba(255,255,255,0.7)', 'rgba(30, 41, 59, 0.7)']
+        ['rgba(47, 62, 48, 0.7)', 'rgba(255, 255, 255, 0.8)']
     );
 
     const targetRef = useRef(null);
@@ -224,9 +226,9 @@ const BookPage = () => {
                         {/* Text Column */}
                         <div className="space-y-6 text-center lg:text-left animate-in fade-in slide-in-from-bottom-10 duration-1000">
 
-                            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg">
+                            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg text-structure">
                                 El Reino de <br />
-                                <span className="text-white">lo Posible</span>
+                                <span className="text-conversion">lo Posible</span>
                             </h1>
 
                             <motion.p style={{ color: muteTextColor }} className="text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed font-body">
@@ -234,7 +236,7 @@ const BookPage = () => {
                             </motion.p>
 
                             <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
-                                <a href="#" className="w-full sm:w-auto px-8 py-4 bg-yellow-500 hover:bg-yellow-400 text-stone-900 font-bold rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                                <a href="#" className="w-full sm:w-auto px-8 py-4 bg-[#3E2723] hover:bg-[#2C1810] text-white font-bold rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2">
                                     <BookOpen size={20} />
                                     Comprar en Amazon
                                 </a>
@@ -288,7 +290,7 @@ const BookPage = () => {
                 <section id="vault" className="py-32 relative" ref={targetRef}>
                     <div className="relative z-10 max-w-7xl mx-auto px-6">
                         <div className="text-center mb-16">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-400 text-stone-900 font-bold text-xs uppercase rounded-full mb-6 shadow-lg">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-conversion text-white font-bold text-xs uppercase rounded-full mb-6 shadow-lg">
                                 <Sparkles size={12} fill="currentColor" />
                                 <span>Exclusivo para Lectores</span>
                             </div>

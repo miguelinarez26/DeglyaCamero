@@ -30,7 +30,7 @@ export default function Navbar({ className }) {
     const Lamp = () => (
         <motion.div
             layoutId="lamp"
-            className="absolute inset-0 w-full bg-yellow-400/5 rounded-full -z-10"
+            className="absolute inset-0 w-full bg-conversion/10 rounded-full -z-10"
             initial={false}
             transition={{
                 type: "spring",
@@ -38,10 +38,10 @@ export default function Navbar({ className }) {
                 damping: 30,
             }}
         >
-            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-yellow-400 rounded-t-full">
-                <div className="absolute w-12 h-6 bg-yellow-400/20 rounded-full blur-md -top-2 -left-2" />
-                <div className="absolute w-8 h-6 bg-yellow-400/20 rounded-full blur-md -top-1" />
-                <div className="absolute w-4 h-4 bg-yellow-400/20 rounded-full blur-sm top-0 left-2" />
+            <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-conversion rounded-t-full">
+                <div className="absolute w-12 h-6 bg-conversion/20 rounded-full blur-md -top-2 -left-2" />
+                <div className="absolute w-8 h-6 bg-conversion/20 rounded-full blur-md -top-1" />
+                <div className="absolute w-4 h-4 bg-conversion/20 rounded-full blur-sm top-0 left-2" />
             </div>
         </motion.div>
     );
@@ -63,7 +63,7 @@ export default function Navbar({ className }) {
                 >
                     <span className={cn(
                         "text-sm font-medium transition-colors relative z-10",
-                        activeTab === 'Inicio' ? "text-stone-900 font-bold" : "text-stone-600 hover:text-stone-900"
+                        activeTab === 'Inicio' ? "text-structure font-bold" : "text-stone-500 hover:text-structure"
                     )}>
                         Inicio
                     </span>
@@ -78,7 +78,7 @@ export default function Navbar({ className }) {
                 >
                     <span className={cn(
                         "text-sm font-medium transition-colors relative z-10",
-                        activeTab === 'Quiénes Somos' ? "text-stone-900 font-bold" : "text-stone-600 hover:text-stone-900"
+                        activeTab === 'Quiénes Somos' ? "text-structure font-bold" : "text-stone-500 hover:text-structure"
                     )}>
                         Quiénes Somos
                     </span>
@@ -148,7 +148,7 @@ export default function Navbar({ className }) {
                 >
                     <span className={cn(
                         "text-sm font-medium transition-colors relative z-10",
-                        activeTab === 'El Reino' ? "text-stone-900 font-bold" : "text-stone-600 hover:text-stone-900"
+                        activeTab === 'El Reino' ? "text-structure font-bold" : "text-stone-500 hover:text-structure"
                     )}>
                         El Reino
                     </span>
@@ -162,7 +162,7 @@ export default function Navbar({ className }) {
                         openBookingModal();
                     }}
                     onMouseEnter={() => setActive(null)}
-                    className="bg-yellow-400 hover:bg-yellow-500 text-stone-900 text-sm font-bold px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all transform hover:scale-105 cursor-pointer"
+                    className="bg-conversion hover:bg-opacity-90 text-white text-sm font-bold px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all transform hover:scale-105 cursor-pointer"
                 >
                     Agendar
                 </button>

@@ -17,8 +17,8 @@ const Home = () => {
     // Updated per user request (2): Cream (0-10%) -> Solid Blue (35-55%) -> Fade to Cream (80%)
     const backgroundColor = useTransform(
         scrollYProgress,
-        [0, 0.10, 0.35, 0.55, 0.8, 1],
-        ['#F9F9F7', '#F9F9F7', '#1B6CA8', '#1B6CA8', '#F9F9F7', '#F9F9F7']
+        [0, 0.25, 0.45, 0.60, 0.85, 1],
+        ['#F9F7F2', '#F9F7F2', '#B06540', '#B06540', '#F9F7F2', '#F9F7F2']
     );
 
     return (
