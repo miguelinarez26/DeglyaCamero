@@ -11,19 +11,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Vitalidad Sofisticada Palette (Strict)
-        "structure": "#1B6CA8", // Teal 700 (Primary Headers/Nav)
-        "conversion": "#E3B346", // Yellow 500 (Action Buttons)
-        "canvas": "#F9F9F7", // Stone 50 (Backgrounds)
-        "accent": "#44403C", // Stone 700 (Typography)
+        // Golden Harvest Palette (Premium Organic)
+        "structure": "#2F3E30", // Deep Olive (Nav/Headers)
+        "conversion": "#D4A373", // Harvest Gold (Buttons/Accents)
+        "canvas": "#F9F7F2", // Warm Alabaster (Backgrounds)
+        "accent": "#4A403A", // Dark Taupe (Typography)
 
         // Semantic & Compatibility overrides
-        "primary": "#1B6CA8", // Structure
-        "secondary": "#E3B346", // Conversion
-        "surface-light": "#F9F9F7", // Canvas
-        "surface-dark": "#1B6CA8", // Structure (as per 'Fondos oscuros')
-        "background-light": "#F9F9F7", // Canvas
-        "text-light": "#44403C", // Accent
+        "primary": "#2F3E30", // Structure
+        "secondary": "#D4A373", // Conversion
+        "surface-light": "#F9F7F2", // Canvas
+        "surface-dark": "#2F3E30", // Structure
+        "background-light": "#F9F7F2", // Canvas
+        "text-light": "#4A403A", // Accent
 
         // Map gray to stone for consistent warm greys
         gray: colors.stone,

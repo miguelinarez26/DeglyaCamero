@@ -49,7 +49,7 @@ const BookSection = () => {
                         </ul>
 
                         <div className="pt-4 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <a href="#" className="bg-conversion text-stone-900 px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-lg">
+                            <a href="#" className="bg-[#3E2723] text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 hover:bg-[#2C1810] transition-all shadow-lg">
                                 <ShoppingCart size={20} />
                                 Comprar en Amazon
                             </a>
@@ -60,6 +60,7 @@ const BookSection = () => {
                     </div>
                 </div>
             </div>
+
         </section>
     );
 };

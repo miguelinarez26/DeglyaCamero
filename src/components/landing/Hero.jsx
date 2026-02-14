@@ -64,10 +64,7 @@ const Hero = () => {
                         <a href="/servicios" className="bg-conversion text-stone-900 px-8 py-3 rounded-md font-semibold shadow-lg hover:shadow-conversion/30 transition-all hover:-translate-y-1">
                             Ver Servicios
                         </a>
-                        <a href="/about" className="flex items-center gap-2 px-8 py-3 rounded-md border border-stone-300 hover:border-primary hover:text-primary transition-colors text-stone-700">
-                            <PlayCircle size={18} />
-                            Mi Historia
-                        </a>
+
                     </div>
                 </motion.div>
 

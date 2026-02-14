@@ -6,6 +6,7 @@ import BookSection from '../components/landing/BookSection';
 import TestimonialsSection from '../components/landing/TestimonialsSection';
 import ContactForm from '../components/landing/ContactForm';
 import Footer from '../components/landing/Footer';
+import HeroVideoReveal from '../components/landing/HeroVideoReveal';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
 
@@ -14,11 +15,11 @@ const Home = () => {
     const { scrollYProgress } = useScroll();
 
     // Brand Palette Inverted: #F9F9F7 (Canvas/Cream) -> #1B6CA8 (Structure/Royal Blue/Book) -> #F9F9F7 (Cream/Testimonials)
-    // Updated per user request (2): Cream (0-10%) -> Solid Blue (35-55%) -> Fade to Cream (80%)
+    // Updated for Slider/Video addition: Book section is now much lower (approx 60-80% of page)
     const backgroundColor = useTransform(
         scrollYProgress,
-        [0, 0.10, 0.35, 0.55, 0.8, 1],
-        ['#F9F9F7', '#F9F9F7', '#1B6CA8', '#1B6CA8', '#F9F9F7', '#F9F9F7']
+        [0, 0.55, 0.65, 0.80, 0.9, 1],
+        ['#F9F7F2', '#F9F7F2', '#B06540', '#B06540', '#F9F7F2', '#F9F7F2']
     );
 
     return (
@@ -31,11 +32,14 @@ const Home = () => {
 
             <div className="relative z-10">
                 <Navbar />
+                <HeroVideoReveal />
+
                 <Hero />
                 <Services />
                 <BookSection />
                 <TestimonialsSection />
                 <ContactForm />
+
                 {/* Footer has its own solid background, so it handles the bottom visually */}
                 <Footer />
             </div>
