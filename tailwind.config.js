@@ -17,21 +17,34 @@ export default {
         "canvas": "#F9F7F2", // Warm Alabaster (Backgrounds)
         "accent": "#4A403A", // Dark Taupe (Typography)
 
-        // Semantic & Compatibility overrides
-        "primary": "#2F3E30", // Structure
-        "secondary": "#D4A373", // Conversion
-        "surface-light": "#F9F7F2", // Canvas
-        "surface-dark": "#2F3E30", // Structure
-        "background-light": "#F9F7F2", // Canvas
-        "text-light": "#4A403A", // Accent
+        // Semantic & Compatibility overrides (Dashboards)
+        "primary": "#2F3E30",
+        "secondary": "#D4A373",
+        "surface-light": "#F9F7F2",
+        "surface-dark": "#2F3E30",
+        "background-light": "#F9F7F2",
+        "text-light": "#4A403A",
+
+        // Identidad Visual Stitch Replicación (Exacta)
+        "deglya-primary": "#C89F70",     // Oro/Beige
+        "deglya-accent": "#2F3E35",      // Verde Bosque Oscuro
+        "deglya-surface": "#F8F6F2",     // Crema/Off-white
+        "deglya-typography": "#2D3748",  // Text Dark
+        "deglya-soft-gold": "#EADBC8",   // Lighter gold
+        "deglya-dark": "#161E1A",        // Sidebar Dark
+        "deglya-footer-dark": "#1F2923", // Background Dark
+        // Stitch Reference Palette (Technological/Modern)
+        "stitch-neon": "#46ec13",
+        "stitch-dark-bg": "#0a0a0a",
+        "stitch-card": "#181818",
 
         // Map gray to stone for consistent warm greys
         gray: colors.stone,
       },
       fontFamily: {
-        "sans": ["Nunito", "sans-serif"],
+        "sans": ["Lato", "sans-serif"],
         "display": ["Playfair Display", "serif"],
-        "body": ["Nunito", "sans-serif"],
+        "body": ["Lato", "sans-serif"],
       },
     },
     plugins: [

@@ -22,12 +22,14 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import DashboardLayout from './components/layout/DashboardLayout';
 import PatientDashboard from './pages/dashboard/PatientDashboard';
 import ReceptionDashboard from './pages/dashboard/ReceptionDashboard';
+import SpecialistDashboard from './pages/dashboard/SpecialistDashboard';
+import SpecialistPatients from './pages/dashboard/SpecialistPatients';
+import SpecialistAgenda from './pages/dashboard/SpecialistAgenda';
+import SpecialistFinances from './pages/dashboard/SpecialistFinances';
 
 // Placeholders
 const Contact = () => <div className="p-12 text-center text-deglya-teal font-display text-2xl">Contacto (En Construcción)</div>;
 
-// Dashboard Placeholders
-const SpecialistDashboard = () => <div className="p-12 text-white">Dashboard Especialista (En Construcción)</div>;
 
 import ScrollToHashElement from './components/ScrollToHashElement';
 
@@ -80,6 +82,9 @@ function App() {
         <Route element={<ProtectedRoute allowedRoles={['specialist']} />}>
           <Route path="/dashboard/especialista" element={<DashboardLayout role="specialist" />}>
             <Route index element={<SpecialistDashboard />} />
+            <Route path="pacientes" element={<SpecialistPatients />} />
+            <Route path="agenda" element={<SpecialistAgenda />} />
+            <Route path="finanzas" element={<SpecialistFinances />} />
           </Route>
         </Route>
 

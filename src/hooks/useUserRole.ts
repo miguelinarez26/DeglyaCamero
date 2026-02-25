@@ -20,7 +20,18 @@ export const useUserRole = (): UserContext => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // --- MODO DEMO / BYPASS (Solo para visualización local) ---
+    const isDemo = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('demo') === 'specialist';
+
     useEffect(() => {
+        if (isDemo) {
+            setUser({ email: 'deglya.demo@gmail.com', id: 'demo-id' });
+            setProfile({ full_name: 'Deglya Camero (Modo Demo)', role: 'specialist' } as any);
+            setRole('specialist');
+            setLoading(false);
+            return;
+        }
+
         // 1. Check active session
         const checkSession = async () => {
             try {
