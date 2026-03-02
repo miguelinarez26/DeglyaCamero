@@ -31,9 +31,9 @@ const AboutSection = () => {
                     <div className="relative order-2 lg:order-1">
                         <div className="relative rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.02] transition-transform duration-500">
                             <img
-                                src="https://yqmqzyaqlhgzcbcbintn.supabase.co/storage/v1/object/public/Imagenes%20Deglya%20web/Especialistas/Todos%20los%20Especialistas.png"
+                                src={import.meta.env.BASE_URL + "images/El equipo de psicoterapeutas.jpg"}
                                 alt="Equipo Deglya Camero Group"
-                                className="w-full h-auto object-cover object-top"
+                                className="w-full aspect-[4/3] sm:aspect-video object-cover object-[center_40%]"
                             />
                             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-8">
                                 <p className="text-white font-display text-2xl font-bold">Nuestro Equipo</p>
@@ -66,10 +66,10 @@ const AboutSection = () => {
                         <div className="pt-4">
                             <div className="flex gap-12">
                                 <div>
-                                    <p className="text-3xl font-display font-bold text-booking-primary">
+                                    <p className="text-4xl font-display font-bold text-gradient-wellness">
                                         <Counter from={0} to={2000} suffix="+" />
                                     </p>
-                                    <p className="text-sm text-deglya-wood/60 uppercase tracking-wider font-semibold">Pacientes</p>
+                                    <p className="text-sm mt-1 text-deglya-wood/60 uppercase tracking-wider font-semibold">Pacientes</p>
                                 </div>
                             </div>
                         </div>

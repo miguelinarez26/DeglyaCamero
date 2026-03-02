@@ -3,12 +3,22 @@ import { motion } from 'framer-motion';
 import Navbar from './landing/Navbar';
 import Footer from './landing/Footer';
 import ServiceModal from './services/ServiceModal';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Check, ChevronDown } from 'lucide-react';
 import { SERVICES_DATA } from '../data/services';
 
 const ServicesPage = () => {
     const [selectedService, setSelectedService] = useState(null);
     const [filter, setFilter] = useState('all'); // all, personas, empresas
+
+    // Dropdown form state
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [selectedArea, setSelectedArea] = useState("");
+
+    const areaOptions = [
+        { value: 'corporativo', label: 'Consultoría para Empresas' },
+        { value: 'individual', label: 'Acompañamiento Personal' },
+        { value: 'otro', label: 'Otro Enfoque' },
+    ];
 
     const filteredServices = SERVICES_DATA.filter(service =>
         filter === 'all' ? true : service.category === filter
@@ -66,49 +76,53 @@ const ServicesPage = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
                                 onClick={() => setSelectedService(service)}
-                                className={`group cursor-pointer relative bg-white rounded-3xl overflow-hidden transition-all duration-500 transform hover:-translate-y-1 h-[450px]
-                                    ${service.category === 'personas'
-                                        ? 'border-2 border-transparent hover:border-yellow-400/50 hover:shadow-[0_0_20px_rgba(250,204,21,0.3)]'
-                                        : 'border-2 border-transparent hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.3)]'}
-                                    shadow-sm`}
+                                className="group cursor-pointer relative flex flex-col h-full bg-[#F4EFE6] rounded-3xl p-6 lg:p-7 shadow-sm transition-all duration-500 overflow-hidden hover:-translate-y-1 hover:shadow-xl"
                             >
-                                {/* Background Image */}
-                                <div className="absolute inset-0">
-                                    <img
-                                        src={service.image}
-                                        alt={service.title}
-                                        className="w-full h-full object-contain object-center px-6 pt-6 pb-32 transition-transform duration-700 group-hover:scale-105"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
-                                </div>
+                                {/* Hover Gradient Background */}
+                                <div className="absolute inset-0 bg-gradient-to-tr from-[#D96B2F] via-[#DB5E42] to-[#D35355] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none"></div>
 
-                                {/* Content Overlay */}
-                                <div className="absolute inset-0 p-8 flex flex-col justify-end">
-                                    {/* Top Metadata */}
-                                    <div className="absolute top-6 left-6 right-6 flex justify-between items-start opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <div className="bg-structure/5 backdrop-blur-sm p-3 rounded-full text-structure border border-structure/10 shadow-sm">
-                                            <Icon size={20} />
-                                        </div>
-                                        <div className="bg-structure backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-wider shadow-md">
-                                            {service.category}
-                                        </div>
-                                    </div>
-
-                                    {/* Bottom Text */}
-                                    <div className="transform transition-all duration-500 translate-y-2 group-hover:translate-y-0 relative z-10">
-                                        <h3 className="font-display font-bold text-2xl text-structure mb-2 drop-shadow-sm">
+                                <div className="relative z-10 flex flex-col h-full">
+                                    {/* Top Text Area (Title & Subtitle) */}
+                                    <div className="mb-4">
+                                        <h3 className="text-2xl font-medium font-display text-stone-800 group-hover:text-white transition-colors duration-500">
                                             {service.title}
                                         </h3>
-                                        <p className="text-stone-600 text-sm leading-relaxed mb-4 line-clamp-3 font-medium">
+                                        <p className="text-conversion group-hover:text-white transition-colors duration-500 font-bold text-sm mt-1">
+                                            {service.price || "Contactar"}
+                                        </p>
+                                    </div>
+
+                                    {/* Image Box */}
+                                    <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 bg-[#E8E2D6] flex-shrink-0">
+                                        <img src={service.image} alt={service.title} className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${service.imagePosition || 'object-center'}`} />
+                                    </div>
+
+                                    {/* Features & Description */}
+                                    <div className="flex-grow space-y-4 mb-6">
+                                        <p className="text-stone-600 group-hover:text-white transition-colors duration-500 text-sm leading-relaxed line-clamp-2">
                                             {service.shortDescription}
                                         </p>
+                                        <ul className="space-y-2">
+                                            {(service.features || []).slice(0, 3).map((feature, idx) => (
+                                                <li key={idx} className="flex items-start text-xs font-semibold text-stone-600 group-hover:text-white transition-colors duration-500">
+                                                    <div className="rounded-full mr-2 mt-0.5 text-conversion group-hover:text-white transition-colors duration-500">
+                                                        <Check size={14} strokeWidth={3} />
+                                                    </div>
+                                                    {feature}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
 
-                                        <div className="border-t border-stone-200 pt-4 flex items-center justify-between">
-                                            <span className="text-conversion font-bold text-xs uppercase tracking-wider flex items-center gap-2 group-hover:gap-3 transition-all">
-                                                Ver detalles
-                                                <ArrowRight size={14} className="text-conversion" />
-                                            </span>
-                                        </div>
+                                    {/* Bottom Buttons (CTA) */}
+                                    <div className="flex items-center justify-end mt-auto pt-2 gap-2">
+                                        {/* Action Button */}
+                                        <button
+                                            className="py-2.5 px-5 rounded-full border border-stone-800 text-stone-800 text-sm font-medium transition-colors group-hover:border-white group-hover:text-white hover:bg-stone-800 hover:text-white group-hover:hover:bg-white group-hover:hover:text-[#D1554A] whitespace-nowrap"
+                                            onClick={(e) => e.stopPropagation()}
+                                        >
+                                            {service.cta || "Ver más"}
+                                        </button>
                                     </div>
                                 </div>
                             </motion.div>
@@ -116,17 +130,100 @@ const ServicesPage = () => {
                     })}
                 </div>
 
-                {/* Banner CTA */}
-                <div className="mt-20 bg-structure rounded-3xl p-8 md:p-12 relative overflow-hidden text-center text-white shadow-2xl">
-                    <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                    <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-                        <h2 className="font-display text-3xl font-bold">¿Necesitas una propuesta personalizada?</h2>
-                        <p className="text-white/80 text-lg">
-                            Diseñamos planes de bienestar corporativo y acompañamiento personal a la medida de tus necesidades.
-                        </p>
-                        <a href="#contacto" className="inline-block bg-conversion hover:bg-conversion/90 text-stone-900 px-8 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-conversion/50 transform hover:scale-105">
-                            Contactar Especialista
-                        </a>
+                {/* Banner CTA (Custom Proposal) */}
+                <div className="mt-20 grid grid-cols-1 lg:grid-cols-2 rounded-[2.5rem] overflow-hidden bg-[#F4EFE6] shadow-sm hover:shadow-xl transition-shadow duration-500">
+                    {/* Left: Image */}
+                    <div className="relative min-h-[450px] lg:min-h-full">
+                        <img
+                            src={import.meta.env.BASE_URL + "images/_AND7822.jpg"}
+                            alt="Deglya Camero"
+                            className="absolute inset-0 w-full h-full object-cover"
+                            style={{ objectPosition: 'center 75%' }}
+                        />
+                    </div>
+
+                    {/* Right: Form */}
+                    <div className="p-10 lg:p-16 flex flex-col justify-center">
+                        <div className="text-center mb-10">
+                            <h2 className="font-display text-4xl lg:text-4xl font-bold text-stone-800 mb-4 tracking-tight">
+                                ¿Necesitas una propuesta personalizada?
+                            </h2>
+                            <p className="text-stone-600 text-lg">
+                                Diseñamos planes de bienestar corporativo y acompañamiento analítico a la medida de tu empresa o necesidades personales.
+                            </p>
+                        </div>
+
+                        <form className="space-y-4 max-w-lg mx-auto w-full">
+                            <div className="w-full">
+                                <input
+                                    type="text"
+                                    placeholder="Tu Nombre / Empresa"
+                                    className="w-full px-6 py-4 rounded-full border-[1.5px] border-stone-800 bg-transparent placeholder:text-stone-500 text-stone-800 focus:outline-none focus:border-conversion focus:ring-1 focus:ring-conversion transition-colors"
+                                />
+                            </div>
+                            <div className="w-full">
+                                <input
+                                    type="tel"
+                                    placeholder="Tu Teléfono"
+                                    className="w-full px-6 py-4 rounded-full border-[1.5px] border-stone-800 bg-transparent placeholder:text-stone-500 text-stone-800 focus:outline-none focus:border-conversion focus:ring-1 focus:ring-conversion transition-colors"
+                                />
+                            </div>
+                            <div className="w-full relative">
+                                <div
+                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                    className="w-full px-6 py-4 rounded-full border-[1.5px] border-stone-800 bg-transparent text-stone-800 focus:outline-none hover:border-conversion transition-colors cursor-pointer flex justify-between items-center"
+                                >
+                                    <span className={selectedArea ? "text-stone-800" : "text-stone-500"}>
+                                        {selectedArea ? areaOptions.find(o => o.value === selectedArea)?.label : "Área de Interés"}
+                                    </span>
+                                    <ChevronDown
+                                        className={`text-stone-800 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                                        size={18}
+                                    />
+                                </div>
+
+                                {/* Custom Dropdown Menu */}
+                                {isDropdownOpen && (
+                                    <>
+                                        <div
+                                            className="fixed inset-0 z-40"
+                                            onClick={() => setIsDropdownOpen(false)}
+                                        ></div>
+                                        <div className="absolute top-full left-0 w-full mt-2 bg-[#F4EFE6] border-[1.5px] border-stone-800 rounded-3xl shadow-xl overflow-hidden z-50 flex flex-col">
+                                            {areaOptions.map((option) => (
+                                                <div
+                                                    key={option.value}
+                                                    onClick={() => {
+                                                        setSelectedArea(option.value);
+                                                        setIsDropdownOpen(false);
+                                                    }}
+                                                    className="px-6 py-4 cursor-pointer hover:bg-stone-800 text-stone-700 hover:text-white transition-colors border-b border-stone-800/10 last:border-0 font-medium"
+                                                >
+                                                    {option.label}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+
+                            <div className="w-full">
+                                <textarea
+                                    placeholder="Cuéntanos brevemente sobre tu equipo o desafío actual..."
+                                    rows="4"
+                                    className="w-full px-6 py-4 rounded-3xl border-[1.5px] border-stone-800 bg-transparent placeholder:text-stone-500 text-stone-800 focus:outline-none focus:border-conversion focus:ring-1 focus:ring-conversion transition-colors resize-none"
+                                ></textarea>
+                            </div>
+
+                            <div className="pt-2">
+                                <button
+                                    type="button"
+                                    className="w-full btn-wellness text-white font-bold text-lg py-4 rounded-full shadow-lg hover:shadow-conversion/50 focus:outline-none"
+                                >
+                                    Contactar Especialista
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

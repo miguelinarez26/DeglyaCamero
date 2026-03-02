@@ -1,13 +1,15 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { X } from 'lucide-react';
 import HeroSlider from './HeroSlider';
 
 const HeroVideoReveal = () => {
     // We use the scroll of the *entire* section
     const containerRef = useRef(null);
+    const [isVideoOpen, setIsVideoOpen] = useState(false);
+
     const { scrollYProgress } = useScroll({
         target: containerRef,
-        // The animation runs while this container is in view
         offset: ["start start", "end end"]
     });
 
@@ -44,7 +46,7 @@ const HeroVideoReveal = () => {
 
                     {/* Typography Header */}
                     <div className="text-center mb-16 max-w-4xl">
-                        <span className="text-sm font-bold tracking-[0.3em] text-[#D4A373] uppercase mb-4 block animate-fadeIn">
+                        <span className="text-sm font-bold tracking-[0.3em] uppercase mb-4 block animate-fadeIn text-gradient-wellness">
                             Tu Viaje Empieza Aquí
                         </span>
                         <h2 className="text-[#2F3E30] font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight animate-slideUp">
@@ -53,22 +55,21 @@ const HeroVideoReveal = () => {
                         </h2>
                     </div>
 
-                    {/* The Video "Card" */}
-                    <div className="w-full max-w-6xl aspect-video rounded-[2rem] overflow-hidden shadow-2xl bg-black relative group border border-stone-200">
-                        <video
-                            className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-700"
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                        >
-                            <source src="https://videos.pexels.com/video-files/855564/855564-hd_1920_1080_24fps.mp4" type="video/mp4" />
-                        </video>
+                    {/* The Video "Card" with Image Cover */}
+                    <div
+                        className="w-full max-w-6xl aspect-video rounded-[2rem] overflow-hidden shadow-2xl bg-black relative group border border-stone-200 cursor-pointer"
+                        onClick={() => setIsVideoOpen(true)}
+                    >
+                        <img
+                            src={import.meta.env.BASE_URL + "images/deglya-4.jpg"}
+                            alt="Video Manifiesto"
+                            className="w-full h-full object-cover object-[center_35%] opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                        />
 
                         {/* Elegant Play Button Center */}
                         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div className="w-24 h-24 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 shadow-lg group-hover:scale-110 transition-transform duration-500">
-                                <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[22px] border-l-white border-b-[12px] border-b-transparent ml-2 opacity-90" />
+                            <div className="w-24 h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 shadow-2xl group-hover:scale-110 group-hover:bg-white/30 transition-all duration-500">
+                                <div className="w-0 h-0 border-t-[14px] border-t-transparent border-l-[24px] border-l-white border-b-[14px] border-b-transparent ml-2 opacity-100" />
                             </div>
                         </div>
 
@@ -81,6 +82,45 @@ const HeroVideoReveal = () => {
 
                 </div>
             </div>
+
+            {/* YouTube Video Modal Popup */}
+            <AnimatePresence>
+                {isVideoOpen && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 md:p-8 backdrop-blur-sm"
+                        onClick={() => setIsVideoOpen(false)}
+                    >
+                        {/* Close button */}
+                        <button
+                            className="absolute top-6 right-6 md:top-10 md:right-10 text-white/70 hover:text-white transition-colors p-2"
+                            onClick={() => setIsVideoOpen(false)}
+                        >
+                            <X size={32} />
+                        </button>
+
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+                            className="w-full max-w-6xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
+                            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the video itself
+                        >
+                            <iframe
+                                className="w-full h-full"
+                                src="https://www.youtube.com/embed/Nw7xV0PhnCU?autoplay=1&rel=0&showinfo=0"
+                                title="Video de Deglya Camero"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                allowFullScreen
+                            ></iframe>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
         </div>
     );

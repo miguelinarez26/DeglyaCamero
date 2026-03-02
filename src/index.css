@@ -1,25 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  /* Golden Harvest Palette */
-  --color-structure: #2F3E30;
-  /* Deep Olive */
-  --color-conversion: #D4A373;
-  /* Harvest Gold */
-  --color-canvas: #F9F7F2;
-  /* Warm Alabaster */
-  --color-accent: #4A403A;
-  /* Dark Taupe */
+  /* Wellness Bliss Palette */
+  --color-structure: #1E1B1B;
+  /* Charcoal Heading */
+  --color-conversion: #D96B2F;
+  /* Terracotta Start */
+  --color-canvas: #FDFBF7;
+  /* Cream Background */
+  --color-accent: #212121;
+  /* Dark Gray Body */
 
   /* Legacy Mappings (Redirecting to new system) */
   --color-deglya-teal: var(--color-structure);
   --color-deglya-mustard: var(--color-conversion);
   --color-deglya-wood: var(--color-accent);
-  /* Remapped from Wood to Stone 700 */
   --color-deglya-cream: var(--color-canvas);
-  /* Remapped from Cream to Stone 50 */
-  --color-deglya-terracota: #E7E5E4;
-  /* Deprecated: Mapping to Stone 200 */
+  --color-deglya-terracota: #D35355;
+  /* Coral End */
 
   /* Semantic Aliases */
   --color-primary: var(--color-structure);
@@ -35,33 +33,66 @@
 
 @layer base {
   body {
-    /* Updated to strictly follow AGENT_CONFIG.md: Canvas & Accent */
-    @apply overflow-x-hidden bg-[#F9F7F2] text-[#4A403A] font-sans;
+    /* Updated to Wellness Bliss Colors */
+    @apply overflow-x-hidden bg-[#FDFBF7] text-[#212121] font-sans;
   }
-
-
 }
 
 @layer utilities {
   .ai-insights-gradient {
-    /* Golden Morning Gradient (Alabaster -> Soft Gold -> Harvest Gold) */
-    background: linear-gradient(135deg, #F9F7F2 40%, #EADBC8 70%, #D4A373 100%);
+    /* Wellness Bliss Soft Gradient */
+    background: linear-gradient(135deg, #FDFBF7 40%, #EDE2D7 70%, #D96B2F 100%);
     background-size: 200% 200%;
     animation: gradient 10s ease infinite;
   }
 
   .hero-gradient {
-    /* Golden Mist Overlay */
+    /* Wellness Mist Overlay */
     background: linear-gradient(to right,
-        rgba(249, 247, 242, 0.95) 0%,
-        rgba(249, 247, 242, 0.8) 50%,
-        rgba(212, 163, 115, 0.1) 100%);
+        rgba(253, 251, 247, 0.95) 0%,
+        rgba(253, 251, 247, 0.8) 50%,
+        rgba(217, 107, 47, 0.1) 100%);
     backdrop-filter: blur(4px);
   }
 
   .dark .hero-gradient {
-    /* Kept dark mode but might need adjustment later */
     background: linear-gradient(to right, rgba(28, 25, 23, 0.95) 0%, rgba(28, 25, 23, 0.7) 50%, rgba(28, 25, 23, 0.3) 80%, transparent 100%);
+  }
+
+  /* NEW: Wellness Button Effect */
+  .btn-wellness {
+    @apply relative overflow-hidden text-white font-semibold flex items-center justify-center transition-all duration-300;
+    background: linear-gradient(-90deg, #D96B2F, #D35355);
+    background-size: 200% auto;
+    box-shadow: inset 0 0 0 2px transparent;
+  }
+
+  .btn-wellness:hover {
+    background: #FFFFFF;
+    color: #D96B2F !important;
+    box-shadow: inset 0 0 0 2px #D96B2F, 0 4px 15px rgba(217, 107, 47, 0.3);
+  }
+
+  /* NEW: Wellness Image Hover Zoom Effect */
+  .wellness-hover-img {
+    @apply overflow-hidden rounded-xl;
+  }
+
+  .wellness-hover-img img {
+    @apply transition-transform duration-[1500ms] ease-out w-full h-full object-cover;
+  }
+
+  .wellness-hover-img:hover img {
+    @apply scale-105;
+  }
+
+  /* NEW: Wellness Gradient Text for Subtitles */
+  .text-gradient-wellness {
+    background: linear-gradient(90deg, #D96B2F 0%, #D35355 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
   }
 
   /* Custom scrollbar matching canvas */
@@ -70,11 +101,11 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #F9F7F2;
+    background: #FDFBF7;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #2F3E30;
+    background: #1E1B1B;
     /* Structure color */
     border-radius: 4px;
   }

@@ -17,11 +17,12 @@ export const MenuItem = ({
     item,
     children,
     href,
+    isActiveTab,
 }) => {
     const content = (
         <motion.p
             transition={{ duration: 0.3 }}
-            className="cursor-pointer text-stone-600 hover:text-stone-900 font-medium text-sm"
+            className={`cursor-pointer font-medium text-sm relative z-10 ${isActiveTab ? 'text-structure font-bold' : 'text-stone-500 hover:text-structure'}`}
         >
             {item}
         </motion.p>
@@ -63,7 +64,7 @@ export const Menu = ({
     return (
         <nav
             onMouseLeave={() => setActive(null)}
-            className="relative rounded-full border border-stone-200 bg-white/90 backdrop-blur-md shadow-lg flex justify-center space-x-6 px-8 py-3 items-center"
+            className="relative rounded-full border border-stone-200 bg-white/90 backdrop-blur-md shadow-lg flex justify-center space-x-6 px-8 py-0.5 items-center"
         >
             {children}
         </nav>

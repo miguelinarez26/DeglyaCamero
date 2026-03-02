@@ -8,7 +8,7 @@ const values = [
         desc: "Honestidad y coherencia en cada paso.",
         why: "La seguridad es el cimiento necesario para la vulnerabilidad terapéutica.",
         forWhat: "Para garantizar un espacio donde puedas expresarte sin juicios ni riesgos.",
-        bg: "bg-structure/10",
+        bg: "bg-[#F4EFE6]",
         text: "text-structure",
         border: "border-structure/20"
     },
@@ -18,7 +18,7 @@ const values = [
         desc: "Escuchamos y comprendemos sin juzgar.",
         why: "Nadie sana en la frialdad; el vínculo humano es el motor del cambio.",
         forWhat: "Para validar tu experiencia y transformar el dolor en aprendizaje consciente.",
-        bg: "bg-conversion/10",
+        bg: "bg-[#F4EFE6]",
         text: "text-conversion",
         border: "border-conversion/20"
     },
@@ -28,7 +28,7 @@ const values = [
         desc: "Formación continua para lo mejor.",
         why: "Tu bienestar merece la mejor formación y precisión diagnóstica posible.",
         forWhat: "Para asegurar resultados medibles y un progreso real en tu Rediseño Vital.",
-        bg: "bg-stone-100",
+        bg: "bg-[#F4EFE6]",
         text: "text-accent",
         border: "border-stone-200"
     },
@@ -38,7 +38,7 @@ const values = [
         desc: "El poder de cambiar y crecer.",
         why: "El rediseño requiere una brújula clara para no perderse en el síntoma.",
         forWhat: "Para que alcances una autonomía emocional duradera y auténtica.",
-        bg: "bg-structure/10",
+        bg: "bg-[#F4EFE6]",
         text: "text-structure",
         border: "border-structure/20"
     },
@@ -48,7 +48,7 @@ const values = [
         desc: "Tu información siempre protegida.",
         why: "Privacidad clínica absoluta y ética profesional en cada interacción.",
         forWhat: "Para construir una alianza terapéutica sólida basada en la confianza mutua.",
-        bg: "bg-conversion/10",
+        bg: "bg-[#F4EFE6]",
         text: "text-conversion",
         border: "border-conversion/20"
     },
@@ -58,7 +58,7 @@ const values = [
         desc: "Espacios seguros donde te sientas en casa.",
         why: "La salud mental debe ser accesible, comprensiva y libre de barreras.",
         forWhat: "Para ofrecerte métodos de reprogramación mental efectivos y modernos.",
-        bg: "bg-white",
+        bg: "bg-[#F4EFE6]",
         text: "text-accent",
         border: "border-stone-200"
     }

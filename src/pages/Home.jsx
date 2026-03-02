@@ -18,8 +18,8 @@ const Home = () => {
     // Updated for Slider/Video addition: Book section is now much lower (approx 60-80% of page)
     const backgroundColor = useTransform(
         scrollYProgress,
-        [0, 0.55, 0.65, 0.80, 0.9, 1],
-        ['#F9F7F2', '#F9F7F2', '#B06540', '#B06540', '#F9F7F2', '#F9F7F2']
+        [0, 1],
+        ['#FDFBF7', '#FDFBF7'] // Fondo claro y premium permanente
     );
 
     return (
@@ -34,8 +34,9 @@ const Home = () => {
                 <Navbar />
                 <HeroVideoReveal />
 
-                <Hero />
+                {/* Secciones intercambiadas por petición: Pilares primero, luego el módulo de ¿Quieres potenciar... */}
                 <Services />
+                <Hero />
                 <BookSection />
                 <TestimonialsSection />
                 <ContactForm />

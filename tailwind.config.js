@@ -11,19 +11,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Golden Harvest Palette (Premium Organic)
-        "structure": "#2F3E30", // Deep Olive (Nav/Headers)
-        "conversion": "#D4A373", // Harvest Gold (Buttons/Accents)
-        "canvas": "#F9F7F2", // Warm Alabaster (Backgrounds)
-        "accent": "#4A403A", // Dark Taupe (Typography)
+        // Wellness Bliss Palette
+        "wellness-bg": "#FDFBF7",
+        "wellness-heading": "#1E1B1B",
+        "wellness-body": "#212121",
+        "wellness-cta-start": "#D96B2F",
+        "wellness-cta-end": "#D35355",
+        "wellness-accent": "#EDE2D7",
 
         // Semantic & Compatibility overrides
-        "primary": "#2F3E30", // Structure
-        "secondary": "#D4A373", // Conversion
-        "surface-light": "#F9F7F2", // Canvas
-        "surface-dark": "#2F3E30", // Structure
-        "background-light": "#F9F7F2", // Canvas
-        "text-light": "#4A403A", // Accent
+        "structure": "#1E1B1B",
+        "conversion": "#D96B2F",
+        "canvas": "#FDFBF7",
+        "accent": "#212121",
+
+        "primary": "#1E1B1B", // Structure
+        "secondary": "#D96B2F", // Conversion
+        "surface-light": "#FDFBF7", // Canvas
+        "surface-dark": "#1E1B1B", // Structure
+        "background-light": "#FDFBF7", // Canvas
+        "text-light": "#212121", // Accent
 
         // Map gray to stone for consistent warm greys
         gray: colors.stone,

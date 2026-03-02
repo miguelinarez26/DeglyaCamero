@@ -1,7 +1,16 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const ContactForm = () => {
+    const ref = useRef(null);
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start end", "end start"]
+    });
+    // Rango de rotación de -90 a 90, e movimiento vertical (parallax de arriba hacia abajo)
+    const rotate = useTransform(scrollYProgress, [0, 1], [-120, 120]);
+    const y = useTransform(scrollYProgress, [0, 1], [50, -100]);
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -24,7 +33,7 @@ const ContactForm = () => {
     };
 
     return (
-        <section className="py-24 px-6 lg:px-12 bg-transparent">
+        <section ref={ref} className="py-24 px-6 lg:px-12 bg-transparent relative overflow-hidden">
             <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
 
                 {/* Text Side */}
@@ -32,19 +41,29 @@ const ContactForm = () => {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="order-2 lg:order-1 space-y-6"
+                    className="order-2 lg:order-1 space-y-6 relative"
                 >
-                    <span className="text-primary font-bold uppercase tracking-widest text-sm">Mi Misión</span>
-                    <h2 className="text-3xl lg:text-4xl font-display font-semibold text-stone-700">
-                        Rediseñamos las condiciones internas
-                    </h2>
-                    <div className="prose prose-lg text-stone-700">
-                        <p>
-                            Rediseñamos y transformamos las condiciones internas de individuos, parejas, familias y equipos que, por diversos factores, han sufrido adversidad psicológica y emocional.
-                        </p>
-                        <p>
-                            Cambiamos, potenciamos y redefinimos los resultados de vida, profesionales y de productividad de aquellos que participan de nuestro sistema de acompañamiento y rediseño.
-                        </p>
+                    {/* Background Parallax Icon Element for Text */}
+                    <motion.img
+                        src={import.meta.env.BASE_URL + "images/icono-logo.png"}
+                        alt="Decoración Fondo"
+                        style={{ y, rotate }}
+                        className="absolute inset-0 m-auto w-full h-auto max-w-md object-contain z-0 pointer-events-none opacity-20 -translate-y-10 scale-[1.3]"
+                    />
+
+                    <div className="relative z-10">
+                        <span className="font-bold uppercase tracking-widest text-sm text-gradient-wellness">Mi Misión</span>
+                        <h2 className="text-3xl lg:text-4xl font-display font-semibold text-stone-700">
+                            Rediseñamos las condiciones internas
+                        </h2>
+                        <div className="prose prose-lg text-stone-700">
+                            <p>
+                                Rediseñamos y transformamos las condiciones internas de individuos, parejas, familias y equipos que, por diversos factores, han sufrido adversidad psicológica y emocional.
+                            </p>
+                            <p>
+                                Cambiamos, potenciamos y redefinimos los resultados de vida, profesionales y de productividad de aquellos que participan de nuestro sistema de acompañamiento y rediseño.
+                            </p>
+                        </div>
                     </div>
                 </motion.div>
 
@@ -54,71 +73,74 @@ const ContactForm = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="order-1 lg:order-2 bg-white/50 backdrop-blur-sm p-8 lg:p-10 rounded-3xl shadow-2xl relative border border-stone-200"
+                    className="order-1 lg:order-2 relative"
                 >
-                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-2xl pointer-events-none" />
 
-                    <h3 className="text-2xl font-display font-bold mb-2 text-stone-700">Agenda tu sesión</h3>
-                    <p className="text-stone-600 mb-8 text-sm">Da el primer paso hacia tu transformación hoy mismo.</p>
+                    <div className="bg-[#F4EFE6] p-8 lg:p-10 rounded-3xl shadow-2xl relative border border-stone-200 z-10">
+                        <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-2xl pointer-events-none" />
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-xs font-bold text-stone-600 uppercase mb-1">Nombre</label>
-                                <input
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    type="text"
-                                    placeholder="Tu nombre"
-                                    className="w-full bg-stone-50 border border-stone-200 rounded-md px-4 py-2 text-stone-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                                    required
-                                />
+                        <h3 className="text-2xl font-display font-bold mb-2 text-stone-700">Agenda tu sesión</h3>
+                        <p className="text-stone-600 mb-8 text-sm">Da el primer paso hacia tu transformación hoy mismo.</p>
+
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-xs font-bold text-stone-600 uppercase mb-1">Nombre</label>
+                                    <input
+                                        name="name"
+                                        value={formData.name}
+                                        onChange={handleChange}
+                                        type="text"
+                                        placeholder="Tu nombre"
+                                        className="w-full bg-stone-50 border border-stone-200 rounded-md px-4 py-2 text-stone-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-stone-600 uppercase mb-1">Email</label>
+                                    <input
+                                        name="email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        type="email"
+                                        placeholder="correo@ejemplo.com"
+                                        className="w-full bg-stone-50 border border-stone-200 rounded-md px-4 py-2 text-stone-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
+                                        required
+                                    />
+                                </div>
                             </div>
                             <div>
-                                <label className="block text-xs font-bold text-stone-600 uppercase mb-1">Email</label>
-                                <input
-                                    name="email"
-                                    value={formData.email}
+                                <label className="block text-xs font-bold text-stone-600 uppercase mb-1">Tipo de Consulta</label>
+                                <select
+                                    name="type"
+                                    value={formData.type}
                                     onChange={handleChange}
-                                    type="email"
-                                    placeholder="correo@ejemplo.com"
                                     className="w-full bg-stone-50 border border-stone-200 rounded-md px-4 py-2 text-stone-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                                    required
+                                >
+                                    <option>Coaching Individual</option>
+                                    <option>Terapia de Pareja</option>
+                                    <option>Consultoría Empresarial</option>
+                                    <option>Neuro-Bienestar</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-xs font-bold text-stone-600 uppercase mb-1">Fecha Preferida</label>
+                                <input
+                                    name="date"
+                                    value={formData.date}
+                                    onChange={handleChange}
+                                    type="date"
+                                    className="w-full bg-stone-50 border border-stone-200 rounded-md px-4 py-2 text-stone-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                 />
                             </div>
-                        </div>
-                        <div>
-                            <label className="block text-xs font-bold text-stone-600 uppercase mb-1">Tipo de Consulta</label>
-                            <select
-                                name="type"
-                                value={formData.type}
-                                onChange={handleChange}
-                                className="w-full bg-stone-50 border border-stone-200 rounded-md px-4 py-2 text-stone-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                            >
-                                <option>Coaching Individual</option>
-                                <option>Terapia de Pareja</option>
-                                <option>Consultoría Empresarial</option>
-                                <option>Neuro-Bienestar</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label className="block text-xs font-bold text-stone-600 uppercase mb-1">Fecha Preferida</label>
-                            <input
-                                name="date"
-                                value={formData.date}
-                                onChange={handleChange}
-                                type="date"
-                                className="w-full bg-stone-50 border border-stone-200 rounded-md px-4 py-2 text-stone-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
-                            />
-                        </div>
-                        <button type="submit" className="w-full bg-conversion hover:bg-conversion/90 text-stone-900 font-bold py-3 rounded-md transition-all shadow-md mt-2">
-                            Solicitar Cita
-                        </button>
-                        <p className="text-xs text-center text-gray-400 mt-4">
-                            *Nos pondremos en contacto contigo para confirmar la disponibilidad.
-                        </p>
-                    </form>
+                            <button type="submit" className="w-full btn-wellness py-3 rounded-full transform hover:scale-105 shadow-md mt-2">
+                                Solicitar Cita
+                            </button>
+                            <p className="text-xs text-center text-gray-400 mt-4">
+                                *Nos pondremos en contacto contigo para confirmar la disponibilidad.
+                            </p>
+                        </form>
+                    </div>
                 </motion.div>
             </div>
         </section>

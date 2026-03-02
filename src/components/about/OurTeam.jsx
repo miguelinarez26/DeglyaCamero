@@ -45,13 +45,20 @@ const TeamModal = ({ member, onClose }) => {
     if (!member) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm animate-in fade-in duration-300">
-            <div className="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl relative animate-in zoom-in-95 duration-300">
+        <div
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm animate-in fade-in duration-300"
+            onClick={onClose}
+        >
+            <div
+                className="bg-white rounded-3xl w-full max-w-2xl overflow-hidden shadow-xl relative animate-in zoom-in-95 duration-300 pointer-events-auto"
+                onClick={(e) => e.stopPropagation()}
+            >
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 z-10 p-2 bg-white/50 hover:bg-white rounded-full transition-all"
+                    className="absolute top-4 right-4 z-50 p-2 bg-white/70 hover:bg-white rounded-full transition-all cursor-pointer shadow-md"
+                    aria-label="Cerrar modal"
                 >
-                    <svg className="w-5 h-5 text-stone-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-5 h-5 text-stone-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -96,35 +103,33 @@ const OurTeam = () => {
                     <p className="mt-4 text-deglya-wood/80 max-w-2xl mx-auto text-lg">Profesionales unidos por la pasión de servir y acompañar.</p>
                 </div>
 
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12 md:gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-8 lg:gap-8">
                     {teamMembers.map((member, i) => (
                         <div
                             key={i}
-                            className="flex flex-col items-center text-center group cursor-pointer"
+                            className={`flex flex-col group cursor-pointer rounded-[2.5rem] p-6 lg:p-6 transition-all duration-500 bg-[#F4EFE6] shadow-sm hover:shadow-lg relative overflow-hidden`}
                             onClick={() => setSelectedMember(member)}
                         >
-                            <div className={`relative mb-6 transform transition-transform duration-500 hover:rotate-0 hover:scale-105 ${member.rotation}`}>
-                                {/* Increased Size here: w-44 h-60 md:w-56 md:h-72 */}
-                                <div className={`w-44 h-60 md:w-56 md:h-72 ${member.bgColor}/40 rounded-xl p-1 shadow-sm transition-all duration-300 group-hover:shadow-xl`}>
-                                    <div className={`w-full h-full bg-white rounded-lg overflow-hidden border border-white/40`}>
-                                        <img
-                                            alt={member.name}
-                                            // Removed grayscale
-                                            className={`w-full h-full object-cover transition-all duration-500 saturate-[0.85] brightness-[0.95] group-hover:saturate-100 group-hover:brightness-100 ${member.position || 'object-center'}`}
-                                            src={member.img}
-                                        />
-                                        {/* Interaction hint */}
-                                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                                            <span className="bg-white/90 text-stone-800 text-xs font-bold px-3 py-1 rounded-full shadow-lg transform translate-y-2 group-hover:translate-y-0 transition-all">
-                                                Ver Bio
-                                            </span>
-                                        </div>
-                                    </div>
+                            {/* Gradient Hover Background */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-[#D96B2F] to-[#D35355] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none"></div>
+
+                            <div className="mb-6 text-left relative z-10 flex flex-col justify-start transition-colors duration-500">
+                                <h3 className="font-display text-2xl lg:text-3xl font-bold text-stone-800 group-hover:text-white transition-colors duration-500 mb-1 leading-tight">{member.name}</h3>
+                                <p className="text-conversion group-hover:text-white/90 transition-colors duration-500 text-xs font-bold mt-2 uppercase tracking-wide">{member.role}</p>
+                            </div>
+                            <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden mt-auto z-10">
+                                <img
+                                    alt={member.name}
+                                    className={`w-full h-full object-cover transition-transform duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.12] ${member.position || 'object-center'}`}
+                                    src={member.img}
+                                />
+                                {/* Overlay / CTA */}
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 flex items-end justify-center pb-6 opacity-0 group-hover:opacity-100 z-10 pointer-events-none">
+                                    <span className="bg-white/95 text-stone-800 text-xs font-bold px-6 py-2.5 rounded-full shadow-[0_10px_30px_rgba(0,0,0,0.15)] transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] tracking-widest uppercase">
+                                        Ver Perfil
+                                    </span>
                                 </div>
                             </div>
-                            <h3 className="font-display text-xl md:text-2xl font-bold text-booking-primary group-hover:text-booking-secondary transition-colors">{member.name}</h3>
-                            <p className="text-booking-secondary text-[10px] md:text-xs font-bold uppercase tracking-wider mt-1">{member.role}</p>
-                            <p className="text-xs md:text-sm text-deglya-wood/70 mt-2 italic leading-tight max-w-[180px]">{member.tags}</p>
                         </div>
                     ))}
                 </div>
