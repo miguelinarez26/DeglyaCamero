@@ -53,7 +53,7 @@ const AboutSection = () => {
 
                         <div className="space-y-4 text-lg text-deglya-wood/80 leading-relaxed font-body">
                             <p>
-                                Deglya Camero Group es una firma dedicada a transformar vidas y organizaciones a través de una comprensión profunda del comportamiento humano.
+                                Deglya Camero y su equipo se dedican a transformar vidas y organizaciones a través de una comprensión profunda del comportamiento humano.
                             </p>
                             <p>
                                 Combinamos la ciencia de la psicología clínica con estrategias de consultoría organizacional para desbloquear el potencial latente en personas y equipos. Creemos firmemente que el bienestar no es un destino, sino una práctica diaria de diseño consciente.

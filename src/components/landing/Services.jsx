@@ -12,14 +12,14 @@ const Services = () => {
         },
         {
             icon: <BrainCircuit size={32} />,
-            title: "Laboratorio Neuro-Bienestar",
-            description: "Experiencias grupales de reprogramación. Educamos, formamos y ayudamos a reprogramar las autopercepciones limitantes.",
+            title: "Laboratorio de Neuro-Bienestar",
+            description: "Experiencias grupales de reprogramación psicoespiritual. Psicoeducación y entrenamiento para auto reprogramar las distorsiones en la autopercepción y la percepción del mundo.",
             link: "#"
         },
         {
             icon: <Library size={32} />,
-            title: "Recursos de Rediseño",
-            description: "Experiencias de autoaprendizaje y autoayuda. Accede a herramientas diseñadas para tu crecimiento continuo a tu propio ritmo.",
+            title: "Recursos de Rediseño personal",
+            description: "Experiencias de autogestión psicológica. Accede a herramientas diseñadas para tu crecimiento continuo y a tu propio ritmo.",
             link: "#"
         }
     ];
@@ -33,7 +33,7 @@ const Services = () => {
                         Nuestros Pilares de Transformación
                     </h2>
                     <p className="text-accent/80">
-                        Nuestro enfoque se destaca por estar centrado en el Sistema Destino, integrando diferentes tipos de formación y especialidades.
+                        Nuestro enfoque se destaca por estar centrado en el Sistema Destino, integrando diferentes metodologías de intervención psicoterapéutica y otras especialidades de acompañamiento personal.
                     </p>
                 </div>
 

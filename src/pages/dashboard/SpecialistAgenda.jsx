@@ -184,7 +184,8 @@ export default function SpecialistAgenda() {
                                     </div>
                                 ))}
                             </div>
-                        </>
+                        </div>
+                    </>
                 )}
 
                         {viewMode === 'Día' && (
@@ -271,7 +272,6 @@ export default function SpecialistAgenda() {
                                         </div>
                                     ))}
                                 </div>
-                            </div>
                     </>
                 )}
 

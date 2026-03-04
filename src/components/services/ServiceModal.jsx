@@ -44,18 +44,18 @@ const ServiceModal = ({ service, onClose }) => {
 
                     <div className="grid md:grid-cols-2 h-full">
                         {/* Image Side */}
-                        <div className={`relative h-64 md:h-auto ${mainColor}`}>
+                        <div className="relative h-64 md:h-auto bg-stone-900">
                             <img
                                 src={service.image}
                                 alt={service.title}
-                                className="w-full h-full object-cover mix-blend-overlay opacity-80"
+                                className="w-full h-full object-cover opacity-90"
                             />
-                            <div className={`absolute inset-0 bg-gradient-to-t ${gradientFrom} to-transparent flex flex-col justify-end p-8`}>
-                                <div className="bg-white/10 w-12 h-12 rounded-xl flex items-center justify-center mb-4 backdrop-blur-sm">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+                                <div className="bg-white/20 w-12 h-12 rounded-xl flex items-center justify-center mb-4 backdrop-blur-md">
                                     <Icon className="text-white" size={24} />
                                 </div>
                                 <h2 className="font-display text-3xl font-bold text-white mb-2">{service.title}</h2>
-                                <p className="text-white/80 text-sm font-medium tracking-wide uppercase">{service.category}</p>
+                                <p className="text-white/90 text-sm font-medium tracking-wide uppercase">{service.category}</p>
                             </div>
                         </div>
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Facebook, Instagram, Youtube } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
@@ -41,8 +42,8 @@ const Footer = () => {
                 <div>
                     <h5 className="font-display font-medium text-xl md:text-2xl text-structure mb-6 mt-0">Explorar</h5>
                     <div className="space-y-4 text-stone-600 text-[15px] flex flex-col">
-                        <a href="http://localhost:5173/DeglyaCamero/about" className="hover:text-conversion transition-colors">Sobre Mí</a>
-                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Servicios</a>
+                        <Link to="/about" className="hover:text-conversion transition-colors">Sobre Mí</Link>
+                        <Link to="/servicios" className="hover:text-conversion transition-colors">Servicios</Link>
                         <a href={import.meta.env.BASE_URL + "#book"} className="hover:text-conversion transition-colors">El Libro</a>
                         <a href={import.meta.env.BASE_URL + "#resources"} className="hover:text-conversion transition-colors">Recursos Gratuitos</a>
                     </div>
@@ -52,10 +53,13 @@ const Footer = () => {
                 <div>
                     <h5 className="font-display font-medium text-xl md:text-2xl text-structure mb-6 mt-0">Servicios</h5>
                     <div className="space-y-4 text-stone-600 text-[15px] flex flex-col">
-                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Terapia individual</a>
-                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Terapia de Pareja</a>
-                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Coaching de Vida</a>
-                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Coaching Ejecutivo</a>
+                        <Link to="/servicios" className="hover:text-conversion transition-colors">Psicoterapia EMDR (individual y grupal)</Link>
+                        <Link to="/servicios" className="hover:text-conversion transition-colors">Psicoterapia de pareja</Link>
+                        <Link to="/servicios" className="hover:text-conversion transition-colors">Psicoterapia infantil y de adolescentes</Link>
+                        <Link to="/servicios" className="hover:text-conversion transition-colors">Asesoramiento psicológico</Link>
+                        <Link to="/servicios" className="hover:text-conversion transition-colors">Coaching de vida</Link>
+                        <Link to="/servicios" className="hover:text-conversion transition-colors">Coaching vocacional y ocupacional</Link>
+                        <Link to="/servicios" className="hover:text-conversion transition-colors">Psicoterapia grupal</Link>
                     </div>
                 </div>
 

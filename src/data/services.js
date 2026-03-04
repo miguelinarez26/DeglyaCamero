@@ -6,7 +6,7 @@ export const SERVICES_DATA = [
         title: "Entrevista Inicial",
         shortDescription: "Valoración diagnóstica para nuevos pacientes.",
         fullDescription: "Sesión obligatoria para nuevos pacientes. Realizamos una valoración diagnóstica integral para entender tus necesidades y asignarte el plan de tratamiento más adecuado.",
-        features: ["valoración Diagnóstica", "Plan de Tratamiento", "Asignación de Especialista", "Modalidad Online"],
+        features: ["Valoración Diagnóstica", "Plan de Tratamiento", "Asignación de Especialista", "Modalidad Online"],
         icon: Users,
         image: import.meta.env.BASE_URL + "images/entrevista-inicial.jpg",
         category: "personas",
@@ -15,10 +15,15 @@ export const SERVICES_DATA = [
     },
     {
         id: "individual-therapy",
-        title: "Terapia Individual",
+        title: "Psicoterapia EMDR individual",
         shortDescription: "Un espacio seguro para sanar y crecer.",
         fullDescription: "Sesiones personalizadas diseñadas para abordar ansiedad, depresión, duelo y procesos de transformación personal. Utilizamos un enfoque integrativo que combina técnicas clínicas probadas con una comprensión profunda del ser humano, proporcionando un entorno confidencial y empático.",
-        features: ["Atención a Ansiedad y Depresión", "Manejo del Duelo", "Crecimiento Personal", "Modalidad Online o Presencial"],
+        features: [
+            "Tratamiento del trauma psicológico y de toda la sintomatología asociada al trauma.",
+            "Tratamiento de diversos tipos de duelos no resueltos y problemas relacionales.",
+            "Tratamiento especializado del Síndrome de Burnout.",
+            "Otros"
+        ],
         icon: Heart,
         image: import.meta.env.BASE_URL + "images/terapia-individual.jpg",
         category: "personas",
@@ -30,7 +35,15 @@ export const SERVICES_DATA = [
         title: "Coaching de Vida",
         shortDescription: "Alcanza tus metas y vive con propósito.",
         fullDescription: "Un proceso dinámico enfocado en el futuro y la acción. Trabajamos juntos para clarificar tu visión, identificar obstáculos y diseñar un plan de acción concreto para alcanzar tus objetivos personales y profesionales, potenciando tus fortalezas naturales.",
-        features: ["Clarificación de Metas", "Diseño de Plan de Acción", "Superación de Bloqueos", "Accountability"],
+        features: [
+            "Evaluación y coaching vocacional y ocupacional.",
+            "Acompañamiento en el diseño de planes de vida y de rediseño personal.",
+            "Fortalecimiento de competencias",
+            "Desensibilización de creencias limitantes y negativas.",
+            "Instalación de creencias potenciadoras y positivas.",
+            "Fortalecimiento del desempeño óptimo con psicoterapia EMDR",
+            "Evaluación y fortalecimiento del diseño personal."
+        ],
         icon: Compass,
         image: import.meta.env.BASE_URL + "images/coaching-de-vida.jpg",
         category: "personas",
@@ -50,23 +63,17 @@ export const SERVICES_DATA = [
         cta: "Agendar Pareja"
     },
     {
-        id: "emotional-healing",
-        title: "Sanación Emocional",
-        shortDescription: "Libera traumas y recupera tu equilibrio.",
-        fullDescription: "Técnicas integrativas enfocadas en liberar bloqueos emocionales y traumas pasados que limitan tu presente. Un camino suave pero profundo hacia la paz interior y la recuperación de tu vitalidad.",
-        features: ["Liberación de Trauma", "Equilibrio Energético", "Mindfulness", "Técnicas Somáticas"],
-        icon: Sparkles,
-        image: import.meta.env.BASE_URL + "images/sanacion-emocional.jpg",
-        category: "personas",
-        price: "Desde $90",
-        cta: "Consultar"
-    },
-    {
         id: "org-consulting",
         title: "Consultoría Organizacional",
-        shortDescription: "Potencia el talento y la cultura de tu empresa.",
+        shortDescription: "Potencia el talento humano",
         fullDescription: "Diagnóstico e intervención para empresas que valoran el capital humano. Desarrollamos estrategias para mejorar el clima laboral, aumentar la productividad y fomentar una cultura de bienestar y alto rendimiento.",
-        features: ["Diagnóstico de Clima", "Resolución de Conflictos", "Bienestar Corporativo", "Retención de Talento"],
+        features: [
+            "Desarrollo de competencias",
+            "Mejora en la comunicación y solución de conflictos.",
+            "Evaluación de equipos y reconstrucción según diseño personal.",
+            "Diagnóstico, tratamiento y prevención del Síndrome de Burnout.",
+            "Fortalecimiento del desempeño óptimo con psicoterapia EMDR"
+        ],
         icon: Building2,
         image: import.meta.env.BASE_URL + "images/consultoria-organizacionaljpg.jpg",
         category: "empresas",
@@ -78,7 +85,13 @@ export const SERVICES_DATA = [
         title: "Coaching Ejecutivo",
         shortDescription: "Liderazgo consciente para la alta gerencia.",
         fullDescription: "Programa exclusivo para directivos y líderes. Enfocado en desarrollar habilidades de liderazgo consciente, toma de decisiones estratégica y gestión de equipos de alto nivel, con un enfoque humano y orientado a resultados.",
-        features: ["Liderazgo Consciente", "Toma de Decisiones", "Gestión del cambio", "Marca Personal"],
+        features: [
+            "Fortalecimiento de competencias",
+            "Mejora del rendimiento.",
+            "Evaluación del diseño personal.",
+            "Diagnóstico, tratamiento y prevención del Síndrome de Burnout.",
+            "Fortalecimiento del rol de liderazgo."
+        ],
         icon: Lightbulb,
         image: import.meta.env.BASE_URL + "images/coaching-ejecutivo.jpg",
         category: "empresas",
