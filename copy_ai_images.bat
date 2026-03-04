@@ -1,0 +1,3 @@
+copy "C:\Users\Personal\.gemini\antigravity\brain\d2143e61-60dd-4ed6-8282-a65704373334\wellness_room_slider_*.png" "c:\Users\Personal\Documents\MundoCarMi\Deglyacamero\public\images\wellness_room_slider.png"
+copy "C:\Users\Personal\.gemini\antigravity\brain\d2143e61-60dd-4ed6-8282-a65704373334\wellness_zen_slider_*.png" "c:\Users\Personal\Documents\MundoCarMi\Deglyacamero\public\images\wellness_zen_slider.png"
+copy "C:\Users\Personal\.gemini\antigravity\brain\d2143e61-60dd-4ed6-8282-a65704373334\wellness_abstract_slider_*.png" "c:\Users\Personal\Documents\MundoCarMi\Deglyacamero\public\images\wellness_abstract_slider.png"

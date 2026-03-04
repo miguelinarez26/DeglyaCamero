@@ -5,22 +5,27 @@ import { ArrowDown } from 'lucide-react';
 const slides = [
     {
         id: 1,
-        // Placeholder gradient/image - replace with real images later
-        image: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=2074&auto=format&fit=crop",
+        // Foto de Paisaje Premium 4K (Naturaleza majestuosa, tonos cálidos)
+        image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2600&auto=format&fit=crop",
         title: "El Arte de Rediseñarte",
-        subtitle: "Descubre tu potencial ilimitado"
+        subtitle: "Descubre tu potencial ilimitado",
+        position: "center 65%"
     },
     {
         id: 2,
-        image: "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=1528&auto=format&fit=crop",
+        // Foto para nueva seccion: Calma y proposito
+        image: import.meta.env.BASE_URL + "images/calmayproposito1.jpg",
         title: "Calma y Propósito",
-        subtitle: "Un espacio para tu bienestar mental"
+        subtitle: "Un espacio para tu bienestar mental",
+        position: "center center"
     },
     {
         id: 3,
-        image: "https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?q=80&w=2070&auto=format&fit=crop",
+        // Foto para el reino de lo posible
+        image: import.meta.env.BASE_URL + "images/reinodeloposible.jpg",
         title: "Reino de lo Posible",
-        subtitle: "Donde la transformación comienza"
+        subtitle: "Donde la transformación comienza",
+        position: "center center"
     }
 ];
 
@@ -45,13 +50,16 @@ const HeroSlider = () => {
                     transition={{ duration: 1.5 }}
                     className="absolute inset-0"
                 >
-                    {/* Image Layer */}
+                    {/* Image Layer - Full Cover without blur */}
                     <div
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{ backgroundImage: `url(${slides[current].image})` }}
+                        className="absolute inset-0 bg-cover"
+                        style={{
+                            backgroundImage: `url(${slides[current].image})`,
+                            backgroundPosition: slides[current].position || "center center"
+                        }}
                     />
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-black/30 md:bg-black/20" />
+                    {/* Overlay muy sutil cálido (no negro entero) para resaltar colores y no matar la luz */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/40 via-transparent to-black/10 mix-blend-multiply" />
                 </motion.div>
             </AnimatePresence>
 
@@ -65,10 +73,10 @@ const HeroSlider = () => {
                         exit={{ y: -20, opacity: 0 }}
                         transition={{ duration: 0.8, delay: 0.5 }}
                     >
-                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight mb-4 drop-shadow-lg">
+                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tight mb-4 drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] filter shadow-black">
                             {slides[current].title}
                         </h1>
-                        <p className="text-xl md:text-2xl font-light tracking-wide opacity-90 max-w-2xl mx-auto drop-shadow-md">
+                        <p className="text-xl md:text-2xl font-light tracking-wide opacity-100 max-w-2xl mx-auto drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] text-white/95">
                             {slides[current].subtitle}
                         </p>
                     </motion.div>

@@ -2,76 +2,14 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Check, ArrowRight, Menu, Mail } from 'lucide-react';
+import { Check, ArrowRight, Menu, Mail, Facebook, Twitter, Linkedin } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // --- Shared Components (Duplicated for standalone page consistency) ---
 // In a real refactor, these would move to src/components/layout/
 
-const Header = () => (
-    <header className="absolute top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-            <div className="flex items-center justify-between py-6">
-                <div className="flex items-center gap-3">
-                    <a href="/" className="flex items-center gap-3 group">
-                        <div className="h-8 w-8 text-deglya-teal dark:text-deglya-terracota group-hover:scale-110 transition-transform">
-                            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fillRule="evenodd"></path><path clipRule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fillRule="evenodd"></path></svg>
-                        </div>
-                        <h2 className="font-display text-2xl font-semibold leading-tight text-deglya-teal dark:text-white">Deglya Camero</h2>
-                    </a>
-                </div>
-                <nav className="hidden items-center gap-10 lg:flex">
-                    <a className="text-sm font-medium hover:text-deglya-teal dark:hover:text-deglya-terracota" href="/#about">Quiénes Somos</a>
-                    <a className="text-sm font-medium text-deglya-teal font-bold" href="/servicios">Servicios</a>
-                    <a className="text-sm font-medium hover:text-deglya-teal dark:hover:text-deglya-terracota" href="/#kingdom">Reino de lo Posible</a>
-                    <a className="text-sm font-medium hover:text-deglya-teal dark:hover:text-deglya-terracota" href="/#portal">Portal</a>
-                </nav>
-                <div className="hidden items-center gap-4 lg:flex">
-                    <button className="flex cursor-pointer items-center justify-center rounded-full bg-deglya-mustard px-6 py-2 text-sm font-bold text-deglya-wood shadow-lg shadow-deglya-mustard/30 transition-shadow duration-300 hover:shadow-xl hover:shadow-deglya-mustard/50">
-                        <span>Agendar Cita</span>
-                    </button>
-                </div>
-                <button className="lg:hidden text-deglya-teal">
-                    <Menu size={32} />
-                </button>
-            </div>
-        </div>
-    </header>
-);
-
-const Footer = () => (
-    <footer className="bg-deglya-terracota/10 py-16 dark:bg-deglya-terracota/5 mt-auto">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-                <div className="col-span-2 md:col-span-1">
-                    <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 text-deglya-teal dark:text-deglya-terracota">
-                            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path clipRule="evenodd" d="M24 18.4228L42 11.475V34.3663C42 34.7796 41.7457 35.1504 41.3601 35.2992L24 42V18.4228Z" fill="currentColor" fillRule="evenodd"></path><path clipRule="evenodd" d="M24 8.18819L33.4123 11.574L24 15.2071L14.5877 11.574L24 8.18819ZM9 15.8487L21 20.4805V37.6263L9 32.9945V15.8487ZM27 37.6263V20.4805L39 15.8487V32.9945L27 37.6263ZM25.354 2.29885C24.4788 1.98402 23.5212 1.98402 22.646 2.29885L4.98454 8.65208C3.7939 9.08038 3 10.2097 3 11.475V34.3663C3 36.0196 4.01719 37.5026 5.55962 38.098L22.9197 44.7987C23.6149 45.0671 24.3851 45.0671 25.0803 44.7987L42.4404 38.098C43.9828 37.5026 45 36.0196 45 34.3663V11.475C45 10.2097 44.2061 9.08038 43.0155 8.65208L25.354 2.29885Z" fill="currentColor" fillRule="evenodd"></path></svg>
-                        </div>
-                        <h2 className="font-display text-2xl font-semibold leading-tight text-deglya-teal dark:text-white">Deglya Camero</h2>
-                    </div>
-                    <p className="mt-4 text-sm text-deglya-wood/90">Un espacio para sanar, crecer y reconectar.</p>
-                </div>
-                <div>
-                    <h3 className="font-bold text-deglya-teal">Navegación</h3>
-                    <ul className="mt-4 space-y-2 text-sm text-deglya-wood">
-                        <li><a href="/" className="hover:text-deglya-mustard">Inicio</a></li>
-                        <li><a href="/servicios" className="hover:text-deglya-mustard">Servicios</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 className="font-bold text-deglya-teal">Contacto</h3>
-                    <ul className="mt-4 space-y-2 text-sm text-deglya-wood">
-                        <li className="flex items-center gap-2"><Mail size={16} /> contacto@deglyacamero.com</li>
-                    </ul>
-                </div>
-            </div>
-            <div className="mt-12 border-t border-deglya-terracota/30 pt-8 text-center text-sm text-deglya-wood/60">
-                <p>© 2024 Deglya Camero Group. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-);
+import Navbar from '../components/landing/Navbar';
+import Footer from '../components/landing/Footer';
 
 
 // Mock Data for Services
@@ -82,21 +20,24 @@ const servicesData = {
             description: "Un espacio seguro para explorar tu mundo interno y sanar heridas profundas.",
             features: ["Sesiones de 50 min", "Modalidad Online/Presencial", "Enfoque Integrativo Destino"],
             price: "$80 / sesión",
-            cta: "Reservar Cita"
+            cta: "Reservar Cita",
+            img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1000&auto=format&fit=crop"
         },
         {
             title: "Coaching de Vida",
             description: "Diseña el futuro que deseas con herramientas prácticas y acompañamiento.",
             features: ["Definición de Metas", "Plan de Acción", "Seguimiento Semanal"],
             price: "$100 / sesión",
-            cta: "Iniciar Proceso"
+            cta: "Iniciar Proceso",
+            img: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop"
         },
         {
             title: "Talleres de Bienestar",
             description: "Experiencias grupales para reconectar con tu esencia y vitalidad.",
             features: ["Grupos reducidos", "Material incluido", "Comunidad de apoyo"],
             price: "Desde $45",
-            cta: "Ver Próximos Eventos"
+            cta: "Ver Próximos Eventos",
+            img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop"
         }
     ],
     empresas: [
@@ -105,21 +46,24 @@ const servicesData = {
             description: "Formación para líderes que buscan inspirar y gestionar con empatía.",
             features: ["Evaluación 360", "Mentoring Ejecutivo", "Resultados Medibles"],
             price: "Consultar",
-            cta: "Solicitar Propuesta"
+            cta: "Solicitar Propuesta",
+            img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000&auto=format&fit=crop"
         },
         {
             title: "Team Building 'Vital'",
             description: "Actividades diseñada para fortalecer la cohesión y la comunicación.",
             features: ["Indoor/Outdoor", "Dinámicas Gamificadas", "Reporte de Impacto"],
             price: "Consultar",
-            cta: "Cotizar Experiencia"
+            cta: "Cotizar Experiencia",
+            img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1000&auto=format&fit=crop"
         },
         {
             title: "Bienestar Corporativo",
             description: "Programas integrales de salud mental y emocional para tu equipo.",
             features: ["Charlas y Webinars", "Soporte Psicológico", "Línea de Ayuda"],
             price: "A medida",
-            cta: "Hablar con un Asesor"
+            cta: "Hablar con un Asesor",
+            img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1000&auto=format&fit=crop"
         }
     ]
 };
@@ -143,7 +87,7 @@ export default function Services() {
 
     return (
         <div className="flex min-h-screen flex-col bg-deglya-cream font-sans selection:bg-deglya-mustard selection:text-white">
-            <Header />
+            <Navbar />
 
             <main className="flex-grow pt-32 pb-24 px-6">
                 {/* Header Section */}
@@ -190,41 +134,68 @@ export default function Services() {
                 {/* Content Grid */}
                 <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {servicesData[activeTab].map((service, index) => (
-                        <Card key={index} className="group relative flex flex-col h-full bg-white border-none shadow-xl hover:shadow-2xl transition-all duration-300 overflow-hidden hover:-translate-y-1">
-                            <div className={cn("absolute top-0 left-0 w-full h-1", activeTab === 'empresas' ? 'bg-deglya-mustard' : 'bg-deglya-teal')}></div>
+                        <div key={index} className="group relative flex flex-col h-full bg-[#F4EFE6] rounded-3xl p-6 lg:p-7 shadow-sm transition-all duration-500 overflow-hidden hover:-translate-y-1 hover:shadow-xl">
+                            {/* Hover Gradient Background */}
+                            <div className="absolute inset-0 bg-gradient-to-tr from-[#D96B2F] via-[#DB5E42] to-[#D35355] opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none"></div>
 
-                            <CardHeader className="pt-8">
-                                <h3 className="text-2xl font-bold font-display text-deglya-teal group-hover:text-deglya-mustard transition-colors">
-                                    {service.title}
-                                </h3>
-                            </CardHeader>
-                            <CardContent className="flex-grow space-y-6">
-                                <p className="text-deglya-wood text-lg leading-relaxed">{service.description}</p>
-                                <ul className="space-y-4">
-                                    {service.features.map((feature, idx) => (
-                                        <li key={idx} className="flex items-start text-sm text-deglya-wood/80">
-                                            <div className={cn("rounded-full p-1 mr-3 mt-0.5", activeTab === 'empresas' ? 'bg-deglya-mustard/10 text-deglya-mustard' : 'bg-deglya-teal/10 text-deglya-teal')}>
-                                                <Check size={14} strokeWidth={3} />
-                                            </div>
-                                            {feature}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </CardContent>
-                            <CardFooter className="flex flex-col items-stretch border-t border-gray-100 p-6 bg-gray-50/50 mt-auto gap-4">
-                                <div className="text-center pb-2">
-                                    <span className="font-display font-bold text-2xl text-deglya-wood">{service.price}</span>
+                            <div className="relative z-10 flex flex-col h-full">
+                                {/* Top Text Area (Title & Subtitle) */}
+                                <div className="mb-4">
+                                    <h3 className="text-2xl font-medium font-display text-stone-800 group-hover:text-white transition-colors duration-500">
+                                        {service.title}
+                                    </h3>
+                                    <p className="text-conversion group-hover:text-white transition-colors duration-500 font-bold text-sm mt-1">
+                                        {service.price}
+                                    </p>
                                 </div>
-                                <Button
-                                    className="w-full"
-                                    size="lg"
-                                    variant={activeTab === 'empresas' ? 'action' : 'default'}
-                                    onClick={() => navigate('/contacto')} // Placeholder action
-                                >
-                                    {service.cta} <ArrowRight size={16} className="ml-2" />
-                                </Button>
-                            </CardFooter>
-                        </Card>
+
+                                {/* Image Box */}
+                                <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 flex-shrink-0">
+                                    <img src={service.img} alt={service.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                                </div>
+
+                                {/* Features & Description */}
+                                <div className="flex-grow space-y-4 mb-6">
+                                    <p className="text-stone-600 group-hover:text-white transition-colors duration-500 text-sm leading-relaxed">
+                                        {service.description}
+                                    </p>
+                                    <ul className="space-y-2">
+                                        {service.features.map((feature, idx) => (
+                                            <li key={idx} className="flex items-start text-xs font-semibold text-stone-600 group-hover:text-white transition-colors duration-500">
+                                                <div className="rounded-full mr-2 mt-0.5 text-conversion group-hover:text-white transition-colors duration-500">
+                                                    <Check size={14} strokeWidth={3} />
+                                                </div>
+                                                {feature}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+
+                                {/* Bottom Buttons (Social & CTA) */}
+                                <div className="flex items-center justify-between mt-auto pt-2 gap-2">
+                                    {/* Circular Social Buttons */}
+                                    <div className="flex gap-2">
+                                        <button className="w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center transition-colors group-hover:border-white group-hover:text-white text-stone-800 group-hover:hover:bg-white group-hover:hover:text-[#D1554A] hover:bg-stone-800 hover:text-white" aria-label="Facebook">
+                                            <Facebook size={16} fill="currentColor" className="opacity-80" />
+                                        </button>
+                                        <button className="w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center transition-colors group-hover:border-white group-hover:text-white text-stone-800 group-hover:hover:bg-white group-hover:hover:text-[#D1554A] hover:bg-stone-800 hover:text-white" aria-label="Twitter">
+                                            <Twitter size={16} fill="currentColor" strokeWidth={0} className="opacity-80" />
+                                        </button>
+                                        <button className="w-10 h-10 rounded-full border border-stone-300 flex items-center justify-center transition-colors group-hover:border-white group-hover:text-white text-stone-800 group-hover:hover:bg-white group-hover:hover:text-[#D1554A] hover:bg-stone-800 hover:text-white" aria-label="LinkedIn">
+                                            <Linkedin size={16} fill="currentColor" className="opacity-80" />
+                                        </button>
+                                    </div>
+
+                                    {/* Action Button */}
+                                    <button
+                                        onClick={() => navigate('/contacto')}
+                                        className="py-2.5 px-5 rounded-full border border-stone-800 text-stone-800 text-sm font-medium transition-colors group-hover:border-white group-hover:text-white hover:bg-stone-800 hover:text-white group-hover:hover:bg-white group-hover:hover:text-[#D1554A] whitespace-nowrap"
+                                    >
+                                        {service.cta}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     ))}
                 </div>
 

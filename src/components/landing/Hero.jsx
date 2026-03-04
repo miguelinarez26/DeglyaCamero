@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlayCircle, Leaf } from 'lucide-react';
 import heroGradient from '../../assets/hero-gradient.png';
-import deglyaHeroNew from '../../assets/brand/deglya-hero-new.jpg';
+const deglyaHeroNew = import.meta.env.BASE_URL + 'images/Deglya-6.jpg'; // Wellness Bliss main image
 
 const words = ["confianza", "esperanza", "espiritualidad", "propósito"];
 
@@ -34,12 +34,12 @@ const Hero = () => {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="space-y-6"
                 >
-                    <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider uppercase border border-primary/20">
+                    <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-xs font-bold tracking-wider uppercase border border-primary/20 text-gradient-wellness">
                         Psicóloga y Autora
                     </span>
-                    <h1 className="text-4xl lg:text-6xl font-display font-medium leading-tight text-stone-700">
+                    <h1 className="text-4xl lg:text-6xl font-display font-medium leading-tight text-primary">
                         ¿Quieres potenciar tus <span className="text-secondary italic">habilidades</span>?
-                        <span className="block mt-4 text-3xl lg:text-5xl opacity-90 font-normal">
+                        <span className="block mt-4">
                             Rediseñate en{' '}
                         </span>
                         <span className="block h-[1.3em] relative overflow-hidden text-primary italic mt-2">
@@ -57,14 +57,13 @@ const Hero = () => {
                             </AnimatePresence>
                         </span>
                     </h1>
-                    <p className="text-lg lg:text-xl text-stone-700 max-w-lg leading-relaxed">
+                    <p className="text-lg lg:text-xl text-primary/80 max-w-lg leading-relaxed">
                         Acompaño procesos de transformación con empatía y esperanza. Descubre el maravilloso camino de rediseñarte y potenciar tus capacidades.
                     </p>
                     <div className="flex flex-wrap gap-4 pt-4">
-                        <a href="/servicios" className="bg-conversion text-stone-900 px-8 py-3 rounded-md font-semibold shadow-lg hover:shadow-conversion/30 transition-all hover:-translate-y-1">
-                            Ver Servicios
+                        <a href="/servicios" className="btn-wellness px-8 py-3 rounded-full transform hover:scale-105 shadow-lg">
+                            Explorar Servicios
                         </a>
-
                     </div>
                 </motion.div>
 
@@ -79,11 +78,11 @@ const Hero = () => {
                     <div className="absolute inset-0 bg-primary/5 rounded-t-[10rem] rounded-b-[2rem] rotate-3 transform scale-95 origin-bottom-right dark:bg-primary/10" />
 
                     {/* Main Image */}
-                    <div className="relative w-full h-full max-h-[550px] rounded-t-[10rem] rounded-b-[2rem] overflow-hidden shadow-2xl group flex items-end justify-center bg-stone-100">
+                    <div className="relative w-full h-full max-h-[550px] overflow-hidden shadow-2xl group flex items-end justify-center bg-stone-100 wellness-hover-img rounded-t-[10rem] rounded-b-[2rem]">
                         <img
                             src={deglyaHeroNew}
-                            alt="Deglya Camero Portrait"
-                            className="w-full h-full object-cover object-[50%_15%] hover:scale-105 transition-transform duration-700"
+                            alt="Deglya Camero"
+                            className="object-cover object-[50%_30%]"
                         />
                     </div>
                 </motion.div>

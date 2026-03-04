@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from "framer-motion";
+import { Star } from 'lucide-react'; // Added star icon
 
 // --- Data ---
 const testimonials = [
@@ -90,26 +91,29 @@ const TestimonialsColumn = ({ className, testimonials, duration = 10 }) => {
                                     rotateX: 2,
                                     boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1)",
                                 }}
-                                className="p-8 rounded-3xl bg-white border-b-4 border-stone-100 shadow-xl transition-all duration-300 cursor-default hover:border-b-amber-400/50"
+                                className="p-8 rounded-3xl bg-[#F4EFE6] shadow-sm transition-all duration-300 cursor-default"
                             >
-                                <blockquote className="m-0 p-0">
-                                    <p className="text-deglya-wood/80 leading-relaxed font-body italic m-0">
-                                        "{text}"
-                                    </p>
-                                    <footer className="flex items-center gap-4 mt-6">
+                                <blockquote className="m-0 p-0 flex flex-col h-full justify-between">
+                                    <div>
+                                        {/* Stars Rating */}
+                                        <div className="flex gap-1 mb-6">
+                                            {[...Array(5)].map((_, starIdx) => (
+                                                <Star key={starIdx} size={20} className="fill-[#D96B2F] text-[#D96B2F]" />
+                                            ))}
+                                        </div>
+                                        <p className="text-stone-700 leading-relaxed font-body text-lg m-0">
+                                            "{text}"
+                                        </p>
+                                    </div>
+                                    <footer className="mt-8 border-t border-stone-300/40 pt-4 flex items-center gap-4">
                                         <img
                                             src={image}
                                             alt={`Avatar de ${name}`}
-                                            className="h-12 w-12 rounded-full object-cover border-2 border-booking-secondary/20"
+                                            className="h-12 w-12 rounded-full object-cover shadow-sm"
                                         />
-                                        <div className="flex flex-col">
-                                            <cite className="font-display font-bold not-italic tracking-wide text-booking-primary">
-                                                {name}
-                                            </cite>
-                                            <span className="text-xs font-semibold uppercase tracking-wider text-booking-secondary mt-0.5">
-                                                {role}
-                                            </span>
-                                        </div>
+                                        <cite className="font-display text-lg not-italic text-[#1E1B1B]">
+                                            {name} <span className="text-stone-500 font-body text-base font-normal block sm:inline">en {role}</span>
+                                        </cite>
                                     </footer>
                                 </blockquote>
                             </motion.li>
@@ -135,7 +139,7 @@ const TestimonialsSection = () => {
                 className="container px-4 z-10 mx-auto"
             >
                 <div className="flex flex-col items-center justify-center max-w-2xl mx-auto mb-16 text-center">
-                    <span className="inline-block py-1 px-3 rounded-full bg-booking-primary/10 text-booking-primary text-xs font-bold tracking-wider uppercase border border-booking-primary/20 mb-4">
+                    <span className="inline-block py-1 px-3 rounded-full bg-booking-primary/10 text-xs font-bold tracking-wider uppercase border border-booking-primary/20 mb-4 text-gradient-wellness">
                         Comunidad
                     </span>
 

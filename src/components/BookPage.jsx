@@ -166,30 +166,33 @@ const BookPage = () => {
     // Scroll Tracking
     const { scrollYProgress } = useScroll();
 
-    // Golden Harvest Palette Seamless Flow
-    // #F9F7F2 (Canvas) -> #B06540 (Terracotta) -> #F9F7F2 (Canvas)
+    // Wellness Bliss Palette Seamless Flow
+    // Mantenemos una sutil transición de color Beige para todo el recorrido 
+    // y evitamos oscurecer/naranjear para que siempre ilumine la imagen de fondo.
     const backgroundColor = useTransform(
         scrollYProgress,
-        [0, 0.4, 0.8],
-        ['#F9F7F2', '#B06540', '#F9F7F2']
+        [0, 0.5, 1],
+        ['#FDFBF7', '#F4EFE6', '#FDFBF7']
     );
 
-    // Typography Correction: White on Blue, Dark on Cream
-    // Typography: Structure (Olive) on Cream -> White on Terracotta -> Structure on Cream
+    // Typography:
+    // Mantenemos texto blanco brillante estilo Slider Principal
     const textColor = useTransform(
         scrollYProgress,
-        [0, 0.3, 0.6],
-        ['#2F3E30', '#FFFFFF', '#2F3E30']
+        [0, 1],
+        ['#FFFFFF', '#FFFFFF']
     );
+
+    // Parallax Global (Mueve la imagen de fondo lentamente a lo largo de toda la página)
+    const yGlobalBg = useTransform(scrollYProgress, [0, 1], ['0%', '-15%']);
 
     const [selectedCategory, setSelectedCategory] = React.useState(null);
 
-    // Specific text colors for lighter sections
-    // Specific text colors for lighter sections
+    // Textos secundarios y descripciones
     const muteTextColor = useTransform(
         scrollYProgress,
-        [0, 0.5],
-        ['rgba(47, 62, 48, 0.7)', 'rgba(255, 255, 255, 0.8)']
+        [0, 1],
+        ['rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 0.8)']
     );
 
     const targetRef = useRef(null);
@@ -206,41 +209,52 @@ const BookPage = () => {
                 />
             )}
 
-            {/* MECHANISM: Fixed Background Layer */}
-            <motion.div
-                style={{ backgroundColor }}
-                className="fixed inset-0 w-full h-full -z-50 will-change-[background-color]"
-            />
+            {/* MECHANISM: Fixed Parallax Background Layer */}
+            <div className="fixed inset-0 w-full h-full -z-50 overflow-hidden pointer-events-none">
+                <motion.div
+                    style={{ y: yGlobalBg }}
+                    className="absolute inset-0 w-full h-[120vh]"
+                >
+                    <img
+                        src={import.meta.env.BASE_URL + "images/reinodeloposible.jpg"}
+                        alt="Fondo de El Reino de lo Posible"
+                        className="w-full h-full object-cover object-[center_30%]"
+                    />
+                </motion.div>
+                {/* Overlay de Paleta de Colores Dinámico (Opacidad parcial para dejar ver la mayor parte foto de fondo) */}
+                <motion.div
+                    style={{ backgroundColor }}
+                    className="absolute inset-0 w-full h-full opacity-[0.02] will-change-[background-color]"
+                />
+            </div>
 
             {/* Content Container (dynamically colored text) */}
             <motion.div style={{ color: textColor }} className="relative z-10 font-sans">
 
                 {/* === HERO SECTION === */}
-                <header className="relative pt-24 pb-12 lg:pt-24 lg:pb-20 px-6 overflow-hidden min-h-screen flex items-start">
-                    {/* Background Decor */}
-                    <div className="absolute inset-0 z-0 pointer-events-none">
-                        <div className="absolute top-20 right-20 w-72 h-72 bg-white/10 rounded-full blur-[100px]"></div>
-                    </div>
+                <header className="relative pt-24 pb-12 lg:pt-24 lg:pb-20 px-6 overflow-hidden min-h-screen flex items-center lg:items-start">
+                    {/* Suave degradado arriba para que no se pierda el navbar y darle más aire al titulo */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#FDFBF7]/60 via-transparent to-transparent z-0 pointer-events-none" />
 
                     <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
                         {/* Text Column */}
-                        <div className="space-y-6 text-center lg:text-left animate-in fade-in slide-in-from-bottom-10 duration-1000">
+                        <div className="space-y-6 text-center lg:text-left animate-in fade-in slide-in-from-bottom-10 duration-1000 lg:-translate-y-8">
 
-                            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg text-structure">
+                            <h1 className="font-display text-5xl md:text-6xl lg:text-7xl font-bold leading-tight drop-shadow-lg text-white relative z-20">
                                 El Reino de <br />
-                                <span className="text-conversion">lo Posible</span>
+                                <span className="text-white drop-shadow-md">lo Posible</span>
                             </h1>
 
-                            <motion.p style={{ color: muteTextColor }} className="text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed font-body">
+                            <motion.p style={{ color: muteTextColor }} className="text-lg md:text-xl max-w-xl mx-auto lg:mx-0 leading-relaxed font-body font-semibold">
                                 Has dado el primer paso. Este libro no es solo lectura, es una llave para desbloquear tu potencial latente y rediseñar tu realidad desde la consciencia.
                             </motion.p>
 
-                            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4">
-                                <a href="#" className="w-full sm:w-auto px-8 py-4 bg-[#3E2723] hover:bg-[#2C1810] text-white font-bold rounded-full shadow-lg transition-all transform hover:scale-105 flex items-center justify-center gap-2">
+                            <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-4 relative z-20">
+                                <a href="#" className="w-full sm:w-auto px-8 py-4 btn-wellness text-white font-bold rounded-full shadow-lg hover:shadow-conversion/50 focus:outline-none transition-all flex items-center justify-center gap-2">
                                     <BookOpen size={20} />
                                     Comprar en Amazon
                                 </a>
-                                <a href="#vault" className="w-full sm:w-auto px-8 py-4 bg-transparent border border-current text-current hover:bg-white/10 font-bold rounded-full transition-all flex items-center justify-center gap-2">
+                                <a href="#vault" className="w-full sm:w-auto px-8 py-4 bg-transparent border-[1.5px] border-white text-white hover:bg-white hover:text-stone-900 font-bold rounded-full transition-all flex items-center justify-center gap-2">
                                     <Download size={20} />
                                     Entrar al Laboratorio
                                 </a>
@@ -271,11 +285,11 @@ const BookPage = () => {
                             {LESSONS.map((lesson) => {
                                 const Icon = IconMap[lesson.iconName];
                                 return (
-                                    <div key={lesson.id} className="bg-white/90 backdrop-blur-md border border-white/50 p-8 rounded-3xl hover:-translate-y-2 transition-all duration-300 group shadow-lg">
-                                        <div className="w-14 h-14 bg-stone-100 rounded-2xl flex items-center justify-center text-stone-900 mb-6 group-hover:scale-110 transition-transform shadow-sm">
+                                    <div key={lesson.id} className="bg-[#F4EFE6] border border-white/50 p-8 rounded-[2.5rem] hover:-translate-y-2 transition-all duration-300 group shadow-lg">
+                                        <div className="w-14 h-14 bg-white/50 rounded-2xl flex items-center justify-center text-conversion mb-6 group-hover:scale-110 group-hover:bg-conversion group-hover:text-white transition-all shadow-sm">
                                             <Icon size={28} />
                                         </div>
-                                        <h3 className="text-2xl font-bold mb-3 font-display text-stone-900">{lesson.title}</h3>
+                                        <h3 className="text-2xl font-bold mb-3 font-display text-stone-900 group-hover:text-conversion transition-colors">{lesson.title}</h3>
                                         <p className="leading-relaxed text-sm text-stone-700 font-medium">
                                             {lesson.text}
                                         </p>
@@ -290,7 +304,7 @@ const BookPage = () => {
                 <section id="vault" className="py-32 relative" ref={targetRef}>
                     <div className="relative z-10 max-w-7xl mx-auto px-6">
                         <div className="text-center mb-16">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 bg-conversion text-white font-bold text-xs uppercase rounded-full mb-6 shadow-lg">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md border border-white/30 text-current font-bold text-xs uppercase rounded-full mb-6 shadow-sm">
                                 <Sparkles size={12} fill="currentColor" />
                                 <span>Exclusivo para Lectores</span>
                             </div>

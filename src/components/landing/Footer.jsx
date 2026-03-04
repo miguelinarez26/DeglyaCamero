@@ -1,59 +1,84 @@
 import React from 'react';
-import { Facebook, Instagram, Linkedin } from 'lucide-react';
+import { Facebook, Instagram, Youtube } from 'lucide-react';
 
 const Footer = () => {
     return (
-        <footer className="bg-structure text-white/80 py-16 px-6 lg:px-12 border-t border-structure/50">
-            <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
-                <div className="col-span-1 md:col-span-1">
-                    <a href="#" className="font-display font-bold text-2xl text-white mb-6 block">Deglya Camero</a>
-                    <p className="text-sm leading-relaxed opacity-90 mb-6">
-                        Acompañando procesos de transformación humana para construir vidas con propósito y significado.
-                    </p>
-                    <div className="flex gap-4">
-                        <a href="#" className="hover:text-white transition-colors"><Facebook size={24} /></a>
-                        <a href="#" className="hover:text-white transition-colors"><Instagram size={24} /></a>
-                        <a href="#" className="hover:text-white transition-colors"><Linkedin size={24} /></a>
+        <footer className="relative bg-[#F4EFE6] text-stone-700 py-24 px-6 lg:px-12 overflow-hidden border-t border-stone-200/50">
+            {/* Decorative background waves */}
+            <div className="absolute top-0 right-1/4 w-[800px] h-[800px] bg-conversion/5 rounded-full blur-3xl -translate-y-1/2 -z-10 pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-stone-200/20 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4 -z-10 pointer-events-none" />
+
+            <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-x-8 gap-y-16 font-body items-start">
+                {/* 1. Logo & Bio */}
+                <div className="col-span-1 flex flex-col items-start">
+                    {/* Contenedor anclado métricamente a la misma altura/margen que los H5 adyacentes */}
+                    <a href="#" className="h-8 md:h-10 mb-6 flex items-center -ml-2">
+                        <img
+                            src={import.meta.env.BASE_URL + "images/logo4.png"}
+                            alt="Deglya Camero Logo"
+                            className="w-40 md:w-48 object-contain origin-left"
+                        />
+                    </a>
+                    <div className="space-y-6 pt-1">
+                        <p className="text-stone-600 text-[15px] leading-relaxed max-w-sm">
+                            Acompañando procesos de transformación humana para construir vidas con propósito y significado.
+                        </p>
+                        <div className="flex gap-4">
+                            <a href="#" className="w-10 h-10 bg-white shadow hover:shadow-md rounded-full flex items-center justify-center text-structure hover:text-conversion transition-all">
+                                <Facebook size={18} />
+                            </a>
+                            <a href="#" className="w-10 h-10 bg-white shadow hover:shadow-md rounded-full flex items-center justify-center text-structure hover:text-conversion transition-all">
+                                <Instagram size={18} />
+                            </a>
+                            <a href="#" className="w-10 h-10 bg-white shadow hover:shadow-md rounded-full flex items-center justify-center text-structure hover:text-conversion transition-all">
+                                <Youtube size={18} />
+                            </a>
+                        </div>
                     </div>
                 </div>
 
+                {/* 2. Explorar */}
                 <div>
-                    <h5 className="text-white font-bold uppercase tracking-wider text-xs mb-6">Explorar</h5>
-                    <ul className="space-y-3 text-sm">
-                        <li><a href="/about" className="hover:text-white transition-colors">Sobre Mí</a></li>
-                        <li><a href="/servicios" className="hover:text-white transition-colors">Servicios</a></li>
-                        <li><a href="/#book" className="hover:text-white transition-colors">El Libro</a></li>
-                        <li><a href="/#resources" className="hover:text-white transition-colors">Recursos Gratuitos</a></li>
-                    </ul>
+                    <h5 className="font-display font-medium text-xl md:text-2xl text-structure mb-6 mt-0">Explorar</h5>
+                    <div className="space-y-4 text-stone-600 text-[15px] flex flex-col">
+                        <a href="http://localhost:5173/DeglyaCamero/about" className="hover:text-conversion transition-colors">Sobre Mí</a>
+                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Servicios</a>
+                        <a href={import.meta.env.BASE_URL + "#book"} className="hover:text-conversion transition-colors">El Libro</a>
+                        <a href={import.meta.env.BASE_URL + "#resources"} className="hover:text-conversion transition-colors">Recursos Gratuitos</a>
+                    </div>
                 </div>
 
+                {/* 3. Servicios */}
                 <div>
-                    <h5 className="text-white font-bold uppercase tracking-wider text-xs mb-6">Servicios</h5>
-                    <ul className="space-y-3 text-sm">
-                        <li><a href="#" className="hover:text-white transition-colors">Coaching Personal</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors">Terapia Psicológica</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors">Consultoría Corporativa</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors">Talleres y Cursos</a></li>
-                    </ul>
+                    <h5 className="font-display font-medium text-xl md:text-2xl text-structure mb-6 mt-0">Servicios</h5>
+                    <div className="space-y-4 text-stone-600 text-[15px] flex flex-col">
+                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Terapia individual</a>
+                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Terapia de Pareja</a>
+                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Coaching de Vida</a>
+                        <a href="http://localhost:5173/DeglyaCamero/servicios" className="hover:text-conversion transition-colors">Coaching Ejecutivo</a>
+                    </div>
                 </div>
 
+                {/* 4. Newsletter */}
                 <div>
-                    <h5 className="text-white font-bold uppercase tracking-wider text-xs mb-6">Newsletter</h5>
-                    <p className="text-sm opacity-90 mb-4">Recibe inspiración semanal en tu correo.</p>
-                    <form className="flex flex-col gap-2">
-                        <input type="email" placeholder="Tu correo electrónico" className="bg-white/10 border border-white/20 rounded px-4 py-2 text-sm text-white placeholder-white/50 focus:outline-none focus:border-white" />
-                        <button className="bg-conversion hover:bg-conversion/90 text-stone-900 text-sm font-bold py-2 rounded transition-colors shadow-lg">Suscribirse</button>
+                    <h5 className="font-display font-medium text-xl md:text-2xl text-structure mb-6 mt-0 whitespace-nowrap">Suscripción</h5>
+                    <p className="text-stone-600 text-[15px] mb-4">Recibe inspiración semanal en tu correo.</p>
+                    <form className="flex flex-col gap-3">
+                        <input type="email" placeholder="Tu correo electrónico" className="bg-white border border-stone-200 rounded px-4 py-2 text-[15px] text-stone-800 focus:outline-none focus:border-conversion focus:ring-1 focus:ring-conversion" />
+                        <button className="btn-wellness text-white text-sm font-bold py-2.5 rounded-full transform hover:scale-105 transition-all shadow-md">Suscribirse</button>
                     </form>
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto pt-12 mt-12 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center text-xs opacity-60">
-                <p>© 2026 Deglya Camero Group. Todos los derechos reservados.</p>
-                <div className="flex gap-6 mt-4 md:mt-0">
-                    <a href="#" className="hover:text-white">Política de Privacidad</a>
-                    <a href="#" className="hover:text-white">Términos de Servicio</a>
+            {/* Sub-footer Elements positioned dynamically */}
+            <div className="relative z-10 max-w-7xl mx-auto pt-24 mt-4 flex flex-col md:flex-row justify-between items-center text-[15px] border-t border-stone-200">
+                <p className="text-stone-500 font-medium">© 2026 Deglya Camero Group. Todos los derechos reservados.</p>
+                <div className="flex gap-6 mt-4 md:mt-0 text-stone-500 font-medium">
+                    <a href="#" className="hover:text-conversion transition-colors">Política de Privacidad</a>
+                    <a href="#" className="hover:text-conversion transition-colors">Términos de Servicio</a>
                 </div>
             </div>
+
         </footer>
     );
 };

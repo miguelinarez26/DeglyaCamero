@@ -9,21 +9,21 @@ function cn(...inputs) {
 }
 
 const buttonVariants = cva(
-    "inline-flex items-center justify-center rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white",
+    "inline-flex items-center justify-center rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white",
     {
         variants: {
             variant: {
-                default: "bg-structure text-white hover:bg-structure/90 shadow-md", // Structure (Teal)
-                action: "bg-conversion text-stone-900 hover:bg-conversion/90 shadow-md uppercase tracking-wide font-bold", // Conversion (Yellow + Dark Text)
+                default: "btn-wellness shadow-sm", // Changed to btn-wellness
+                action: "btn-wellness shadow-sm uppercase tracking-wide font-bold", // Added btn-wellness
                 outline: "border-2 border-structure text-structure hover:bg-structure/10",
                 ghost: "hover:bg-accent/10 text-accent",
                 link: "text-structure underline-offset-4 hover:underline",
             },
             size: {
                 default: "h-10 py-2 px-4",
-                sm: "h-9 px-3 rounded-md",
-                lg: "h-12 px-8 rounded-xl text-base",
-                icon: "h-10 w-10",
+                sm: "h-9 px-3 rounded-full",
+                lg: "h-12 px-8 rounded-full text-base",
+                icon: "h-10 w-10 rounded-full",
             },
         },
         defaultVariants: {
