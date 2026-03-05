@@ -5,12 +5,12 @@ export const SERVICES_DATA = [
         id: "initial-interview",
         title: "Entrevista Inicial",
         shortDescription: "Valoración diagnóstica para nuevos pacientes.",
-        fullDescription: "Sesión obligatoria para nuevos pacientes. Realizamos una valoración diagnóstica integral para entender tus necesidades y asignarte el plan de tratamiento más adecuado.",
-        features: ["Valoración Diagnóstica", "Plan de Tratamiento", "Asignación de Especialista", "Modalidad Online"],
+        fullDescription: "Sesión obligatoria para nuevos pacientes. Realizamos una valoración diagnóstica integral para entender tus necesidades.",
+        features: ["Valoración Diagnóstica", "Asignación de Especialista", "Modalidad Online"],
         icon: Users,
         image: import.meta.env.BASE_URL + "images/entrevista-inicial.jpg",
         category: "personas",
-        price: "$50",
+        price: "",
         cta: "Agendar Entrevista"
     },
     {

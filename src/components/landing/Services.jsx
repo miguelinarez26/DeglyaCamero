@@ -7,19 +7,25 @@ const Services = () => {
         {
             icon: <Sparkles size={32} />,
             title: "Psicoterapia y Coaching",
+            subtitle: "Acompañamiento personal profundo",
             description: "Atendemos diversas necesidades en los procesos de cambio, trauma psicológico y rediseño personal a través de un acompañamiento empático.",
+            img: import.meta.env.BASE_URL + "images/terapia-individual.jpg",
             link: "#"
         },
         {
             icon: <BrainCircuit size={32} />,
-            title: "Laboratorio de Neuro-Bienestar",
+            title: "Neuro-Bienestar",
+            subtitle: "Reprogramación y psicoeducación",
             description: "Experiencias grupales de reprogramación psicoespiritual. Psicoeducación y entrenamiento para auto reprogramar las distorsiones en la autopercepción y la percepción del mundo.",
+            img: import.meta.env.BASE_URL + "images/sanacion-emocional.jpg",
             link: "#"
         },
         {
             icon: <Library size={32} />,
-            title: "Recursos de Rediseño personal",
+            title: "Recursos de Rediseño",
+            subtitle: "Herramientas de autogestión",
             description: "Experiencias de autogestión psicológica. Accede a herramientas diseñadas para tu crecimiento continuo y a tu propio ritmo.",
+            img: import.meta.env.BASE_URL + "images/coaching-de-vida.jpg",
             link: "#"
         }
     ];
@@ -37,7 +43,7 @@ const Services = () => {
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8">
+                <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
                     {services.map((service, index) => (
                         <motion.div
                             key={index}
@@ -45,20 +51,49 @@ const Services = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="group relative bg-[#F4EFE6] p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-transparent hover:border-conversion/20"
+                            className="group relative h-[450px] w-full rounded-3xl overflow-hidden cursor-pointer shadow-lg"
+                            onClick={() => window.location.href = "/DeglyaCamero/servicios"}
                         >
-                            <div className="w-14 h-14 bg-conversion/10 rounded-xl flex items-center justify-center text-conversion mb-6 group-hover:bg-conversion group-hover:text-white transition-colors">
-                                {service.icon}
+                            {/* Background Image */}
+                            <img
+                                src={service.img}
+                                alt={service.title}
+                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                            />
+
+                            {/* Base Dark Gradient (always visible on bottom for readability) */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-stone-900/90 via-stone-900/30 to-transparent transition-opacity duration-500 group-hover:opacity-0" />
+
+                            {/* Hover Color Overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-[#D96B2F] via-[#DB5E42] to-[#D35355] opacity-0 group-hover:opacity-[0.85] transition-opacity duration-500 ease-in-out" />
+
+                            {/* Content Container */}
+                            <div className="absolute inset-0 flex flex-col justify-end p-8 z-10 text-white">
+                                {/* Elements that slide up */}
+                                <div className="transform transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] group-hover:-translate-y-2">
+                                    <div className="mb-4">
+                                        {React.cloneElement(service.icon, { size: 36, strokeWidth: 1.5, className: "opacity-80 group-hover:opacity-100 transition-opacity" })}
+                                    </div>
+                                    <h3 className="text-3xl lg:text-3xl font-display font-medium mb-1 leading-tight group-hover:drop-shadow-md">
+                                        {service.title}
+                                    </h3>
+                                    <p className="text-white/80 text-sm group-hover:text-white transition-colors">
+                                        {service.subtitle}
+                                    </p>
+                                </div>
+
+                                {/* Hidden details that expand on hover */}
+                                <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] opacity-0 group-hover:opacity-100 mt-2">
+                                    <div className="overflow-hidden">
+                                        <p className="text-white/95 text-sm leading-relaxed mb-6 pt-2">
+                                            {service.description}
+                                        </p>
+                                        <button className="px-6 py-2.5 rounded-full border border-white/80 text-white text-sm font-semibold hover:bg-white hover:text-[#D1554A] transition-all duration-300">
+                                            Saber más
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <h3 className="text-2xl font-display font-semibold mb-4 text-accent">
-                                {service.title}
-                            </h3>
-                            <p className="text-accent/80 mb-6 text-sm leading-relaxed">
-                                {service.description}
-                            </p>
-                            <a href="/servicios" className="inline-flex items-center justify-center px-6 py-2 rounded-full transform hover:scale-105 font-semibold text-conversion border border-conversion/30 hover:bg-gradient-to-r hover:from-[#D96B2F] hover:to-[#D35355] hover:text-white hover:border-transparent transition-all duration-400">
-                                Saber más <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                            </a>
                         </motion.div>
                     ))}
                 </div>

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlayCircle, Leaf } from 'lucide-react';
 import heroGradient from '../../assets/hero-gradient.png';
-const deglyaHeroNew = import.meta.env.BASE_URL + 'images/Deglya-6.jpg'; // Wellness Bliss main image
+const deglyaHeroNew = import.meta.env.BASE_URL + 'images/deglya-3.jpg';
 
 const words = ["confianza", "esperanza", "espiritualidad", "propósito"];
 
@@ -78,12 +78,15 @@ const Hero = () => {
                     <div className="absolute inset-0 bg-primary/5 rounded-t-[10rem] rounded-b-[2rem] rotate-3 transform scale-95 origin-bottom-right dark:bg-primary/10" />
 
                     {/* Main Image */}
-                    <div className="relative w-full h-full max-h-[550px] overflow-hidden shadow-2xl group flex items-end justify-center bg-stone-100 wellness-hover-img rounded-t-[10rem] rounded-b-[2rem]">
+                    <div className="relative w-full h-full max-h-[550px] overflow-hidden shadow-2xl group flex items-start justify-center bg-stone-100 wellness-hover-img rounded-t-[10rem] rounded-b-[2rem]">
                         <img
                             src={deglyaHeroNew}
                             alt="Deglya Camero"
-                            className="object-cover object-[50%_30%]"
+                            className="w-full h-full object-cover object-[center_65%]"
                         />
+                        {/* Filtro cálido atenuado */}
+                        <div className="absolute inset-0 bg-[#D96B2F]/5 pointer-events-none mix-blend-color-burn z-10" />
+                        <div className="absolute inset-0 bg-amber-600/5 pointer-events-none mix-blend-multiply z-10" />
                     </div>
                 </motion.div>
             </div>

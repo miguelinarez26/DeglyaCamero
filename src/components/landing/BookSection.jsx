@@ -4,23 +4,32 @@ import { CheckCircle, ShoppingCart } from 'lucide-react';
 
 const BookSection = () => {
     return (
-        <section id="book" className="py-24 relative overflow-hidden bg-transparent transition-colors">
-            {/* Background Element */}
-            <div className="absolute top-0 right-0 w-1/3 h-full bg-[#F4EFE6] -skew-x-12 transform translate-x-20 pointer-events-none" />
+        <section id="book" className="py-24 relative overflow-hidden">
+            {/* Aesthetic Background Image with Parallax */}
+            <div
+                className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat bg-fixed"
+                style={{
+                    backgroundImage: `url('${import.meta.env.BASE_URL}images/2.jpg')`,
+                }}
+            />
 
             <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
-                <div className="flex flex-col lg:flex-row items-center gap-16">
+                {/* Main Container */}
+                <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 relative">
 
                     {/* Book Cover (Interactive 3D) */}
                     <motion.div
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="lg:w-1/2 flex justify-center items-center"
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="lg:w-1/2 flex justify-center items-center w-full z-20"
                         style={{ perspective: '1500px' }}
                     >
-                        <div
+                        {/* Book wrapper with floating animation */}
+                        <motion.div
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }}
                             className="group relative w-64 lg:w-80 aspect-[1/1.5] cursor-pointer transition-transform duration-1000 ease-[cubic-bezier(0.23,1,0.32,1)] hover:rotate-x-[5deg] hover:-rotate-y-[15deg] hover:translate-x-12 z-10"
                             style={{ transformStyle: 'preserve-3d' }}
                         >
@@ -93,32 +102,36 @@ const BookSection = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </motion.div>
 
-                    {/* Content */}
+                    {/* Content Glassmorphism Box */}
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="lg:w-1/2 space-y-8 text-center lg:text-left"
+                        className="lg:w-1/2 space-y-6 text-center lg:text-left z-10 bg-white/50 backdrop-blur-md border border-white/60 p-6 lg:p-10 rounded-3xl shadow-2xl relative overflow-hidden"
                     >
-                        <div>
-                            <span className="font-bold uppercase tracking-widest text-sm text-gradient-wellness mb-2 block">
+                        {/* Decorative botanical touch from CSS inside the text box */}
+                        <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-deglya-mustard/20 rounded-full blur-3xl pointer-events-none" />
+                        <div className="absolute -top-20 -left-20 w-48 h-48 bg-deglya-teal/10 rounded-full blur-3xl pointer-events-none" />
+
+                        <div className="relative z-10">
+                            <span className="font-bold uppercase tracking-widest text-xs lg:text-sm text-conversion mb-1 block drop-shadow-sm">
                                 Nuevo Lanzamiento
                             </span>
-                            <h2 className="text-4xl lg:text-6xl font-display font-medium text-primary mt-2 mb-6">
+                            <h2 className="text-3xl lg:text-4xl xl:text-5xl font-display font-medium text-stone-800 mt-2 mb-4 drop-shadow-sm">
                                 El Reino de lo Posible
                             </h2>
                             {/* Decorative divider matching the subtle aesthetic */}
-                            <div className="w-16 h-[2px] bg-conversion/40 mx-auto lg:mx-0 mb-6"></div>
+                            <div className="w-12 h-[2px] bg-conversion/40 mx-auto lg:mx-0 mb-4 blur-[1px]"></div>
                         </div>
-                        <p className="text-lg text-primary/80 leading-relaxed max-w-xl mx-auto lg:mx-0 font-light">
+                        <p className="relative z-10 text-base lg:text-lg text-stone-700 leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium drop-shadow-sm">
                             "El Reino de lo posible" es un manual para iniciar procesos de cambio psicoespirituales. La autora nos conduce de una forma creativa por diferentes rutas para la toma de conciencia de nuestras distorsiones en la percepción propia y del mundo.
                         </p>
 
-                        <ul className="space-y-4 text-left max-w-md mx-auto lg:mx-0">
+                        <ul className="relative z-10 space-y-3 text-left max-w-md mx-auto lg:mx-0">
                             {["Herramientas prácticas para el día a día.", "Ejercicios de introspección profunda.", "Enfoque psicoespiritual único."].map((item, i) => (
                                 <motion.li
                                     key={i}
@@ -126,22 +139,22 @@ const BookSection = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: 0.2 + (i * 0.1), duration: 0.5 }}
-                                    className="flex items-start gap-4"
+                                    className="flex items-center gap-3"
                                 >
-                                    <div className="mt-1 bg-conversion/10 p-1 rounded-full text-conversion">
-                                        <CheckCircle size={16} strokeWidth={3} />
+                                    <div className="bg-conversion/20 p-1 rounded-full text-conversion shadow-sm shrink-0">
+                                        <CheckCircle size={14} strokeWidth={3} />
                                     </div>
-                                    <span className="text-primary/70 font-medium">{item}</span>
+                                    <span className="text-stone-800 font-bold text-sm lg:text-base drop-shadow-sm">{item}</span>
                                 </motion.li>
                             ))}
                         </ul>
 
-                        <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                            <a href="#" className="btn-wellness px-8 py-3 rounded-full transform hover:scale-105 flex items-center justify-center gap-2 shadow-[0_8px_20px_-6px_rgba(217,107,47,0.4)]">
-                                <ShoppingCart size={20} />
+                        <div className="relative z-10 pt-4 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
+                            <a href="#" className="btn-wellness px-6 py-2.5 rounded-full transform hover:scale-105 flex items-center justify-center gap-2 shadow-[0_8px_20px_-6px_rgba(217,107,47,0.5)] bg-gradient-to-r from-[#D96B2F] to-[#D35355] text-white text-sm font-bold tracking-wide w-full sm:w-auto">
+                                <ShoppingCart size={18} />
                                 Comprar en Amazon
                             </a>
-                            <a href="#" className="flex justify-center items-center px-8 py-3 rounded-full transform hover:scale-105 font-semibold text-conversion border border-conversion/30 hover:bg-gradient-to-r hover:from-[#D96B2F] hover:to-[#D35355] hover:text-white hover:border-transparent transition-all duration-400 shadow-sm">
+                            <a href="#" className="flex justify-center items-center px-6 py-2.5 rounded-full transform hover:scale-105 font-bold text-stone-800 text-sm border-2 border-stone-800 hover:bg-stone-800 hover:text-white transition-all duration-400 shadow-sm bg-white/40 backdrop-blur-sm w-full sm:w-auto">
                                 Leer primer capítulo
                             </a>
                         </div>

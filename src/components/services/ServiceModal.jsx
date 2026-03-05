@@ -78,11 +78,13 @@ const ServiceModal = ({ service, onClose }) => {
                                 </ul>
                             </div>
 
-                            <div className="mt-auto pt-6 border-t border-stone-100 flex items-center justify-between gap-4">
-                                <div>
-                                    <p className="text-xs text-stone-500 uppercase tracking-wider mb-1">Inversión</p>
-                                    <p className="text-2xl font-bold text-stone-900 font-display">{service.price}</p>
-                                </div>
+                            <div className={`mt-auto pt-6 border-t border-stone-100 flex items-center gap-4 ${service.price ? 'justify-between' : 'justify-end'}`}>
+                                {service.price && (
+                                    <div>
+                                        <p className="text-xs text-stone-500 uppercase tracking-wider mb-1">Inversión</p>
+                                        <p className="text-2xl font-bold text-stone-900 font-display">{service.price}</p>
+                                    </div>
+                                )}
                                 <Link
                                     to="/contacto"
                                     onClick={onClose}

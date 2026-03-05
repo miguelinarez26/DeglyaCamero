@@ -61,22 +61,22 @@ const HeroVideoReveal = () => {
                         onClick={() => setIsVideoOpen(true)}
                     >
                         <img
-                            src={import.meta.env.BASE_URL + "images/deglya-4.jpg"}
+                            src={import.meta.env.BASE_URL + "images/deglya-2.jpg"}
                             alt="Video Manifiesto"
-                            className="w-full h-full object-cover object-[center_35%] opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                            className="w-full h-full object-cover object-[center_30%] opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                         />
 
-                        {/* Elegant Play Button Center */}
-                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                            <div className="w-24 h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 shadow-2xl group-hover:scale-110 group-hover:bg-white/30 transition-all duration-500">
-                                <div className="w-0 h-0 border-t-[14px] border-t-transparent border-l-[24px] border-l-white border-b-[14px] border-b-transparent ml-2 opacity-100" />
+                        {/* Elegant Play Button Center -> Moved Down */}
+                        <div className="absolute inset-0 flex items-center justify-center pt-32 sm:pt-40 md:pt-48 pointer-events-none">
+                            <div className="w-20 h-20 md:w-24 md:h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/30 shadow-2xl group-hover:scale-110 group-hover:bg-white/30 transition-all duration-500">
+                                <div className="w-0 h-0 border-t-[12px] md:border-t-[14px] border-t-transparent border-l-[20px] md:border-l-[24px] border-l-white border-b-[12px] md:border-b-[14px] border-b-transparent ml-2 opacity-100" />
                             </div>
                         </div>
 
                         {/* Title Overlay in Video */}
                         <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 pointer-events-none">
-                            <p className="text-white/80 text-sm tracking-widest uppercase mb-1">Video Manifiesto</p>
-                            <h3 className="text-white font-display text-2xl md:text-3xl drop-shadow-lg">Descubre tu Esencia</h3>
+                            <p className="text-[#2F3E30]/80 font-bold text-sm tracking-widest uppercase mb-1 drop-shadow-sm">Video Manifiesto</p>
+                            <h3 className="text-[#2F3E30] font-display text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-md">Descubre tu Esencia</h3>
                         </div>
                     </div>
 

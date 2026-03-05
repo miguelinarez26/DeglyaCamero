@@ -87,9 +87,11 @@ const ServicesPage = () => {
                                         <h3 className="text-2xl font-medium font-display text-stone-800 group-hover:text-white transition-colors duration-500">
                                             {service.title}
                                         </h3>
-                                        <p className="text-conversion group-hover:text-white transition-colors duration-500 font-bold text-sm mt-1">
-                                            {service.price || "Contactar"}
-                                        </p>
+                                        {service.price && (
+                                            <p className="text-conversion group-hover:text-white transition-colors duration-500 font-bold text-sm mt-1">
+                                                {service.price}
+                                            </p>
+                                        )}
                                     </div>
 
                                     {/* Image Box */}

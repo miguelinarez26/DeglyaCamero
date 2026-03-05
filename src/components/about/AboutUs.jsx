@@ -20,9 +20,8 @@ const AboutUs = () => {
             <main className="relative z-10 pt-20">
                 {/* HERO SECTION REPLACED */}
                 <AboutSection />
-
-                <OurHistory />
                 <OurValues />
+                <OurHistory />
                 <OurTeam />
             </main>
 
