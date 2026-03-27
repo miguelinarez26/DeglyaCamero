@@ -23,23 +23,42 @@ const StaffLogin = () => {
 
             if (authError || !user) throw authError || new Error('Credenciales inválidas');
 
-            // 2. Check Role
-            const { data: profile } = await supabase
-                .from('profiles')
+            // 2. Check Role (Staff Priority)
+            let finalRole = null;
+
+            // First check user_roles (Staff table)
+            const { data: userRoleData } = await supabase
+                .from('user_roles')
                 .select('role')
-                .eq('id', user.id)
-                .single();
+                .eq('user_id', user.id)
+                .maybeSingle();
+            
+            if (userRoleData && userRoleData.role) {
+                finalRole = userRoleData.role;
+            } else {
+                // Fallback to profiles table
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', user.id)
+                    .maybeSingle();
+                
+                finalRole = profile?.role;
+            }
 
-            const role = profile?.role;
-
-            if (role === 'patient') {
+            if (finalRole === 'patient') {
                 await supabase.auth.signOut();
                 throw new Error('Acceso restringido a personal autorizado.');
             }
 
+            if (!finalRole) {
+                await supabase.auth.signOut();
+                throw new Error('No tienes permisos de personal asignados.');
+            }
+
             // 3. Redirect based on Role
-            if (role === 'specialist') navigate('/dashboard/especialista');
-            else if (['receptionist', 'admin', 'programador'].includes(role)) navigate('/dashboard/recepcion');
+            if (finalRole === 'specialist' || finalRole === 'therapist') navigate('/dashboard/especialista');
+            else if (['receptionist', 'admin', 'secretary', 'programador'].includes(finalRole)) navigate('/dashboard/recepcion');
             else navigate('/'); // Fallback
 
         } catch (err: any) {

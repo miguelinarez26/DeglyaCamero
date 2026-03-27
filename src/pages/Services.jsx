@@ -19,7 +19,7 @@ const servicesData = {
             title: "Psicoterapia Individual",
             description: "Un espacio seguro para explorar tu mundo interno y sanar heridas profundas.",
             features: ["Sesiones de 50 min", "Modalidad Online/Presencial", "Enfoque Integrativo Destino"],
-            price: "$80 / sesión",
+            price: "",
             cta: "Reservar Cita",
             img: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=1000&auto=format&fit=crop"
         },
@@ -27,7 +27,7 @@ const servicesData = {
             title: "Coaching de Vida",
             description: "Diseña el futuro que deseas con herramientas prácticas y acompañamiento.",
             features: ["Definición de Metas", "Plan de Acción", "Seguimiento Semanal"],
-            price: "$100 / sesión",
+            price: "",
             cta: "Iniciar Proceso",
             img: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000&auto=format&fit=crop"
         },
@@ -35,7 +35,7 @@ const servicesData = {
             title: "Talleres de Bienestar",
             description: "Experiencias grupales para reconectar con tu esencia y vitalidad.",
             features: ["Grupos reducidos", "Material incluido", "Comunidad de apoyo"],
-            price: "Desde $45",
+            price: "",
             cta: "Ver Próximos Eventos",
             img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1000&auto=format&fit=crop"
         }
@@ -45,7 +45,7 @@ const servicesData = {
             title: "Liderazgo Consciente",
             description: "Formación para líderes que buscan inspirar y gestionar con empatía.",
             features: ["Evaluación 360", "Mentoring Ejecutivo", "Resultados Medibles"],
-            price: "Consultar",
+            price: "",
             cta: "Solicitar Propuesta",
             img: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000&auto=format&fit=crop"
         },
@@ -53,7 +53,7 @@ const servicesData = {
             title: "Team Building 'Vital'",
             description: "Actividades diseñada para fortalecer la cohesión y la comunicación.",
             features: ["Indoor/Outdoor", "Dinámicas Gamificadas", "Reporte de Impacto"],
-            price: "Consultar",
+            price: "",
             cta: "Cotizar Experiencia",
             img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1000&auto=format&fit=crop"
         },
@@ -61,7 +61,7 @@ const servicesData = {
             title: "Bienestar Corporativo",
             description: "Programas integrales de salud mental y emocional para tu equipo.",
             features: ["Charlas y Webinars", "Soporte Psicológico", "Línea de Ayuda"],
-            price: "A medida",
+            price: "",
             cta: "Hablar con un Asesor",
             img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1000&auto=format&fit=crop"
         }

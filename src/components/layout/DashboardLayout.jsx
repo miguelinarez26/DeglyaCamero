@@ -39,7 +39,7 @@ export default function DashboardLayout({ role = 'patient' }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const { profile } = useUserRole();
+    const { profile, user } = useUserRole();
     const { openSpecialistBooking } = useUIStore();
 
     const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
@@ -48,6 +48,11 @@ export default function DashboardLayout({ role = 'patient' }) {
         await supabase.auth.signOut();
         navigate('/login');
     };
+
+    // --- IDENTIDAD DINÁMICA ---
+    const rawName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Carolina';
+    const displayName = ['Usuario', 'usuario', 'User', 'user'].includes(rawName) ? 'Carolina' : rawName;
+    const roleLabel = (['receptionist', 'admin', 'secretary'].includes(role) || !role) ? 'Recepción' : (['specialist', 'therapist'].includes(role) ? 'Psicoterapeuta' : 'Paciente');
 
     const navItems = role === 'specialist'
         ? [
@@ -75,15 +80,16 @@ export default function DashboardLayout({ role = 'patient' }) {
 
             {/* Sidebar */}
             <aside className={cn(
-                "fixed lg:static inset-y-0 left-0 z-50 w-20 lg:w-64 bg-white border-r border-gray-100 flex flex-col transition-all duration-300 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.05)]",
+                "fixed lg:sticky top-0 h-screen z-50 w-20 lg:w-64 bg-white border-r border-gray-100 flex flex-col transition-all duration-300 shadow-[0_4px_20px_-2px_rgba(0,0,0,0.05)]",
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
             )}>
-                <div className="h-20 flex items-center justify-center lg:justify-start lg:px-8 border-b border-gray-50">
-                    <Link to="/" className="flex items-center gap-2">
-                        <div className="text-2xl font-display font-bold text-deglya-accent tracking-wide hidden lg:block">
-                            Deglya C.
-                        </div>
-                        <div className="lg:hidden text-2xl font-display font-bold text-deglya-primary">DC</div>
+                <div className="h-24 flex items-center justify-center lg:justify-start lg:px-8 border-b border-stone-100/50 bg-stone-50/20">
+                    <Link to="/" className="flex items-center transition-transform hover:scale-105 duration-300">
+                        <img 
+                            src={import.meta.env.BASE_URL + "images/logo4.png"} 
+                            alt="Deglya Camero Logo" 
+                            className="w-32 lg:w-40 object-contain"
+                        />
                     </Link>
                 </div>
 
@@ -117,8 +123,8 @@ export default function DashboardLayout({ role = 'patient' }) {
                             )}
                         </div>
                         <div className="hidden lg:block overflow-hidden">
-                            <p className="text-sm font-bold text-deglya-accent truncate">{profile?.full_name || 'Usuario'}</p>
-                            <p className="text-xs text-gray-400 truncate">Psicoterapeuta</p>
+                            <p className="text-sm font-bold text-deglya-accent truncate">{displayName}</p>
+                            <p className="text-xs text-gray-400 truncate">{roleLabel}</p>
                         </div>
                     </div>
                 </div>

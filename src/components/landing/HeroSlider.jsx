@@ -58,8 +58,7 @@ const HeroSlider = () => {
                             backgroundPosition: slides[current].position || "center center"
                         }}
                     />
-                    {/* Overlay muy sutil cálido (no negro entero) para resaltar colores y no matar la luz */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900/40 via-transparent to-black/10 mix-blend-multiply" />
+                    {/* Overlays removed to maintain maximum image clarity as requested */}
                 </motion.div>
             </AnimatePresence>
 

@@ -19,13 +19,15 @@ export const MenuItem = ({
     href,
     isActiveTab,
 }) => {
+    // Force active state if either prop is true or it's currently selected in the menu
+    const isActuallyActive = isActiveTab || active === item;
+
     const content = (
-        <motion.p
-            transition={{ duration: 0.3 }}
-            className={`cursor-pointer font-medium text-sm relative z-10 ${isActiveTab ? 'text-structure font-bold' : 'text-stone-500 hover:text-structure'}`}
+        <span
+            className={`text-sm transition-all duration-300 relative z-10 whitespace-nowrap ${isActuallyActive ? 'text-structure font-bold' : 'text-stone-500 font-medium hover:text-structure'}`}
         >
             {item}
-        </motion.p>
+        </span>
     );
 
     return (
@@ -64,7 +66,7 @@ export const Menu = ({
     return (
         <nav
             onMouseLeave={() => setActive(null)}
-            className="relative rounded-full border border-stone-200 bg-white/90 backdrop-blur-md shadow-lg flex justify-center space-x-6 px-8 py-0.5 items-center"
+            className="relative rounded-full border border-stone-200 bg-white/90 backdrop-blur-md shadow-lg flex justify-center space-x-3 px-6 py-0.5 items-center"
         >
             {children}
         </nav>

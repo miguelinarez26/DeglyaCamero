@@ -1,16 +1,8 @@
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from './supabase';
 import type { ICalendarManager, UIConfig, Appointment, TimeSlot } from './types';
 
-// Environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error('Missing Supabase environment variables');
-}
-
-// 1. Singleton Supabase Client
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// 1. Unified Supabase Client (Imported)
+export { supabase };
 
 // 2. Mock Implementations (Placeholders until logic is fully fleshed out)
 

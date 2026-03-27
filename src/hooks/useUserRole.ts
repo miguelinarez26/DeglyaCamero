@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '../lib/backend';
 import { Database } from '../types/supabase';
 
-type UserRole = Database['public']['Enums']['user_role'];
+type UserRole = Database['public']['Enums']['user_role'] | 'specialist' | 'secretary' | 'admin' | 'programador';
 type Profile = Database['public']['Tables']['profiles']['Row'];
 
 export interface UserContext {
@@ -20,79 +20,123 @@ export const useUserRole = (): UserContext => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    // --- MODO DEMO / BYPASS (Solo para visualización local) ---
+    // --- MODO DEMO / BYPASS ---
     const isDemo = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('demo') === 'specialist';
 
-    useEffect(() => {
-        if (isDemo) {
-            setUser({ email: 'deglya.demo@gmail.com', id: 'demo-id' });
-            setProfile({ full_name: 'Deglya Camero (Modo Demo)', role: 'specialist' } as any);
-            setRole('specialist');
-            setLoading(false);
-            return;
-        }
-
-        // 1. Check active session
-        const checkSession = async () => {
-            try {
-                const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-
-                if (sessionError) throw sessionError;
-
-                if (session?.user) {
-                    setUser(session.user);
-
-                    // 2. Fetch Profile to get Role
-                    const { data: profileData, error: profileError } = await supabase
-                        .from('profiles')
-                        .select('*')
-                        .eq('id', session.user.id)
-                        .single();
-
-                    if (profileError) {
-                        // Handle case where auth exists but profile doesn't (should be rare with triggers)
-                        console.error('Error fetching profile:', profileError);
-                        setError('Error al cargar perfil de usuario.');
-                    } else {
-                        setProfile(profileData);
-                        setRole(profileData.role);
-                    }
-                }
-            } catch (err: any) {
-                console.error('Auth Check Error:', err);
-                setError(err.message);
-            } finally {
-                setLoading(false);
+    const fetchRoleData = useCallback(async (userId: string) => {
+        try {
+            // ==========================================
+            // OVERRIDE MAESTRO (ADMIN FUNDADORA)
+            // ==========================================
+            if (userId === 'c4b3e03b-74a2-4408-902a-5a7bc544e454') {
+                setRole('admin');
+                return;
             }
-        };
 
-        checkSession();
+            // 1. Obtener el perfil para datos estéticos (como nombre)
+            const { data: profileData, error: profileError } = await supabase
+                .from('profiles')
+                .select('*')
+                .eq('id', userId)
+                .maybeSingle();
 
-        // 3. Listen for changes (Login/Logout)
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+            if (profileError) throw profileError;
+
+            if (profileData) {
+                setProfile(profileData);
+            }
+
+            // 2. PRIORIDAD 1: Consultar la tabla user_roles (Staff)
+            const { data: userRoleData, error: roleError } = await supabase
+                .from('user_roles')
+                .select('role')
+                .eq('user_id', userId)
+                .maybeSingle();
+
+            if (roleError && roleError.code !== '42P01') {
+                console.error("Error fetching user_roles:", roleError);
+            }
+
+            // Si existe en user_roles, ESE es su rol real
+            if (userRoleData && userRoleData.role) {
+                setRole(userRoleData.role as UserRole);
+                return;
+            }
+
+            // 3. PRIORIDAD 2: Rol en la tabla profiles
+            if (profileData && profileData.role) {
+                setRole(profileData.role as UserRole);
+                return;
+            }
+
+            // 4. Fallback si no está en ningún lado
+            setRole('patient');
+        } catch (err: any) {
+            console.error('Error fetching role/profile:', err);
+            setError(err.message);
+        }
+    }, []);
+
+    // Initial auth check to cover all Supabase v2 versions reliably
+    useEffect(() => {
+        let mounted = true;
+        if (isDemo) return;
+        
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            if (!mounted) return;
             if (session?.user) {
                 setUser(session.user);
-                setLoading(true); // Re-fetch profile on new login
-                const { data } = await supabase
-                    .from('profiles')
-                    .select('*')
-                    .eq('id', session.user.id)
-                    .single();
-                setProfile(data);
-                setRole(data?.role || null);
+            } else {
                 setLoading(false);
+            }
+        });
+        return () => { mounted = false; };
+    }, [isDemo]);
+
+    // Role Fetching Effect - Entirely detached from Auth pipeline
+    useEffect(() => {
+        if (!user || role !== null) return;
+        
+        let isActive = true;
+
+        const loadRoles = async () => {
+            setLoading(true);
+            await fetchRoleData(user.id);
+            // Siempre quitar el loading, sin importar qué gane en la condición de montaje
+            setLoading(false);
+        };
+
+        loadRoles();
+
+        return () => { isActive = false; };
+    }, [user, role, fetchRoleData]);
+
+    useEffect(() => {
+        let mounted = true;
+        if (isDemo) return;
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+            console.log('Auth Change Event:', event, ' | Mounted:', mounted);
+            if (!mounted) return;
+
+            if (session?.user) {
+                setUser(session.user);
+                // NOTA VITAL: No usar "await fetchRoleData" aquí.
+                // Supabase AuthClient congela "signInWithPassword" si esta función es async y se detiene.
+                // El useEffect de arriba detectará que 'user' cambió e iniciará la descarga independientemente.
             } else {
                 setUser(null);
                 setProfile(null);
                 setRole(null);
-                setLoading(false);
+                if (mounted) setLoading(false);
             }
         });
 
         return () => {
+            mounted = false;
             subscription.unsubscribe();
         };
-    }, []);
+    }, [isDemo]);
 
     return { user, profile, role, loading, error };
 };

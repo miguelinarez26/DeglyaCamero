@@ -8,7 +8,7 @@ export const SERVICES_DATA = [
         fullDescription: "Sesión obligatoria para nuevos pacientes. Realizamos una valoración diagnóstica integral para entender tus necesidades.",
         features: ["Valoración Diagnóstica", "Asignación de Especialista", "Modalidad Online"],
         icon: Users,
-        image: import.meta.env.BASE_URL + "images/entrevista-inicial.jpg",
+        image: import.meta.env.BASE_URL + "images/entrevista-inicial.png",
         category: "personas",
         price: "",
         cta: "Agendar Entrevista"
@@ -25,9 +25,9 @@ export const SERVICES_DATA = [
             "Otros"
         ],
         icon: Heart,
-        image: import.meta.env.BASE_URL + "images/terapia-individual.jpg",
+        image: import.meta.env.BASE_URL + "images/emdr.png",
         category: "personas",
-        price: "$80 / sesión",
+        price: "",
         cta: "Reservar Cita"
     },
     {
@@ -47,7 +47,7 @@ export const SERVICES_DATA = [
         icon: Compass,
         image: import.meta.env.BASE_URL + "images/coaching-de-vida.jpg",
         category: "personas",
-        price: "$100 / sesión",
+        price: "",
         cta: "Iniciar Proceso"
     },
     {
@@ -59,7 +59,7 @@ export const SERVICES_DATA = [
         icon: Users,
         image: import.meta.env.BASE_URL + "images/terapia-pareja.jpg",
         category: "personas",
-        price: "$120 / sesión",
+        price: "",
         cta: "Agendar Pareja"
     },
     {
@@ -77,7 +77,7 @@ export const SERVICES_DATA = [
         icon: Building2,
         image: import.meta.env.BASE_URL + "images/consultoria-organizacionaljpg.jpg",
         category: "empresas",
-        price: "Consultar",
+        price: "",
         cta: "Solicitar Propuesta"
     },
     {
@@ -95,7 +95,7 @@ export const SERVICES_DATA = [
         icon: Lightbulb,
         image: import.meta.env.BASE_URL + "images/coaching-ejecutivo.jpg",
         category: "empresas",
-        price: "Consultar",
+        price: "",
         cta: "Agenda Ejecutiva"
     }
 ];

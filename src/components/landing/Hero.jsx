@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlayCircle, Leaf } from 'lucide-react';
 import heroGradient from '../../assets/hero-gradient.png';
+import { Link } from 'react-router-dom';
 const deglyaHeroNew = import.meta.env.BASE_URL + 'images/deglya-3.jpg';
 
 const words = ["confianza", "esperanza", "espiritualidad", "propósito"];
@@ -40,7 +41,7 @@ const Hero = () => {
                     <h1 className="text-4xl lg:text-6xl font-display font-medium leading-tight text-primary">
                         ¿Quieres potenciar tus <span className="text-secondary italic">habilidades</span>?
                         <span className="block mt-4">
-                            Rediseñate en{' '}
+                            Rediséñate en{' '}
                         </span>
                         <span className="block h-[1.3em] relative overflow-hidden text-primary italic mt-2">
                             <AnimatePresence mode="wait">
@@ -61,9 +62,9 @@ const Hero = () => {
                         Acompaño procesos de transformación con empatía y esperanza. Descubre el maravilloso camino de rediseñarte y potenciar tus capacidades.
                     </p>
                     <div className="flex flex-wrap gap-4 pt-4">
-                        <a href="/servicios" className="btn-wellness px-8 py-3 rounded-full transform hover:scale-105 shadow-lg">
+                        <Link to="/servicios" className="btn-wellness px-8 py-3 rounded-full shadow-lg">
                             Explorar Servicios
-                        </a>
+                        </Link>
                     </div>
                 </motion.div>
 
@@ -84,9 +85,6 @@ const Hero = () => {
                             alt="Deglya Camero"
                             className="w-full h-full object-cover object-[center_65%]"
                         />
-                        {/* Filtro cálido atenuado */}
-                        <div className="absolute inset-0 bg-[#D96B2F]/5 pointer-events-none mix-blend-color-burn z-10" />
-                        <div className="absolute inset-0 bg-amber-600/5 pointer-events-none mix-blend-multiply z-10" />
                     </div>
                 </motion.div>
             </div>

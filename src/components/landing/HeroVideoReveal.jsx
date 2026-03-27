@@ -32,8 +32,7 @@ const HeroVideoReveal = () => {
                 >
                     <HeroSlider />
                 </motion.div>
-                {/* Overlay gradient to ensure text readability of the upcoming white section if needed? No, solid white covers it. */}
-                <div className="absolute inset-0 bg-black/20 z-10 pointer-events-none" />
+                {/* Overlay removed for transparency as requested */}
             </div>
 
             {/* 2. SCROLLING FOREGROUND (White Video Section) */}
@@ -51,7 +50,7 @@ const HeroVideoReveal = () => {
                         </span>
                         <h2 className="text-[#2F3E30] font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight animate-slideUp">
                             Transforma tu vida desde <br />
-                            <span className="italic font-light text-[#B06540]">la raíz del ser</span>
+                            <span className="italic font-light text-[#B06540] text-xl md:text-3xl lg:text-4xl block mt-4">las bases que conformaron tu SER</span>
                         </h2>
                     </div>
 
@@ -63,7 +62,7 @@ const HeroVideoReveal = () => {
                         <img
                             src={import.meta.env.BASE_URL + "images/deglya-2.jpg"}
                             alt="Video Manifiesto"
-                            className="w-full h-full object-cover object-[center_30%] opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                            className="w-full h-full object-cover object-[center_30%] opacity-100 group-hover:scale-105 transition-all duration-700"
                         />
 
                         {/* Elegant Play Button Center -> Moved Down */}
@@ -76,7 +75,7 @@ const HeroVideoReveal = () => {
                         {/* Title Overlay in Video */}
                         <div className="absolute bottom-8 left-8 md:bottom-12 md:left-12 pointer-events-none">
                             <p className="text-[#2F3E30]/80 font-bold text-sm tracking-widest uppercase mb-1 drop-shadow-sm">Video Manifiesto</p>
-                            <h3 className="text-[#2F3E30] font-display text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-md">Descubre tu Esencia</h3>
+                            <h3 className="text-[#2F3E30] font-display text-2xl md:text-3xl lg:text-4xl font-bold drop-shadow-md">Descubre tu diseño personal natural y cambia tu destino</h3>
                         </div>
                     </div>
 

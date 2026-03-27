@@ -8,25 +8,27 @@ const teamMembers = [
         name: "Deglya Camero",
         role: "Coach de vida, vocacional y ocupacional. Psicoterapeuta EMDR Certificada",
         tags: "CEO y Fundadora",
-        img: "https://yqmqzyaqlhgzcbcbintn.supabase.co/storage/v1/object/public/Imagenes%20Deglya%20web/Especialistas/Deglya-6%20(1).jpg",
+        img: import.meta.env.BASE_URL + "images/Deglya-6.jpg",
         rotation: "-rotate-2",
         bgColor: "bg-[#A2C4C9]", // Serene Blue
+        position: "object-top",
         bio: "Coach de vida, vocacional y ocupacional. Psicoterapeuta EMDR Certificada. Especialista en reprogramación psicoespiritual y análisis de guiones de vida."
     },
     {
         name: "Ana Cristina Castañeda",
         role: "Psicoterapeuta EMDR adolescentes y adultos",
         tags: "Terapia presencial y online",
-        img: "https://yqmqzyaqlhgzcbcbintn.supabase.co/storage/v1/object/public/Imagenes%20Deglya%20web/Especialistas/especialista%202.jpg",
+        img: import.meta.env.BASE_URL + "images/Lic. Ana Cristina Castañeda.jpg",
         rotation: "rotate-1",
         bgColor: "bg-[#F1E4C3]", // Warm Sand
+        position: "object-top",
         bio: "Psicoterapeuta EMDR especialista en el trato y acompañamiento psicológico para adolescentes y adultos."
     },
     {
         name: "Zurisaday Cordero",
         role: "Psicoterapeuta EMDR Infantil y de adultos",
         tags: "Terapia presencial y online",
-        img: "https://yqmqzyaqlhgzcbcbintn.supabase.co/storage/v1/object/public/Imagenes%20Deglya%20web/Especialistas/Lic.%20Zurisaday%20Cordero.jpg",
+        img: import.meta.env.BASE_URL + "images/Lic. Zurisaday Cordero.jpg",
         rotation: "-rotate-1",
         bgColor: "bg-[#C97D60]", // Terracotta
         position: "object-top",
@@ -36,7 +38,7 @@ const teamMembers = [
         name: "Francirys Vargas",
         role: "Psicoterapia de adolescentes y jóvenes adultos",
         tags: "Terapia presencial y online",
-        img: "https://yqmqzyaqlhgzcbcbintn.supabase.co/storage/v1/object/public/Imagenes%20Deglya%20web/Especialistas/Lic.%20Francirys%20Vargas.jpg",
+        img: import.meta.env.BASE_URL + "images/Lic. Francirys Vargas.jpg",
         rotation: "rotate-2",
         bgColor: "bg-[#D4E2D4]", // Sage Green
         position: "object-top",

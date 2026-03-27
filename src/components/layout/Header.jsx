@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { Logo } from '../ui/Logo';
 import { Button } from '../ui/Button';
 import { useUIStore } from '../../lib/uiStore';
@@ -26,6 +26,9 @@ export const Header = () => {
                     </nav>
 
                     <div className="hidden items-center gap-4 lg:flex">
+                        <Link className="text-lg font-medium hover:text-primary dark:hover:text-sand transition-colors flex items-center gap-1.5" to="/login">
+                            <User size={20} /> Portal
+                        </Link>
                         <Button onClick={openBookingModal}>Agendar Cita</Button>
                     </div>
 
@@ -46,6 +49,9 @@ export const Header = () => {
                             <Link className="text-xl font-medium text-text-light dark:text-text-dark" to="/" onClick={() => setIsMenuOpen(false)}>Programas</Link>
                             <Link className="text-xl font-medium text-text-light dark:text-text-dark" to="/" onClick={() => setIsMenuOpen(false)}>Recursos</Link>
                             <Link className="text-xl font-medium text-text-light dark:text-text-dark" to="/" onClick={() => setIsMenuOpen(false)}>Contacto</Link>
+                            <Link className="text-xl font-medium text-text-light dark:text-text-dark flex items-center justify-center gap-2" to="/login" onClick={() => setIsMenuOpen(false)}>
+                                <User size={24} /> Portal
+                            </Link>
                             <Button className="w-full" onClick={() => { setIsMenuOpen(false); openBookingModal(); }}>Agendar Cita</Button>
                         </nav>
                     </div>

@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useUserRole } from '../../hooks/useUserRole';
 import { Database } from '../../types/supabase';
 
-type UserRole = Database['public']['Enums']['user_role'];
+type UserRole = Database['public']['Enums']['user_role'] | 'secretary' | 'programador' | 'specialist' | 'admin' | 'receptionist';
 
 interface ProtectedRouteProps {
     allowedRoles?: UserRole[];

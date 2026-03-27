@@ -59,7 +59,7 @@ const AppointmentCard = ({ appointment }) => {
 };
 
 export default function PatientDashboard() {
-    const { user, loading: authLoading } = useUserRole();
+    const { user, profile, loading: authLoading } = useUserRole();
     const [appointments, setAppointments] = useState([]);
     const [history, setHistory] = useState([]);
     const [stats, setStats] = useState({ completed: 0 });
@@ -138,7 +138,10 @@ export default function PatientDashboard() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h2 className="text-2xl font-display font-bold text-stone-800">
-                        Hola, {user?.user_metadata?.full_name?.split(' ')[0] || 'Usuario'}
+                        Hola, {(() => {
+                            const rawName = profile?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Carolina';
+                            return ['Usuario', 'usuario', 'User', 'user'].includes(rawName) ? 'Carolina' : rawName;
+                        })()}
                     </h2>
                     <p className="text-stone-500">Aquí tienes un resumen de tu bienestar.</p>
                 </div>

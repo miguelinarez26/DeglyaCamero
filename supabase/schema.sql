@@ -18,8 +18,8 @@ DROP TYPE IF EXISTS public.user_role CASCADE;
 -- 2. ENUMS Y TABLAS
 -- ==========================================
 
--- Definimos roles estrictos
-CREATE TYPE public.user_role AS ENUM ('patient', 'specialist', 'admin');
+-- Definimos roles estrictos (admin, therapist, patient)
+CREATE TYPE public.user_role AS ENUM ('patient', 'therapist', 'admin');
 
 CREATE TABLE public.profiles (
     id UUID REFERENCES auth.users(id) ON DELETE CASCADE PRIMARY KEY,
@@ -90,60 +90,44 @@ CREATE TRIGGER on_auth_user_created
 -- 4. SEGURIDAD (POLÍTICAS RLS)
 -- ==========================================
 
--- Política 1: Los usuarios solo pueden ver su propio perfil
-CREATE POLICY "Usuarios pueden ver su propio perfil"
+-- Primero eliminamos TODAS las políticas viejas de profiles si existen (para hacer esto re-ejecutable)
+DROP POLICY IF EXISTS "Usuarios pueden ver su propio perfil" ON public.profiles;
+DROP POLICY IF EXISTS "Usuarios pueden editar su propio perfil" ON public.profiles;
+DROP POLICY IF EXISTS "Personal puede ver todos los perfiles" ON public.profiles;
+DROP POLICY IF EXISTS "Pacientes ven y editan su propio registro" ON public.profiles;
+DROP POLICY IF EXISTS "Terapeutas ven y editan su propio registro" ON public.profiles;
+DROP POLICY IF EXISTS "Admins acceso total" ON public.profiles;
+
+-- Política 1: Pacientes y Terapeutas
+-- Un 'patient' o 'therapist' solo puede ver y editar su propio registro por ahora.
+-- (Ambos caen en esta misma regla de acceso restringido a sí mismos)
+CREATE POLICY "Usuarios comunes (pacientes y terapeutas) pueden ver su propio perfil"
     ON public.profiles
     FOR SELECT
     USING (auth.uid() = id);
 
--- Política 2: Los usuarios pueden actualizar su propio perfil
-CREATE POLICY "Usuarios pueden editar su propio perfil"
+CREATE POLICY "Usuarios comunes (pacientes y terapeutas) pueden actualizar su propio perfil"
     ON public.profiles
     FOR UPDATE
     USING (auth.uid() = id);
 
--- Función helper para verificar roles administrativos sin recursión infinita
-CREATE OR REPLACE FUNCTION public.is_admin_or_specialist()
+-- Función robusta para verificar si alguien es admin absoluto
+-- La guardamos aquí para usarla en la política 2 y evitar recursión infinita
+CREATE OR REPLACE FUNCTION public.is_admin()
 RETURNS BOOLEAN AS $$
 BEGIN
     RETURN EXISTS (
         SELECT 1 FROM public.profiles
         WHERE id = auth.uid()
-        AND role IN ('admin', 'specialist')
+        AND role = 'admin'
     );
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Política 3: Especialistas y Admins pueden ver todos los perfiles de pacientes
-CREATE POLICY "Personal puede ver todos los perfiles"
+-- Política 2: Admins
+-- Un 'admin' tiene acceso total (lectura, inserción, actualización, borrado) sobre toda la tabla profiles.
+CREATE POLICY "Admins tienen acceso global a todos los perfiles"
     ON public.profiles
-    FOR SELECT
-    USING (public.is_admin_or_specialist());
+    FOR ALL
+    USING (public.is_admin());
 
--- ==========================================
--- 5. STORAGE (ALMACENAMIENTO)
--- ==========================================
-
--- Crear bucket 'comprobantes_pago' si no existe
-INSERT INTO storage.buckets (id, name, public)
-VALUES ('comprobantes_pago', 'comprobantes_pago', false)
-ON CONFLICT (id) DO NOTHING;
-
--- Política de Storage: Insertar (Subir)
--- Permitimos subir archivos a usuarios autenticados
-CREATE POLICY "Usuarios autenticados pueden subir comprobantes"
-    ON storage.objects
-    FOR INSERT
-    TO authenticated
-    WITH CHECK ( bucket_id = 'comprobantes_pago' );
-
--- Política de Storage: Select (Ver)
--- El dueño ve su archivo, el personal (Admins/Especialistas) ve todos
-CREATE POLICY "Usuarios ven sus propios comprobantes"
-    ON storage.objects
-    FOR SELECT
-    TO authenticated
-    USING (
-        bucket_id = 'comprobantes_pago' 
-        AND (owner = auth.uid() OR public.is_admin_or_specialist())
-    );

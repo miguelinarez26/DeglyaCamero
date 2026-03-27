@@ -235,18 +235,20 @@ const BookingModal = () => {
                                 <div className="space-y-8 animate-in fade-in zoom-in-95 duration-300 p-8">
                                     <div className="text-center">
                                         <h2 className="text-3xl font-display font-bold text-structure mb-3">
-                                            ¿Cómo deseas continuar?
+                                            Agenda tu Cita
                                         </h2>
                                         <p className="text-accent font-sans max-w-sm mx-auto">
-                                            Selecciona la opción que mejor describa tu situación actual.
+                                            Haz clic en la tarjeta para elegir el día y hora de tu primera sesión de valoración.
                                         </p>
                                     </div>
 
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                    <div className="flex justify-center">
                                         {/* First Time */}
                                         <button
-                                            onClick={() => setView('booking-calendar')}
-                                            className="group relative flex flex-col items-center justify-center p-8 bg-white border border-stone-200 rounded-2xl hover:border-conversion hover:shadow-xl hover:shadow-conversion/5 transition-all duration-300"
+                                            data-cal-link="deglyacamero/valoracion-inicial"
+                                            data-cal-namespace="valoracion-inicial"
+                                            data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+                                            className="w-full max-w-sm group relative flex flex-col items-center justify-center p-8 bg-white border border-stone-200 rounded-2xl hover:border-conversion hover:shadow-xl hover:shadow-conversion/5 transition-all duration-300"
                                         >
                                             <div className="w-16 h-16 bg-conversion/10 text-conversion rounded-full flex items-center justify-center mb-5 group-hover:bg-conversion group-hover:text-stone-900 transition-colors">
                                                 <UserPlus size={32} />
@@ -254,20 +256,6 @@ const BookingModal = () => {
                                             <h3 className="font-display font-bold text-stone-800 text-xl mb-2">Primera Vez</h3>
                                             <p className="text-sm text-stone-500 text-center font-sans leading-relaxed">
                                                 Deseo agendar mi primera sesión de valoración.
-                                            </p>
-                                        </button>
-
-                                        {/* Returning */}
-                                        <button
-                                            onClick={() => setView('login')}
-                                            className="group relative flex flex-col items-center justify-center p-8 bg-white border border-stone-200 rounded-2xl hover:border-structure hover:shadow-xl hover:shadow-structure/5 transition-all duration-300"
-                                        >
-                                            <div className="w-16 h-16 bg-structure/10 text-structure rounded-full flex items-center justify-center mb-5 group-hover:bg-structure group-hover:text-white transition-colors">
-                                                <User size={32} />
-                                            </div>
-                                            <h3 className="font-display font-bold text-stone-800 text-xl mb-2">Ya soy Paciente</h3>
-                                            <p className="text-sm text-stone-500 text-center font-sans leading-relaxed">
-                                                Quiero ingresar a mi portal.
                                             </p>
                                         </button>
                                     </div>

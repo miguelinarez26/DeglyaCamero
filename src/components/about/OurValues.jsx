@@ -6,31 +6,31 @@ const values = [
         icon: ShieldCheck,
         title: "Integridad",
         desc: "Honestidad y coherencia en cada paso.",
-        why: "La seguridad es el cimiento necesario para la vulnerabilidad terapéutica.",
-        forWhat: "Para garantizar un espacio donde puedas expresarte sin juicios ni riesgos.",
-        image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&q=80&w=600",
-        color: "from-[#2F3E35]/40 to-[#161E1A]/80", // Bosque Oscuro
+        why: "Sentirse seguro es el cimiento necesario para abrir la puerta de la vulnerabilidad.",
+        forWhat: "Para garantizar un espacio donde puedas expresarte sin juicios ni riesgos y así alcanzar sanidad.",
+        image: import.meta.env.BASE_URL + "images/integridad.png",
+        color: "from-black/60 to-transparent",
         theme: "dark"
     },
     {
         icon: Heart,
         title: "Empatía",
         desc: "Escuchamos y comprendemos sin juzgar.",
-        why: "Nadie sana en la frialdad; el vínculo humano es el motor del cambio.",
+        why: "Nadie sana en la frialdad; el vínculo humano propicia y sostiene el cambio.",
         forWhat: "Para validar tu experiencia y transformar el dolor en aprendizaje consciente.",
-        image: "https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&q=80&w=600",
-        color: "from-[#C89F70]/40 to-[#8A6A44]/80", // Oro/Beige
+        image: import.meta.env.BASE_URL + "images/Empatia.png",
+        color: "from-black/60 to-transparent",
         theme: "dark"
     },
     {
         icon: Heart,
         title: "Adopción Psicoespiritual",
-        desc: "Eje del modelo de reparentalización.",
-        why: "Es uno de los ejes centrales de nuestro modelo de intervención y reparentalización.",
-        forWhat: "Para sanar heridas tempranas y restablecer un sentido de pertenencia profundo.",
-        image: "https://images.unsplash.com/photo-1476610182048-b716b8518aae?auto=format&fit=crop&q=80&w=600",
-        color: "from-[#F8F6F2]/60 to-[#EADBC8]/90", // Crema
-        theme: "light"
+        desc: "Aprendemos con el ejemplo de aquellos que están o han pasado por situaciones similares a las nuestras.",
+        why: "Si una persona no posee referentes, internos o externos en su entorno que le permitan reprogramar su sistema interno de modelos parentales que le ayuden a reparentalizarse, el proceso de cambio será incompleto.",
+        forWhat: "Para consolidar nuevas memorias que le permitan guiar su proceso de cambio y sostenerlo en el tiempo. Eje del modelo de reparentalización.",
+        image: import.meta.env.BASE_URL + "images/adopcion psicoespiritual.png",
+        color: "from-black/60 to-transparent",
+        theme: "dark"
     },
     {
         icon: Sparkles,
@@ -39,7 +39,7 @@ const values = [
         why: "Dios es nuestro centro vital y de nuestra fe cristiana se desprende nuestro hacer.",
         forWhat: "Para ofrecer un acompañamiento integral fundamentado en un propósito trascendental.",
         image: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&q=80&w=600",
-        color: "from-[#2F3E35]/40 to-[#161E1A]/80",
+        color: "from-black/60 to-transparent",
         theme: "dark"
     },
     {
@@ -47,9 +47,9 @@ const values = [
         title: "Destino",
         desc: "La base de nuestro trabajo.",
         why: "Creemos firmemente que, sin importar el punto de partida, se puede cambiar el destino.",
-        forWhat: "Para ayudarte a trazar una nueva ruta hacia la plenitud y el propósito vital.",
-        image: "https://images.unsplash.com/photo-1506459225024-1428097a7e18?auto=format&fit=crop&q=80&w=600",
-        color: "from-[#C89F70]/40 to-[#8A6A44]/80",
+        forWhat: "Para ayudarte a trazar una nueva ruta hacia la plenitud y tu propósito de vida.",
+        image: import.meta.env.BASE_URL + "images/destino.png",
+        color: "from-black/60 to-transparent",
         theme: "dark"
     },
     {
@@ -58,9 +58,9 @@ const values = [
         desc: "Estructurando tu nueva identidad.",
         why: "Cada persona necesita un plan consciente para moldear su mejor versión.",
         forWhat: "Para pasar del dolor a una identidad saludable y bien fundamentada.",
-        image: "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?auto=format&fit=crop&q=80&w=600",
-        color: "from-[#F8F6F2]/60 to-[#EADBC8]/90",
-        theme: "light"
+        image: import.meta.env.BASE_URL + "images/diseno personal.png",
+        color: "from-black/60 to-transparent",
+        theme: "dark"
     },
     {
         icon: Lightbulb,
@@ -68,8 +68,8 @@ const values = [
         desc: "La luz que impulsa cada cambio.",
         why: "La convicción en un futuro mejor es el motor emocional de toda curación.",
         forWhat: "Para mantener el enfoque en la restauración, incluso en medio de la dificultad.",
-        image: "https://images.unsplash.com/photo-1501426026826-31c667bdf23d?auto=format&fit=crop&q=80&w=600",
-        color: "from-[#2F3E35]/40 to-[#161E1A]/80",
+        image: import.meta.env.BASE_URL + "images/esperanza.png",
+        color: "from-black/60 to-transparent",
         theme: "dark"
     },
     {
@@ -78,8 +78,8 @@ const values = [
         desc: "Formación continua para lo mejor.",
         why: "Tu bienestar merece la mejor formación y precisión diagnóstica posible.",
         forWhat: "Para asegurar resultados medibles y un progreso real en tu transformación.",
-        image: "https://images.unsplash.com/photo-1531548731165-c6ae86ff6491?auto=format&fit=crop&q=80&w=600",
-        color: "from-[#C89F70]/40 to-[#8A6A44]/80",
+        image: import.meta.env.BASE_URL + "images/excelencia.png",
+        color: "from-black/60 to-transparent",
         theme: "dark"
     }
 ];
@@ -108,8 +108,8 @@ const OurValues = () => {
                                     alt={v.title}
                                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 />
-                                {/* Overlay / Glassmorphism */}
-                                <div className={`absolute inset-0 bg-gradient-to-b ${v.color} opacity-80 group-hover:opacity-100 group-hover:backdrop-blur-md transition-all duration-500`} />
+                                {/* Subtle Shadow Gradient for Text Readability - Overlay removed as requested */}
+                                <div className={`absolute inset-0 bg-gradient-to-t ${v.color} transition-all duration-500`} />
 
                                 {/* Content Wrapper */}
                                 <div className={`relative z-10 h-full p-8 flex flex-col items-start justify-end transition-all duration-500 ${v.theme === 'light' ? 'text-stone-800' : 'text-white'}`}>
