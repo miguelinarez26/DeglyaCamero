@@ -69,7 +69,7 @@ const Footer = () => {
                     <p className="text-stone-600 text-[15px] mb-4">Recibe inspiración semanal en tu correo.</p>
                     <form className="flex flex-col gap-3">
                         <input type="email" placeholder="Tu correo electrónico" className="bg-white border border-stone-200 rounded px-4 py-2 text-[15px] text-stone-800 focus:outline-none focus:border-conversion focus:ring-1 focus:ring-conversion" />
-                        <button className="btn-wellness text-white text-sm font-bold py-2.5 rounded-full transform hover:scale-105 transition-all shadow-md">Suscribirse</button>
+                        <button className="btn-action-blue text-white text-sm font-bold py-2.5 rounded-full transform hover:scale-105 transition-all shadow-md">Suscribirse</button>
                     </form>
                 </div>
             </div>

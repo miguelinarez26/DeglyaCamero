@@ -76,8 +76,8 @@ const ContactForm = () => {
                     className="order-1 lg:order-2 relative"
                 >
 
-                    <div className="bg-[#F4EFE6] p-8 lg:p-10 rounded-3xl shadow-2xl relative border border-stone-200 z-10">
-                        <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/20 rounded-full blur-2xl pointer-events-none" />
+                    <div className="bg-[#9dbba4]/40 backdrop-blur-md p-8 lg:p-10 rounded-3xl shadow-2xl relative border border-white/20 z-10">
+                        <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#9dbba4]/20 rounded-full blur-2xl pointer-events-none" />
 
                         <h3 className="text-2xl font-display font-bold mb-2 text-stone-700">Agenda tu sesión</h3>
                         <p className="text-stone-600 mb-8 text-sm">Da el primer paso hacia tu transformación hoy mismo.</p>
@@ -133,7 +133,7 @@ const ContactForm = () => {
                                     className="w-full bg-stone-50 border border-stone-200 rounded-md px-4 py-2 text-stone-800 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all"
                                 />
                             </div>
-                            <button type="submit" className="w-full btn-wellness py-3 rounded-full transform hover:scale-105 shadow-md mt-2">
+                            <button type="submit" className="w-full btn-action-blue py-3 rounded-full transform hover:scale-105 shadow-md mt-2">
                                 Solicitar Cita
                             </button>
                             <p className="text-xs text-center text-gray-400 mt-4">

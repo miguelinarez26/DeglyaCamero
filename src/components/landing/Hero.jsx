@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PlayCircle, Leaf } from 'lucide-react';
 import heroGradient from '../../assets/hero-gradient.png';
 import { Link } from 'react-router-dom';
-const deglyaHeroNew = import.meta.env.BASE_URL + 'images/deglya-3.jpg';
+const deglyaHeroNew = import.meta.env.BASE_URL + 'images/Deglya-3 (1).jpg';
 
 const words = ["confianza", "esperanza", "espiritualidad", "propósito"];
 
@@ -35,15 +35,17 @@ const Hero = () => {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="space-y-6"
                 >
-                    <span className="inline-block py-1 px-3 rounded-full bg-primary/10 text-xs font-bold tracking-wider uppercase border border-primary/20 text-gradient-wellness">
+                    <span
+                        className="inline-block py-1 px-3 rounded-full bg-[#9dbba4]/40 backdrop-blur-md text-xs font-bold tracking-wider uppercase border border-primary/20 text-gradient-wellness shadow-sm"
+                    >
                         Psicóloga y Autora
                     </span>
                     <h1 className="text-4xl lg:text-6xl font-display font-medium leading-tight text-primary">
-                        ¿Quieres potenciar tus <span className="text-secondary italic">habilidades</span>?
+                        ¿Quieres potenciar tus <span className="italic text-secondary">habilidades</span>?
                         <span className="block mt-4">
                             Rediséñate en{' '}
                         </span>
-                        <span className="block h-[1.3em] relative overflow-hidden text-primary italic mt-2">
+                        <span className="block h-[1.3em] relative overflow-hidden text-deglya-sage-dark italic mt-2">
                             <AnimatePresence mode="wait">
                                 <motion.span
                                     key={index}
@@ -62,7 +64,7 @@ const Hero = () => {
                         Acompaño procesos de transformación con empatía y esperanza. Descubre el maravilloso camino de rediseñarte y potenciar tus capacidades.
                     </p>
                     <div className="flex flex-wrap gap-4 pt-4">
-                        <Link to="/servicios" className="btn-wellness px-8 py-3 rounded-full shadow-lg">
+                        <Link to="/servicios" className="btn-action-blue px-8 py-3 rounded-full shadow-lg">
                             Explorar Servicios
                         </Link>
                     </div>
@@ -73,17 +75,19 @@ const Hero = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                    className="relative lg:h-[600px] flex items-center justify-center"
+                    className="relative lg:h-[750px] flex items-center justify-center"
                 >
-                    {/* Abstract Shape */}
-                    <div className="absolute inset-0 bg-primary/5 rounded-t-[10rem] rounded-b-[2rem] rotate-3 transform scale-95 origin-bottom-right dark:bg-primary/10" />
+                    {/* Abstract Shape with Subtle Green Tint */}
+                    <div className="absolute inset-0 bg-[#9dbba4]/20 rounded-3xl rotate-3 transform scale-95 origin-bottom-right dark:bg-[#9dbba4]/10" />
 
-                    {/* Main Image */}
-                    <div className="relative w-full h-full max-h-[550px] overflow-hidden shadow-2xl group flex items-start justify-center bg-stone-100 wellness-hover-img rounded-t-[10rem] rounded-b-[2rem]">
+                    {/* Vertical Capsule Shape with Shared Transparent Green Background #9dbba4 */}
+                    <div
+                        className="relative w-full max-w-[480px] h-[580px] mx-auto overflow-hidden shadow-xl group flex items-start justify-center bg-[#9dbba4]/40 backdrop-blur-md border border-white/20 rounded-t-[10rem] rounded-b-[2rem]"
+                    >
                         <img
                             src={deglyaHeroNew}
                             alt="Deglya Camero"
-                            className="w-full h-full object-cover object-[center_65%]"
+                            className="w-full h-full object-cover object-[center_45%] pointer-events-none drop-shadow-2xl"
                         />
                     </div>
                 </motion.div>

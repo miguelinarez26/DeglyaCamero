@@ -24,6 +24,12 @@
   --color-secondary: var(--color-conversion);
   --color-background-light: var(--color-canvas);
   --color-text-light: var(--color-accent);
+  --color-deglya-sage-dark: #5d7d65;
+  --color-deglya-blue: #45829f;
+
+  /* Beige Shadow for Wellness Elements */
+  --color-wellness-shadow: rgba(200, 159, 112, 0.4);
+  --shadow-wellness: 0 20px 50px -12px var(--color-wellness-shadow);
 
   /* Fonts */
   --font-sans: "Nunito", sans-serif;
@@ -70,6 +76,17 @@
     color: #FFFFFF !important;
   }
 
+  .btn-action-blue {
+    @apply relative overflow-hidden text-white font-bold flex items-center justify-center transition-all duration-300;
+    background: #45829f;
+  }
+
+  .btn-action-blue:hover {
+    @apply shadow-xl scale-[1.03];
+    background: #1E1B1B !important;
+    color: #FFFFFF !important;
+  }
+
   /* NEW: Wellness Image Hover Zoom Effect */
   .wellness-hover-img {
     @apply overflow-hidden rounded-xl;
@@ -83,13 +100,11 @@
     @apply scale-105;
   }
 
-  /* NEW: Wellness Gradient Text for Subtitles */
+  /* NEW: Wellness Highlight Text for Subtitles */
   .text-gradient-wellness {
-    background: linear-gradient(90deg, #D96B2F 0%, #D35355 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #45829f;
     display: inline-block;
+    font-weight: bold;
   }
 
   /* Custom scrollbar matching canvas */

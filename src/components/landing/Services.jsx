@@ -49,7 +49,7 @@ const Services = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            className="bg-[#F4EFE6] rounded-[2rem] overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl transition-all duration-500 group"
+                            className="bg-[#9dbba4]/40 backdrop-blur-md border border-white/20 rounded-[2rem] overflow-hidden flex flex-col h-full shadow-sm hover:shadow-xl transition-all duration-500 group"
                         >
                             {/* Taller Image Header - To avoid cropping the brain image and show its full detail */}
                             <div className="relative h-80 w-full overflow-hidden">

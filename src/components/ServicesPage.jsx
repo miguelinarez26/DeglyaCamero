@@ -220,7 +220,7 @@ const ServicesPage = () => {
                             <div className="pt-2">
                                 <button
                                     type="button"
-                                    className="w-full btn-wellness text-white font-bold text-lg py-4 rounded-full shadow-lg hover:shadow-conversion/50 focus:outline-none"
+                                    className="w-full btn-action-blue text-white font-bold text-lg py-4 rounded-full shadow-lg hover:shadow-conversion/50 focus:outline-none"
                                 >
                                     Contactar Especialista
                                 </button>

@@ -85,9 +85,9 @@ export default function DashboardLayout({ role = 'patient' }) {
             )}>
                 <div className="h-24 flex items-center justify-center lg:justify-start lg:px-8 border-b border-stone-100/50 bg-stone-50/20">
                     <Link to="/" className="flex items-center transition-transform hover:scale-105 duration-300">
-                        <img 
-                            src={import.meta.env.BASE_URL + "images/logo4.png"} 
-                            alt="Deglya Camero Logo" 
+                        <img
+                            src={import.meta.env.BASE_URL + "images/logo4.png"}
+                            alt="Deglya Camero Logo"
                             className="w-32 lg:w-40 object-contain"
                         />
                     </Link>

@@ -13,8 +13,8 @@ const buttonVariants = cva(
     {
         variants: {
             variant: {
-                default: "btn-wellness shadow-sm", // Changed to btn-wellness
-                action: "btn-wellness shadow-sm uppercase tracking-wide font-bold", // Added btn-wellness
+                default: "btn-action-blue shadow-sm", // Changed to btn-action-blue
+                action: "btn-action-blue shadow-sm uppercase tracking-wide font-bold", // Added btn-action-blue
                 outline: "border-2 border-structure text-structure hover:bg-structure/10",
                 ghost: "hover:bg-accent/10 text-accent",
                 link: "text-structure underline-offset-4 hover:underline",

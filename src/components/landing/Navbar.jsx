@@ -12,7 +12,7 @@ export default function Navbar({ className }) {
     const [active, setActive] = useState(null);
     const location = useLocation();
     const [hoveredTab, setHoveredTab] = useState(null);
-    
+
     // INDUSTRIAL-GRADE PATH MATCHING (Literal URL checking)
     const currentUrl = window.location.href.toLowerCase();
     const isAbout = currentUrl.includes('about');
@@ -80,11 +80,11 @@ export default function Navbar({ className }) {
                     onMouseEnter={() => setHoveredTab('Servicios')}
                     onMouseLeave={() => setHoveredTab(null)}
                 >
-                    <MenuItem 
-                        setActive={setActive} 
-                        active={active} 
-                        item="Servicios" 
-                        href="/servicios" 
+                    <MenuItem
+                        setActive={setActive}
+                        active={active}
+                        item="Servicios"
+                        href="/servicios"
                         isActiveTab={isServices || hoveredTab === 'Servicios'}
                     >
                         <div className="flex flex-col gap-6 p-2 w-[650px]">
@@ -174,7 +174,7 @@ export default function Navbar({ className }) {
                         openBookingModal();
                     }}
                     onMouseEnter={() => setActive(null)}
-                    className="btn-wellness text-sm px-6 py-2 rounded-full shadow-sm hover:shadow-md transform hover:scale-105 cursor-pointer"
+                    className="btn-action-blue text-sm px-6 py-2 rounded-full shadow-sm hover:shadow-md transform hover:scale-105 cursor-pointer"
                 >
                     Agendar
                 </button>

@@ -43,26 +43,26 @@ function AuthRedirectHandler() {
 
   useEffect(() => {
     // CAPTURA: Solo para saber si veníamos de un link
-    const hadInviteIntent = window.location.hash.includes('access_token') || 
-                           window.location.hash.includes('type=invite') || 
-                           window.location.hash.includes('type=recovery');
+    const hadInviteIntent = window.location.hash.includes('access_token') ||
+      window.location.hash.includes('type=invite') ||
+      window.location.hash.includes('type=recovery');
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-        console.log(`[AUTH EVENT] ${event} | Session: ${session ? 'OK' : 'NULL'} | Intent: ${hadInviteIntent}`);
+      console.log(`[AUTH EVENT] ${event} | Session: ${session ? 'OK' : 'NULL'} | Intent: ${hadInviteIntent}`);
 
-        // REGLA DE ORO: Si entramos con un link (o ya estamos dentro por el link), vamos a poner clave
-        if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && (hadInviteIntent || window.location.hash.includes('access_token'))) {
-            console.log(">>> CAMINO AL ÉXITO: Redirigiendo a Bóveda de Claves...");
-            navigate('/set-password');
-        }
+      // REGLA DE ORO: Si entramos con un link (o ya estamos dentro por el link), vamos a poner clave
+      if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && (hadInviteIntent || window.location.hash.includes('access_token'))) {
+        console.log(">>> CAMINO AL ÉXITO: Redirigiendo a Bóveda de Claves...");
+        navigate('/set-password');
+      }
 
-        if (event === 'PASSWORD_RECOVERY') {
-            navigate('/set-password');
-        }
+      if (event === 'PASSWORD_RECOVERY') {
+        navigate('/set-password');
+      }
     });
 
     return () => {
-        subscription?.unsubscribe();
+      subscription?.unsubscribe();
     };
   }, [navigate]);
   return null;
